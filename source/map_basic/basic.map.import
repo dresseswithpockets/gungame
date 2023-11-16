@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://blpbikxim5pb"
+path="res://.godot/imported/basic.map-0de71999bbccf61860f6ff005af4f0a6.tres"
+
+[deps]
+
+source_file="res://map_basic/basic.map"
+dest_files=["res://.godot/imported/basic.map-0de71999bbccf61860f6ff005af4f0a6.tres"]
+
+[params]
+
