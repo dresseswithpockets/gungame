@@ -1,0 +1,14 @@
+# textures/images
+*.png filter=lfs diff=lfs merge=lfs -text
+
+# music/sfx/audio
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+
+# binary godot assets - these should be avoided if possible
+*.material filter=lfs diff=lfs merge=lfs -text
+
+# general binaries/build artifacts
+*.dll filter=lfs diff=lfs merge=lfs -text
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.pdb filter=lfs diff=lfs merge=lfs -text
