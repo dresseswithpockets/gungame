@@ -1,3 +1,5 @@
+# GunGame
+
 ## Getting Started
 
 You must follow these instructions before attempting to run or build the project, and before attempting to create or edit maps in Trenchbroom.
