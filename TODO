@@ -1,0 +1,24 @@
+# dev experience and dev ops stuff
+TODO create debug/release win64/linux/macos build scripts
+TODO create a manually-triggered CICD workflow for building releases
+TODO create private itch.io page for distributing QA builds weekly
+TODO document process for creating & building maps
+TODO research trenchbroom engine configurations
+TODO research hot-reloading maps
+
+# game configuration, iteration, etc
+TODO create a simple quake-style drop-down developer console
+TODO load user configurations from simple line-parsed .cfg files in user://
+TODO research crash logging, tracing, and reporting in godot
+
+# game stuff
+TODO create simple build-engine inspired player controller, with WASD movement, jumping, crouching
+TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
+TODO create ammo pickups that give ammo of specific types to the target
+TODO create some shitty developer art for viewmodels
+TODO research generating navigation meshes for qodot maps
+TODO create a dumbass sprite NPC that wanders around on the nav mesh
+TODO make the dumbass NPC shootable, take damage, and die
+TODO give the NPC frames for various perspectives from the player's PoV
+TODO give the NPC a death shitty animation
+TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
