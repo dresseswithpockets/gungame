@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="TrenchBroomGameConfig" load_steps=11 format=3 uid="uid://bhpxjy8lmf1nn"]
+
+[ext_resource type="Resource" path="res://addons/qodot/game_definitions/brush_tags/detail_tag.tres" id="1_goktq"]
+[ext_resource type="Resource" uid="uid://dtrwmwppklvpw" path="res://addons/qodot/game_definitions/fgd/essentials_fgd.tres" id="1_ktf01"]
+[ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://trenchbroom/gungame_fgd.tres" id="2_6k0up"]
+[ext_resource type="Resource" uid="uid://bd23tengu5m5u" path="res://addons/qodot/game_definitions/brush_tags/trigger_tag.tres" id="2_7pnwt"]
+[ext_resource type="Resource" uid="uid://blnk7qwd7u1ls" path="res://addons/qodot/game_definitions/fgd/quake_compat_fgd.tres" id="2_q6iuh"]
+[ext_resource type="Texture2D" uid="uid://b2k2iutnsgjfy" path="res://addons/qodot/icon.png" id="2_ukn3q"]
+[ext_resource type="Resource" uid="uid://dpjjh0hst6xj" path="res://addons/qodot/game_definitions/face_tags/clip_tag.tres" id="3_5xtab"]
+[ext_resource type="Resource" uid="uid://bkmh5qlqkolvt" path="res://addons/qodot/game_definitions/fgd/reciever_signal_fgd.tres" id="3_8b51k"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/trenchbroom_game_config.gd" id="3_wv3ih"]
+[ext_resource type="Resource" uid="uid://b3ec6041xnoec" path="res://addons/qodot/game_definitions/face_tags/skip_tag.tres" id="4_1tlgo"]
+
+[resource]
+script = ExtResource("3_wv3ih")
+export_file = false
+trenchbroom_games_folder = "..\\vendor_trenchbroom\\games"
+game_name = "GunGame"
+icon = ExtResource("2_ukn3q")
+fgd_files = Array[Resource]([ExtResource("1_ktf01"), ExtResource("2_q6iuh"), ExtResource("3_8b51k"), ExtResource("2_6k0up")])
+brush_tags = Array[Resource]([ExtResource("1_goktq"), ExtResource("2_7pnwt")])
+face_tags = Array[Resource]([ExtResource("3_5xtab"), ExtResource("4_1tlgo")])
+face_attrib_surface_flags = Array[Resource]([])
+face_attrib_content_flags = Array[Resource]([])

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=2 format=3 uid="uid://bxopc4p21rvtw"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_t3b8m"]
+
+[resource]
+script = ExtResource("1_t3b8m")
+export_file = false
+target_folder = ""
+fgd_name = "GunGame"
+base_fgd_files = Array[Resource]([])
+entity_definitions = Array[Resource]([])
