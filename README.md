@@ -1,7 +1,7 @@
 ## Getting Started
 
 1. Download and Install the [.NET 6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) and [.NET 7](https://dotnet.microsoft.com/en-us/download/dotnet/7.0) SDKs
-    ![Alt text](image.png)
+    ![Alt text](readme_assets/dotnet.png)
 1. Download Godot 4.1.3 (Mono/.NET Build) for [Windows](https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_mono_win64.zip)
     - For other operating systems see [the github release](https://github.com/godotengine/godot/releases/tag/4.1.3-stable).
 1. Extract contents into `vendor_godot/`
