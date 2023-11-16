@@ -1,0 +1,5 @@
+vendor_godot/**/*
+!vendor_godot/.gitkeep
+
+vendor_trenchbroom/**/*
+!vendor_trenchbroom/.gitkeep
