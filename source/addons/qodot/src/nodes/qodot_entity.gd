@@ -9,14 +9,14 @@ class_name QodotEntity extends QodotNode3D
 
 ## Properties for this entity. Populated from Trenchbroom's entity property editor when building a [QodotMap].
 @export var properties: Dictionary:
-	get:
-		return properties  # TODO Converter40 Non existent get function
-	set(new_properties):
-		if properties != new_properties:
-			properties = new_properties
-			update_properties()
+    get:
+        return properties  # TODO Converter40 Non existent get function
+    set(new_properties):
+        if properties != new_properties:
+            properties = new_properties
+            update_properties()
 
 
 ## Handle updates to [member properties]
 func update_properties() -> void:
-	pass
+    pass

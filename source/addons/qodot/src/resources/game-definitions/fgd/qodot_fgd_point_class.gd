@@ -3,7 +3,7 @@ class_name QodotFGDPointClass
 extends QodotFGDClass
 
 func _init():
-	prefix = "@PointClass"
+    prefix = "@PointClass"
 
 # The scene file to associate with this PointClass
 # On building the map, this scene will be instanced into the scene tree
