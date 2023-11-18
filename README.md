@@ -17,7 +17,7 @@ If you're on MacOS... good luck (:
     - You should have an executable at a path like `vendor_trenchbroom/TrenchBroom.exe`
 1. Open the project in Godot through one of these means:
     - run the Godot executable in `vendor_godot`, then select the `source/project.godot` project file.
-    - run `project.bat` or `project.sh` in the root of this repository
+    - run `open_project.bat` in the root of this repository
 1. Build dependencies by pressing `Alt-B`, or by clicking "Build" in the top right of the editor
 1. Close & reopen the project in Godot
 
