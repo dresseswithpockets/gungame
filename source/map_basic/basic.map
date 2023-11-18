@@ -5,6 +5,7 @@
 "classname" "worldspawn"
 "_tb_textures" "textures"
 "_tb_mod" "textures"
+"_tb_def" "builtin:GunGame.fgd"
 // brush 0
 {
 ( -64 -64 -16 ) ( -64 -63 -16 ) ( -64 -64 -15 ) __TB_empty 0 0 0 1 1
@@ -14,4 +15,12 @@
 ( 64 64 16 ) ( 65 64 16 ) ( 64 64 17 ) __TB_empty 0 0 0 1 1
 ( 64 64 16 ) ( 64 64 17 ) ( 64 65 16 ) __TB_empty 0 0 0 1 1
 }
+}
+// entity 1
+{
+"classname" "env_sprite"
+"origin" "8 8 32"
+"sprite_name" ""
+"modulate" "1 0 0 0.5"
+"billboard" "2"
 }
