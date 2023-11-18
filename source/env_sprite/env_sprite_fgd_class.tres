@@ -19,6 +19,7 @@ class_properties = {
 "Y-Billboard": 2
 },
 "modulate": Color(1, 1, 1, 1),
+"pixel_size": 1.0,
 "sprite_name": ""
 }
 class_property_descriptions = {

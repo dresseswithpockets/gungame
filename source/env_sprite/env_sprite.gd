@@ -7,8 +7,10 @@ var _no_texture: Texture2D = preload("res://trenchbroom/textures/no_texture_8.pn
 #  sprite_path: string path to Texture resource
 #  billboard: Choices [ FaceCamera, YBillboard ]
 #  modulate: Color
+#  pixel_size: Float (1 trenchbroom unit per pixel)
 
 enum { BILLBOARD_DISABLED = 0, BILLBOARD_ENABLED = 1, BILLBOARD_Y = 2 }
+const TB_UNITS_PER_GODOT_UNIT := 128.0
 
 func update_properties():
     if not Engine.is_editor_hint():
@@ -38,6 +40,7 @@ func update_properties():
     var sprite_node := Sprite3D.new()
     sprite_node.texture = texture
     sprite_node.modulate = properties.get("modulate", Color.WHITE)
+    sprite_node.pixel_size = properties.get("pixel_size", 1.0) / TB_UNITS_PER_GODOT_UNIT
     sprite_node.billboard = billboard
     
     add_child(sprite_node)
