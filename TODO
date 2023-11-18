@@ -13,6 +13,8 @@ TODO research crash logging, tracing, and reporting in godot
 
 # mapping, design tools
 DONE add env_sprite with billboard and modulate properties
+TODO add modulation-over-time to env_sprite
+
 # game stuff
 TODO create simple build-engine inspired player controller, with WASD movement, jumping, crouching
 TODO add grapple hook
