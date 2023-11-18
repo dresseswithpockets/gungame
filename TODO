@@ -11,6 +11,8 @@ TODO create a simple quake-style drop-down developer console
 TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
+# mapping, design tools
+DONE add env_sprite with billboard and modulate properties
 # game stuff
 TODO create simple build-engine inspired player controller, with WASD movement, jumping, crouching
 TODO add grapple hook
