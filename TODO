@@ -28,3 +28,6 @@ TODO make the dumbass NPC shootable, take damage, and die
 TODO give the NPC frames for various perspectives from the player's PoV
 TODO give the NPC a death shitty animation
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
+TODO seamless portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
+TODO default material adds dither to all surfaces
+TODO default material supports transparency (flag in TB? or maybe per-texture material)
