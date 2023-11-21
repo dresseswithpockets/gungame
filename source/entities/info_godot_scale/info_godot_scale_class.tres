@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=2 format=3 uid="uid://cvo8yukcwnii3"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_wvf7x"]
+
+[resource]
+script = ExtResource("1_wvf7x")
+classname = "info_godot_scale"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.784314, 0.203922, 0.784314, 1),
+"size": AABB(0, 0, 0, 128, 128, 128)
+}
+node_class = ""
+transient_node = true
