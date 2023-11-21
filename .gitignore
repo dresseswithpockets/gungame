@@ -3,3 +3,15 @@ vendor_godot/**/*
 
 vendor_trenchbroom/**/*
 !vendor_trenchbroom/.gitkeep
+
+build/win64_release/**/*
+!build/win64_release/.gitkeep
+
+build/win64_debug/**/*
+!build/win64_debug/.gitkeep
+
+build/linux_release/**/*
+!build/linux_release/.gitkeep
+
+build/linux_debug/**/*
+!build/linux_debug/.gitkeep
