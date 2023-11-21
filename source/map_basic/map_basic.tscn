@@ -8,23 +8,23 @@
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eh1fb"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n8nbp"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bxa4e"]
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_63trp"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_s6v0k"]
 _surfaces = [{
 "aabb": AABB(-0.5, -0.125, -1.39063, 1, 0.25001, 2.78125),
 "attribute_data": PackedByteArray(0, 0, 128, 194, 0, 0, 128, 193, 0, 0, 128, 194, 0, 0, 128, 65, 0, 0, 128, 66, 0, 0, 128, 65, 0, 0, 128, 66, 0, 0, 128, 193, 0, 0, 50, 195, 0, 0, 128, 193, 0, 0, 50, 67, 0, 0, 128, 193, 0, 0, 50, 67, 0, 0, 128, 65, 0, 0, 50, 195, 0, 0, 128, 65, 0, 0, 50, 195, 0, 0, 128, 194, 0, 0, 50, 195, 0, 0, 128, 66, 0, 0, 50, 67, 0, 0, 128, 66, 0, 0, 50, 67, 0, 0, 128, 194, 0, 0, 50, 195, 0, 0, 128, 194, 0, 0, 50, 67, 0, 0, 128, 194, 0, 0, 50, 67, 0, 0, 128, 66, 0, 0, 50, 195, 0, 0, 128, 66, 0, 0, 50, 195, 0, 0, 128, 193, 0, 0, 50, 195, 0, 0, 128, 65, 0, 0, 50, 67, 0, 0, 128, 65, 0, 0, 50, 67, 0, 0, 128, 193, 0, 0, 128, 194, 0, 0, 128, 193, 0, 0, 128, 66, 0, 0, 128, 193, 0, 0, 128, 66, 0, 0, 128, 65, 0, 0, 128, 194, 0, 0, 128, 65),
 "format": 4119,
 "index_count": 36,
 "index_data": PackedByteArray(0, 0, 1, 0, 2, 0, 0, 0, 2, 0, 3, 0, 4, 0, 5, 0, 6, 0, 4, 0, 6, 0, 7, 0, 8, 0, 9, 0, 10, 0, 8, 0, 10, 0, 11, 0, 12, 0, 13, 0, 14, 0, 12, 0, 14, 0, 15, 0, 16, 0, 17, 0, 18, 0, 16, 0, 18, 0, 19, 0, 20, 0, 21, 0, 22, 0, 20, 0, 22, 0, 23, 0),
-"material": SubResource("StandardMaterial3D_n8nbp"),
+"material": SubResource("StandardMaterial3D_bxa4e"),
 "name": "__TB_empty",
 "primitive": 3,
 "vertex_count": 24,
 "vertex_data": PackedByteArray(0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 191, 255, 255, 255, 255, 255, 255, 255, 63, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 191, 255, 255, 255, 255, 255, 255, 255, 63, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 191, 255, 255, 255, 255, 255, 255, 255, 63, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 191, 255, 255, 255, 255, 255, 255, 255, 63, 0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 191, 0, 0, 255, 127, 255, 127, 255, 191, 0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 63, 0, 0, 255, 127, 255, 127, 255, 191, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 63, 0, 0, 255, 127, 255, 127, 255, 191, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 191, 0, 0, 255, 127, 255, 127, 255, 191, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 191, 255, 127, 0, 0, 255, 127, 255, 63, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 191, 255, 127, 0, 0, 255, 127, 255, 63, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 63, 255, 127, 0, 0, 255, 127, 255, 63, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 63, 255, 127, 0, 0, 255, 127, 255, 63, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 191, 255, 127, 255, 255, 255, 127, 255, 191, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 63, 255, 127, 255, 255, 255, 127, 255, 191, 0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 63, 255, 127, 255, 255, 255, 127, 255, 191, 0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 191, 255, 127, 255, 255, 255, 127, 255, 191, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 191, 255, 255, 255, 127, 255, 127, 255, 63, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 191, 255, 255, 255, 127, 255, 127, 255, 63, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 63, 255, 255, 255, 127, 255, 127, 255, 63, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 63, 255, 255, 255, 127, 255, 127, 255, 63, 0, 0, 0, 191, 0, 0, 0, 62, 0, 0, 178, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 0, 62, 0, 0, 178, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 63, 0, 0, 0, 190, 0, 0, 178, 63, 255, 127, 255, 127, 255, 255, 255, 191, 0, 0, 0, 191, 0, 0, 0, 190, 0, 0, 178, 63, 255, 127, 255, 127, 255, 255, 255, 191)
 }]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_3fdw0"]
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_wmscy"]
 points = PackedVector3Array(-0.5, 0.125, -1.39063, -0.5, -0.125, -1.39063, 0.5, -0.125, -1.39063, 0.5, 0.125, -1.39063, -0.5, 0.125, 1.39063, -0.5, -0.125, 1.39063, 0.5, -0.125, 1.39063, 0.5, 0.125, 1.39063)
 
 [node name="map_basic" type="Node3D"]
@@ -41,10 +41,10 @@ default_material = SubResource("StandardMaterial3D_eh1fb")
 [node name="entity_0_worldspawn" type="StaticBody3D" parent="QodotMap"]
 
 [node name="entity_0_mesh_instance" type="MeshInstance3D" parent="QodotMap/entity_0_worldspawn"]
-mesh = SubResource("ArrayMesh_63trp")
+mesh = SubResource("ArrayMesh_s6v0k")
 
 [node name="entity_0_brush_0_collision_shape" type="CollisionShape3D" parent="QodotMap/entity_0_worldspawn"]
-shape = SubResource("ConvexPolygonShape3D_3fdw0")
+shape = SubResource("ConvexPolygonShape3D_wmscy")
 
 [node name="entity_1_env_sprite" type="Node3D" parent="QodotMap"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.25, 0.5)
@@ -58,7 +58,7 @@ properties = {
 "sprite_name": ""
 }
 
-[node name="@Sprite3D@52281" type="Sprite3D" parent="QodotMap/entity_1_env_sprite"]
+[node name="@Sprite3D@20098" type="Sprite3D" parent="QodotMap/entity_1_env_sprite"]
 pixel_size = 0.00078125
 billboard = 2
 texture = ExtResource("5_uecaj")
