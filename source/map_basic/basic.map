@@ -4,29 +4,26 @@
 {
 "classname" "worldspawn"
 "_tb_textures" "textures"
-"_tb_mod" "textures"
 "_tb_def" "builtin:GunGame.fgd"
+"_tb_mod" "textures"
 // brush 0
 {
-( -178 64 16 ) ( -178 -64 16 ) ( -178 -64 -16 ) __TB_empty 0 0 0 1 1
-( -178 -64 16 ) ( 178 -64 16 ) ( 178 -64 -16 ) __TB_empty 0 0 0 1 1
-( 178 -64 -16 ) ( 178 64 -16 ) ( -178 64 -16 ) __TB_empty 0 0 0 1 1
-( -178 64 16 ) ( 178 64 16 ) ( 178 -64 16 ) __TB_empty 0 0 0 1 1
-( 178 64 -16 ) ( 178 64 16 ) ( -178 64 16 ) __TB_empty 0 0 0 1 1
-( 178 -64 16 ) ( 178 64 16 ) ( 178 64 -16 ) __TB_empty 0 0 0 1 1
+( -642 672 16 ) ( -642 -672 16 ) ( -642 -672 -16 ) materials/uv_test_material 32 0 0 1 1
+( -642 -672 16 ) ( 642 -672 16 ) ( 642 -672 -16 ) materials/uv_test_material 32 0 0 1 1
+( 642 -672 -16 ) ( 642 672 -16 ) ( -642 672 -16 ) materials/uv_test_material 32 0 0 1 1
+( -642 672 16 ) ( 642 672 16 ) ( 642 -672 16 ) materials/uv_test_material 32 0 0 1 1
+( 642 672 -16 ) ( 642 672 16 ) ( -642 672 16 ) materials/uv_test_material 32 0 0 1 1
+( 642 -672 16 ) ( 642 672 16 ) ( 642 672 -16 ) materials/uv_test_material 32 0 0 1 1
 }
 }
 // entity 1
 {
-"classname" "env_sprite"
-"origin" "64 64 32"
-"sprite_name" ""
-"modulate" "1 1 1 1"
-"billboard" "2"
-"pixel_size" "0.1"
+"classname" "info_godot_scale"
+"origin" "96 -48 16"
 }
 // entity 2
 {
-"classname" "info_scale"
-"origin" "96 -48 0"
+"classname" "info_player_start"
+"origin" "432 -64 16"
+"angles" "0 0 0"
 }

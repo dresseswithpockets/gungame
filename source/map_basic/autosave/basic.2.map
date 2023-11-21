@@ -1,0 +1,38 @@
+// Game: GunGame
+// Format: Standard
+// entity 0
+{
+"classname" "worldspawn"
+"_tb_textures" "textures"
+"_tb_mod" "textures"
+"_tb_def" "builtin:GunGame.fgd"
+// brush 0
+{
+( -642 672 16 ) ( -642 -672 16 ) ( -642 -672 -16 ) __TB_empty 0 0 0 1 1
+( -642 -672 16 ) ( 642 -672 16 ) ( 642 -672 -16 ) __TB_empty 0 0 0 1 1
+( 642 -672 -16 ) ( 642 672 -16 ) ( -642 672 -16 ) __TB_empty 0 0 0 1 1
+( -642 672 16 ) ( 642 672 16 ) ( 642 -672 16 ) __TB_empty 0 0 0 1 1
+( 642 672 -16 ) ( 642 672 16 ) ( -642 672 16 ) __TB_empty 0 0 0 1 1
+( 642 -672 16 ) ( 642 672 16 ) ( 642 672 -16 ) __TB_empty 0 0 0 1 1
+}
+}
+// entity 1
+{
+"classname" "env_sprite"
+"origin" "64 64 32"
+"sprite_name" ""
+"modulate" "1 1 1 1"
+"billboard" "2"
+"pixel_size" "0.1"
+}
+// entity 2
+{
+"classname" "info_scale"
+"origin" "96 -48 0"
+}
+// entity 3
+{
+"classname" "info_playerspawn"
+"origin" "432 -64 16"
+"angles" "0 90 0"
+}
