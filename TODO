@@ -1,7 +1,7 @@
 # dev experience and dev ops stuff
 DONE create debug/release win64/linux build scripts
 TODO create a manually-triggered CICD workflow for building releases
-TODO create private itch.io page for distributing QA builds weekly
+DONE create private itch.io page for distributing QA builds weekly: https://dressesdigital.itch.io/temp-gungame-slug
 TODO document process for creating & building maps
 TODO research trenchbroom engine configurations
 TODO research hot-reloading maps
