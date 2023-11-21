@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="GunGame"
+run/main_scene="res://map_basic/map_basic.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
