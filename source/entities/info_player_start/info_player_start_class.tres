@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://b0hhivnqbx5uc"]
+
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclass_angles/angles_baseclass.tres" id="1_r4046"]
+[ext_resource type="PackedScene" uid="uid://bi36owxii4x7q" path="res://entities/info_player_start/info_player_start.tscn" id="1_roq70"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="2_s4mgj"]
+
+[resource]
+script = ExtResource("2_s4mgj")
+scene_file = ExtResource("1_roq70")
+classname = "info_player_start"
+description = "Player start"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_r4046")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0, 0.392157, 0, 1),
+"size": AABB(-52, -52, 0, 52, 52, 234)
+}
+node_class = ""
+transient_node = false
