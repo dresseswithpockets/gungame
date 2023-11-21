@@ -29,10 +29,10 @@ func update_properties():
         if ResourceLoader.exists(sprite_path, "Texture2D"):
             texture = load(sprite_path)
         else:
-            printerr("env_sprite: No Texture2D at sprite_path: '%s'" % sprite_path)
+            push_warning("env_sprite: No Texture2D at sprite_path: '%s'" % sprite_path)
             texture = _no_texture
     else:
-        printerr("env_sprite: No sprite_path specified, or the value is invalid")
+        push_warning("env_sprite: No sprite_path specified, or the value is invalid")
         texture = _no_texture
     
     var billboard: int = properties.get("billboard", BILLBOARD_DISABLED)
