@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c3efvme541xmo"]
+[gd_scene load_steps=9 format=3 uid="uid://c3efvme541xmo"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_sb6f4"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_lqwfk"]
 [ext_resource type="Material" path="res://trenchbroom/textures/materials/uv_test_material.tres" id="3_x1e2h"]
+[ext_resource type="PackedScene" uid="uid://dnrgqr8kfc21n" path="res://entities/player/player.tscn" id="5_agohm"]
 [ext_resource type="PackedScene" uid="uid://bi36owxii4x7q" path="res://entities/info_player_start/info_player_start.tscn" id="6_mapoj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eh1fb"]
@@ -46,3 +47,5 @@ shape = SubResource("ConvexPolygonShape3D_if2yq")
 
 [node name="entity_2_info_player_start" parent="QodotMap" instance=ExtResource("6_mapoj")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.125, 3.375)
+
+[node name="player" parent="." instance=ExtResource("5_agohm")]
