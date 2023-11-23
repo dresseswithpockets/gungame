@@ -15,4 +15,5 @@ shape = SubResource("CapsuleShape3D_rwd8m")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-fov = 80.0
+keep_aspect = 0
+fov = 90.0
