@@ -10,13 +10,13 @@ const SENSITIVITY = 2
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-@onready var _camera: Camera3D = $Camera3D
+@onready var camera: Camera3D = $Camera3D
 
 func _input(event: InputEvent):
     if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED: return
     if event is InputEventMouseMotion:
         rotate_y(deg_to_rad(SENSITIVITY * YAW_SPEED * -event.relative.x))
-        _camera.rotate_x(deg_to_rad(SENSITIVITY * PITCH_SPEED * -event.relative.y))
+        camera.rotate_x(deg_to_rad(SENSITIVITY * PITCH_SPEED * -event.relative.y))
 
 func _physics_process(delta):
     # Add the gravity.
