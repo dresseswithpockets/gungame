@@ -19,6 +19,10 @@ config/icon="res://icon.svg"
 
 InputGlobal="*res://input_global.gd"
 
+[display]
+
+window/vsync/vsync_mode=0
+
 [dotnet]
 
 project/assembly_name="GunGame"
