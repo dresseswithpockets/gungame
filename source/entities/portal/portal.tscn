@@ -43,6 +43,10 @@ albedo_color = Color(0.454902, 0.454902, 0.454902, 1)
 [node name="portal" type="Node3D"]
 script = ExtResource("1_xkmpi")
 
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+aabb = AABB(-1.625, -0.12, -0.0906342, 3.25, 2, 0.181268)
+enable_node_path = NodePath("../PortalSubViewport/PortalCamera")
+
 [node name="PortalSubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
 gui_disable_input = true
