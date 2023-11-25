@@ -15,8 +15,11 @@ class_name Portal extends Node3D
 var linked_portal: Portal
 var is_linked: bool = false
 var tracking: Array[PhysicsBody3D] = []
+var tracked_slice_materials := []
 var tracking_last_side: Array[int] = []
 var player_tracked: bool = false
+
+@onready var slice_shader: Shader = preload("res://entities/portal/slice.gdshader")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -63,14 +66,21 @@ func _process(_delta):
                 player_tracked = false
             tracking.remove_at(index)
             tracking_last_side.remove_at(index)
+            tracked_slice_materials.remove_at(index)
             index -= 1
             
             # need to inform the other portal of what side the body just came from
-            linked_portal.tracking.append(body)
-            linked_portal.tracking_last_side.append(new_side)
+            #linked_portal.tracking.append(body)
+            #linked_portal.tracking_last_side.append(new_side)
         else:
             tracking_last_side[index] = new_side
         index += 1
+    
+    for list in tracked_slice_materials:
+        for item in list:
+            var slice_mat: ShaderMaterial = item
+            slice_mat.set_shader_parameter("slice_center", global_position)
+            slice_mat.set_shader_parameter("slice_normal", -global_transform.basis.z)
 
     fix_near_plane_clip()
 
@@ -100,9 +110,24 @@ func on_body_entered(body: PhysicsBody3D):
     if body is Player:
         player_tracked = true
     tracking.append(body)
+    
     var offset_from_portal := body.global_position - global_position
     var side: int = sign(offset_from_portal.dot(-global_transform.basis.z))
     tracking_last_side.append(side)
+    
+    var slice_mats: Array[ShaderMaterial] = []
+    _get_all_slice_materials(body, slice_mats)
+    tracked_slice_materials.append(slice_mats)
+
+func _get_all_slice_materials(in_node: Node, array: Array[ShaderMaterial]):
+    if in_node is GeometryInstance3D:
+        var geo_instance: GeometryInstance3D = in_node
+        if in_node.material_override is ShaderMaterial:
+            var material: ShaderMaterial = in_node.material_override
+            if material.shader == slice_shader:
+                array.push_back(in_node.material_override)
+    for child in in_node.get_children():
+        _get_all_slice_materials(child, array)
 
 func on_body_exited(body: PhysicsBody3D):
     var index := tracking.find(body)
@@ -111,3 +136,4 @@ func on_body_exited(body: PhysicsBody3D):
         player_tracked = false
     tracking.remove_at(index)
     tracking_last_side.remove_at(index)
+    tracked_slice_materials.remove_at(index)
