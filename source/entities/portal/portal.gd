@@ -44,7 +44,8 @@ func _process(_delta):
     var m = global_transform.inverse() * linked_portal.global_transform * player_camera.global_transform
     viewport_cam.global_transform = m
     
-    for index in len(tracking):
+    var index = 0
+    while index < len(tracking):
         var body := tracking[index]
         var previous_offset := tracking_last_offsets[index]
         var offset_from_portal = body.global_position - global_position
@@ -64,8 +65,10 @@ func _process(_delta):
                 player_tracked = false
             tracking.remove_at(index)
             tracking_last_offsets.remove_at(index)
+            index -= 1
         else:
             tracking_last_offsets[index] = offset_from_portal
+        index += 1
     
     protect_screen_clipping()
 
