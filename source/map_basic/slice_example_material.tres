@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bopjti613s54j"]
+
+[ext_resource type="Shader" path="res://entities/portal/slice.gdshader" id="1_jpkij"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_jpkij")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/slice_center = null
+shader_parameter/slice_normal = null
