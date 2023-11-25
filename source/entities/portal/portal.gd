@@ -15,7 +15,7 @@ class_name Portal extends Node3D
 var linked_portal: Portal
 var is_linked: bool = false
 var tracking: Array[PhysicsBody3D] = []
-var tracking_last_offsets: Array[Vector3] = []
+var tracking_last_side: Array[int] = []
 var player_tracked: bool = false
 
 # Called when the node enters the scene tree for the first time.
@@ -47,16 +47,14 @@ func _process(_delta):
     var index = 0
     while index < len(tracking):
         var body := tracking[index]
-        var previous_offset := tracking_last_offsets[index]
+        var previous_side := tracking_last_side[index]
         var offset_from_portal = body.global_position - global_position
         
-        var forward := -global_transform.basis.z
-        var portal_side_new: int = sign(offset_from_portal.dot(forward))
-        var portal_side_old: int = sign(previous_offset.dot(forward))
+        var new_side: int = sign(offset_from_portal.dot(-global_transform.basis.z))
         
         # the tracked body has crossed sides in the past frame, so we can
         # teleport them
-        if portal_side_new != portal_side_old:
+        if new_side != previous_side:
             # does this teleport?
             var t = global_transform.affine_inverse() * linked_portal.global_transform * body.global_transform
             body.global_transform = t
@@ -64,10 +62,10 @@ func _process(_delta):
             if body is Player:
                 player_tracked = false
             tracking.remove_at(index)
-            tracking_last_offsets.remove_at(index)
+            tracking_last_side.remove_at(index)
             index -= 1
         else:
-            tracking_last_offsets[index] = offset_from_portal
+            tracking_last_side[index] = new_side
         index += 1
     
     protect_screen_clipping()
@@ -109,7 +107,9 @@ func on_body_entered(body: PhysicsBody3D):
     if body is Player:
         player_tracked = true
     tracking.append(body)
-    tracking_last_offsets.append(body.global_position - global_position)
+    var offset_from_portal := body.global_position - global_position
+    var side: int = sign(offset_from_portal.dot(-global_transform.basis.z))
+    tracking_last_side.append(side)
 
 func on_body_exited(body: PhysicsBody3D):
     var index := tracking.find(body)
@@ -117,4 +117,4 @@ func on_body_exited(body: PhysicsBody3D):
     if body is Player:
         player_tracked = false
     tracking.remove_at(index)
-    tracking_last_offsets.remove_at(index)
+    tracking_last_side.remove_at(index)
