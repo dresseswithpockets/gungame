@@ -1,7 +1,8 @@
 shader_type spatial;
+//render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_burley,specular_schlick_ggx,unshaded,shadows_disabled,ambient_light_disabled;
 render_mode blend_mix,depth_draw_opaque,cull_front,diffuse_burley,specular_schlick_ggx,unshaded,shadows_disabled,ambient_light_disabled;
 
-uniform vec4 albedo = vec4(1, 1, 1, 1);
+uniform vec4 albedo : source_color = vec4(1, 1, 1, 1);
 uniform sampler2D albedo_texture;
 uniform float specular : hint_range(0,1) = 0.5;
 
