@@ -71,8 +71,7 @@ func _process(_delta):
         else:
             tracking_last_side[index] = new_side
         index += 1
-    
-    #protect_screen_clipping()
+
     fix_near_plane_clip()
 
 func fix_near_plane_clip():
@@ -95,38 +94,6 @@ func fix_near_plane_clip():
     var cam_facing_sam_dir_as_portal := forward.dot(player_cam_offset) > 0
     surface.scale.z = distance_to_near_clip_plane_corner
     surface.position = Vector3.FORWARD * distance_to_near_clip_plane_corner * (0.5 if cam_facing_sam_dir_as_portal else -0.5)
-
-func protect_screen_clipping():
-    # only do anti-screen clip if the player is being tracked
-    if player_tracked:
-        var player_cam: Camera3D = get_tree().get_first_node_in_group(player_group).camera
-        var player_cam_proj := player_cam.get_camera_projection()
-        var half_width: float
-        var half_height: float
-        if player_cam.keep_aspect == Camera3D.KEEP_HEIGHT:
-            half_width = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
-            half_height = half_width * (1 / player_cam_proj.get_aspect())
-        else:
-            half_height = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
-            half_width = half_height * player_cam_proj.get_aspect()
-        var near_clip_plane_distance := Vector3(half_width, half_height, player_cam.near).length()
-        
-        var offset := global_position - player_cam.global_position
-        var facing_same_direction_sign: int = sign(global_transform.basis.z.dot(offset))
-        surface.scale = Vector3(surface.scale.x, surface.scale.y, near_clip_plane_distance)
-        surface.position = Vector3.FORWARD * near_clip_plane_distance * \
-                        0.5 * facing_same_direction_sign
-    else:
-        surface.scale = Vector3(1, 1, 0.2)
-        surface.position = Vector3.ZERO
-#    front.position = Vector3.FORWARD * near_clip_plane_distance
-#    back.position = Vector3.FORWARD * near_clip_plane_distance
-#    if is_facing_same_direction:
-#        front.position *= 0.5
-#        back.position *= -0.5
-#    else:
-#        front.position *= -0.5
-#        back.position *= 0.5
 
 func on_body_entered(body: PhysicsBody3D):
     if body in tracking: return
