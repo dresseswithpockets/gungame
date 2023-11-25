@@ -115,7 +115,7 @@ material = SubResource("StandardMaterial3D_jem3a")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 4
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.990762, 0)
