@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://c3efvme541xmo"]
+[gd_scene load_steps=29 format=3 uid="uid://c3efvme541xmo"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_sb6f4"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_lqwfk"]
@@ -91,6 +91,17 @@ points = PackedVector3Array(-4.75, 0.75, 1.5, -4.75, 0.125, 1.5, -3.75, 0.125, 1
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fr2yi"]
 points = PackedVector3Array(1.875, 0.75, -1.5, 1.875, 0.125, -1.5, 2.875, 0.125, -1.5, 2.875, 0.75, -1.5, 1.875, 0.75, -0.625, 1.875, 0.125, -0.625, 2.875, 0.125, -0.625, 2.875, 0.75, -0.625)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lwa7t"]
+
+[sub_resource type="Sky" id="Sky_fwpa7"]
+sky_material = SubResource("ProceduralSkyMaterial_lwa7t")
+
+[sub_resource type="Environment" id="Environment_m842v"]
+background_mode = 2
+background_energy_multiplier = 0.84
+sky = SubResource("Sky_fwpa7")
+sky_custom_fov = 90.0
 
 [node name="map_basic" type="Node3D"]
 
