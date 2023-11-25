@@ -76,10 +76,15 @@ func protect_screen_clipping():
     # only do anti-screen clip if the player is being tracked
     if player_tracked:
         var player_cam: Camera3D = get_tree().get_first_node_in_group(player_group).camera
-        var player_viewport := player_cam.get_viewport()
-        var half_width := player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
-        var viewport_rect := player_viewport.get_visible_rect()
-        var half_height := half_width * viewport_rect.size.y / viewport_rect.size.x
+        var player_cam_proj := player_cam.get_camera_projection()
+        var half_width: float
+        var half_height: float
+        if player_cam.keep_aspect == Camera3D.KEEP_HEIGHT:
+            half_width = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
+            half_height = half_width * (1 / player_cam_proj.get_aspect())
+        else:
+            half_height = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
+            half_width = half_height * player_cam_proj.get_aspect()
         var near_clip_plane_distance := Vector3(half_width, half_height, player_cam.near).length()
         
         var offset := global_position - player_cam.global_position
