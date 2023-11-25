@@ -64,11 +64,37 @@ func _process(_delta):
             tracking.remove_at(index)
             tracking_last_side.remove_at(index)
             index -= 1
+            
+            # need to inform the other portal of what side the body just came from
+            linked_portal.tracking.append(body)
+            linked_portal.tracking_last_side.append(new_side)
         else:
             tracking_last_side[index] = new_side
         index += 1
     
-    protect_screen_clipping()
+    #protect_screen_clipping()
+    fix_near_plane_clip()
+
+func fix_near_plane_clip():
+    var player_cam: Camera3D = get_tree().get_first_node_in_group(player_group).camera
+    var player_cam_proj := player_cam.get_camera_projection()
+    var aspect := player_cam_proj.get_aspect()
+    var half_width: float
+    var half_height: float
+    if player_cam.keep_aspect == Camera3D.KEEP_HEIGHT:
+        half_width = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
+        half_height = half_width * (1 / aspect)
+    else:
+        half_height = player_cam.near * tan(deg_to_rad(player_cam.fov * 0.5))
+        half_width = half_height * aspect
+    
+    var distance_to_near_clip_plane_corner := Vector3(half_width, half_height, player_cam.near).length()
+    
+    var forward := -global_transform.basis.z
+    var player_cam_offset := global_position - player_cam.global_position
+    var cam_facing_sam_dir_as_portal := forward.dot(player_cam_offset) > 0
+    surface.scale.z = distance_to_near_clip_plane_corner
+    surface.position = Vector3.FORWARD * distance_to_near_clip_plane_corner * (0.5 if cam_facing_sam_dir_as_portal else -0.5)
 
 func protect_screen_clipping():
     # only do anti-screen clip if the player is being tracked
