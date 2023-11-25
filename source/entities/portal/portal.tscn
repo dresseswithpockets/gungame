@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://d2jckptm66yoq"]
+[gd_scene load_steps=12 format=3 uid="uid://d2jckptm66yoq"]
 
 [ext_resource type="Script" path="res://entities/portal/portal.gd" id="1_xkmpi"]
 [ext_resource type="Shader" path="res://entities/portal/portal.gdshader" id="2_6wr7w"]
+[ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="3_7xr5d"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_22otq"]
 viewport_path = NodePath("PortalSubViewport")
@@ -10,7 +11,7 @@ viewport_path = NodePath("PortalSubViewport")
 resource_local_to_scene = true
 render_priority = 0
 shader = ExtResource("2_6wr7w")
-shader_parameter/albedo = Vector4(1, 1, 1, 1)
+shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
 shader_parameter/metallic_channel = Vector4(1, 0, 0, 0)
@@ -31,20 +32,24 @@ size = Vector3(3, 1.688, 1.75)
 [sub_resource type="BoxMesh" id="BoxMesh_yilvq"]
 size = Vector3(2.999, 1.999, 1)
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_d4pme"]
+[sub_resource type="ViewportTexture" id="ViewportTexture_gbwlg"]
 viewport_path = NodePath("PortalSubViewport")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jrwh4"]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("2_6wr7w")
-shader_parameter/albedo = Vector4(1, 1, 1, 1)
+shader = ExtResource("3_7xr5d")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.5
 shader_parameter/metallic = 0.0
-shader_parameter/metallic_channel = Vector4(1, 0, 0, 0)
-shader_parameter/roughness = 1.0
-shader_parameter/roughness_channel = Vector4(1, 0, 0, 0)
-shader_parameter/albedo_texture = SubResource("ViewportTexture_d4pme")
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = SubResource("ViewportTexture_gbwlg")
 
 [node name="portal" type="Node3D"]
 script = ExtResource("1_xkmpi")
