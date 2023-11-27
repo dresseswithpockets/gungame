@@ -1,41 +1,35 @@
 class_name Portal extends Node3D
 
 @export var player_group: StringName = &"player"
-@export_node_path("Portal") var linked_portal_path: NodePath
+@export var linked_portal: Portal
 
 @onready var sub_viewport: SubViewport = $PortalSubViewport
 @onready var viewport_cam: Camera3D = sub_viewport.get_camera_3d()
 
-@onready var front: Node3D = $FrontSurface
-@onready var back: Node3D = $BackSurface
-@onready var surface: Node3D = $Surface
+@onready var surface: Node3D = $Surface1
 
 @onready var area: Area3D = $Area3D
 
-var linked_portal: Portal
 var is_linked: bool = false
 var tracking: Array[PhysicsBody3D] = []
-var tracked_slice_materials := []
 var tracking_last_side: Array[int] = []
-var player_tracked: bool = false
+var tracking_slicer: Array = []
 
 @onready var slice_shader: Shader = preload("res://entities/portal/slice.gdshader")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    var node = get_node_or_null(linked_portal_path)
-    if node == null:
+    if linked_portal == null:
         set_physics_process(false)
         return
         
-    assert(node != self)
+    assert(linked_portal != self)
 
     var player_camera: Camera3D = get_tree().get_first_node_in_group(player_group).camera
     viewport_cam.fov = player_camera.fov
     # TODO: what about downsampling? this probably works even in that case tho
     sub_viewport.size = get_tree().get_root().get_viewport().size
     
-    linked_portal = node
     is_linked = true
     area.body_entered.connect(on_body_entered)
     area.body_exited.connect(on_body_exited)
@@ -51,38 +45,59 @@ func _process(_delta):
     while index < len(tracking):
         var body := tracking[index]
         var previous_side := tracking_last_side[index]
-        var offset_from_portal = body.global_position - global_position
+        var slicer = tracking_slicer[index]
+        var new_side := side_of_portal(body.global_position)
         
-        var new_side: int = sign(offset_from_portal.dot(-global_transform.basis.z))
-        
+        var t = global_transform.affine_inverse() * linked_portal.global_transform * body.global_transform
         # the tracked body has crossed sides in the past frame, so we can
         # teleport them
         if new_side != previous_side:
             # does this teleport?
-            var t = global_transform.affine_inverse() * linked_portal.global_transform * body.global_transform
             body.global_transform = t
             
-            if body is Player:
-                player_tracked = false
             tracking.remove_at(index)
             tracking_last_side.remove_at(index)
-            tracked_slice_materials.remove_at(index)
             index -= 1
             
             # need to inform the other portal of what side the body just came from
             #linked_portal.tracking.append(body)
             #linked_portal.tracking_last_side.append(new_side)
         else:
+            if slicer != null:
+                slicer.clone_node.global_transform = t
+                update_slice_params(slicer)
             tracking_last_side[index] = new_side
         index += 1
     
-    for list in tracked_slice_materials:
-        for item in list:
-            var slice_mat: ShaderMaterial = item
-            slice_mat.set_shader_parameter("slice_center", global_position)
-            slice_mat.set_shader_parameter("slice_normal", -global_transform.basis.z)
+#    for list in tracked_slice_materials:
+#        for item in list:
+#            var slice_mat: ShaderMaterial = item
+#            slice_mat.set_shader_parameter("slice_center", global_position)
+#            slice_mat.set_shader_parameter("slice_normal", -global_transform.basis.z)
 
     fix_near_plane_clip()
+
+func update_slice_params(slicer: Slicer):
+    var side := side_of_portal(slicer.global_position)
+    var slice_normal := -global_transform.basis.z * -side
+    var clone_slice_normal := -linked_portal.global_transform.basis.z * side
+    
+    var slice_pos := global_position
+    var clone_slice_pos := linked_portal.global_position
+    
+    for mat in slicer.main_materials:
+        mat.set_shader_parameter("slice_center", slice_pos)
+        mat.set_shader_parameter("slice_normal", slice_normal)
+        # TODO: slice_offset_dst
+    
+    for mat in slicer.clone_materials:
+        mat.set_shader_parameter("slice_center", clone_slice_pos)
+        mat.set_shader_parameter("slice_normal", clone_slice_normal)
+        # TODO: slice_offset_dst
+
+func side_of_portal(pos: Vector3) -> int:
+    var offset_from_portal = pos - global_position
+    return sign(offset_from_portal.dot(-global_transform.basis.z))
 
 func fix_near_plane_clip():
     var player_cam: Camera3D = get_tree().get_first_node_in_group(player_group).camera
@@ -107,33 +122,29 @@ func fix_near_plane_clip():
 
 func on_body_entered(body: PhysicsBody3D):
     if body in tracking: return
-    if body is Player:
-        player_tracked = true
+    
+    var slicer = _get_slicer_or_null(body)
+    if slicer != null:
+        slicer.enter_portal_threshold()
+        
     tracking.append(body)
-    
-    var offset_from_portal := body.global_position - global_position
-    var side: int = sign(offset_from_portal.dot(-global_transform.basis.z))
-    tracking_last_side.append(side)
-    
-    var slice_mats: Array[ShaderMaterial] = []
-    _get_all_slice_materials(body, slice_mats)
-    tracked_slice_materials.append(slice_mats)
-
-func _get_all_slice_materials(in_node: Node, array: Array[ShaderMaterial]):
-    if in_node is GeometryInstance3D:
-        var geo_instance: GeometryInstance3D = in_node
-        if in_node.material_override is ShaderMaterial:
-            var material: ShaderMaterial = in_node.material_override
-            if material.shader == slice_shader:
-                array.push_back(in_node.material_override)
-    for child in in_node.get_children():
-        _get_all_slice_materials(child, array)
+    tracking_last_side.append(side_of_portal(body.global_position))
+    tracking_slicer.append(slicer)
 
 func on_body_exited(body: PhysicsBody3D):
     var index := tracking.find(body)
     if index == -1: return
-    if body is Player:
-        player_tracked = false
+    
+    var slicer = tracking_slicer[index]
+    if slicer != null:
+        slicer.exit_portal_threshold()
+
     tracking.remove_at(index)
     tracking_last_side.remove_at(index)
-    tracked_slice_materials.remove_at(index)
+    tracking_slicer.remove_at(index)
+
+func _get_slicer_or_null(in_node: Node):
+    if in_node is Slicer:
+        return in_node
+    for child in in_node.get_children():
+        return _get_slicer_or_null(child) 

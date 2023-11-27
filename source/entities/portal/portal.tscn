@@ -1,27 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://d2jckptm66yoq"]
+[gd_scene load_steps=8 format=3 uid="uid://d2jckptm66yoq"]
 
 [ext_resource type="Script" path="res://entities/portal/portal.gd" id="1_xkmpi"]
-[ext_resource type="Shader" path="res://entities/portal/portal.gdshader" id="2_6wr7w"]
 [ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="3_7xr5d"]
-
-[sub_resource type="ViewportTexture" id="ViewportTexture_22otq"]
-viewport_path = NodePath("PortalSubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5rbuh"]
-resource_local_to_scene = true
-render_priority = 0
-shader = ExtResource("2_6wr7w")
-shader_parameter/albedo = Color(1, 1, 1, 1)
-shader_parameter/specular = 0.5
-shader_parameter/metallic = 0.0
-shader_parameter/metallic_channel = Vector4(1, 0, 0, 0)
-shader_parameter/roughness = 1.0
-shader_parameter/roughness_channel = Vector4(1, 0, 0, 0)
-shader_parameter/albedo_texture = SubResource("ViewportTexture_22otq")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_k2bif"]
-size = Vector2(3, 2)
-orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jem3a"]
 albedo_color = Color(0.454902, 0.454902, 0.454902, 1)
@@ -56,7 +36,7 @@ script = ExtResource("1_xkmpi")
 
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
 aabb = AABB(-1.625, -0.12, -0.0906342, 3.25, 2, 0.181268)
-enable_node_path = NodePath("../PortalSubViewport/PortalCamera")
+enable_node_path = NodePath("../PortalSubViewport")
 
 [node name="PortalSubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
@@ -65,35 +45,10 @@ size = Vector2i(1280, 720)
 
 [node name="PortalCamera" type="Camera3D" parent="PortalSubViewport"]
 keep_aspect = 0
-cull_mask = 1048573
+cull_mask = 32767
 current = true
 
 [node name="CSGSphere3D" type="CSGSphere3D" parent="PortalSubViewport/PortalCamera"]
-visible = false
-
-[node name="FrontSurface" type="Node3D" parent="."]
-visible = false
-
-[node name="FrontSurface" type="MeshInstance3D" parent="FrontSurface"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.05)
-layers = 2
-material_override = SubResource("ShaderMaterial_5rbuh")
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_k2bif")
-skeleton = NodePath("../..")
-
-[node name="BackSurface" type="Node3D" parent="."]
-visible = false
-
-[node name="BackSurface" type="MeshInstance3D" parent="BackSurface"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1, 0.05)
-layers = 2
-material_override = SubResource("ShaderMaterial_5rbuh")
-cast_shadow = 0
-gi_mode = 0
-mesh = SubResource("PlaneMesh_k2bif")
-skeleton = NodePath("../..")
 
 [node name="Edge1" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.55, 1, 0)
@@ -121,10 +76,10 @@ collision_mask = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.990762, 0)
 shape = SubResource("BoxShape3D_iql6j")
 
-[node name="Surface" type="Node3D" parent="."]
+[node name="Surface1" type="Node3D" parent="."]
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Surface"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="Surface1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-layers = 2
+layers = 524288
 mesh = SubResource("BoxMesh_yilvq")
 material = SubResource("ShaderMaterial_jrwh4")

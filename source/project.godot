@@ -61,7 +61,13 @@ move_backward={
 
 [layer_names]
 
+2d_render/layer_2="portal_recurse"
 3d_render/layer_2="portals"
+3d_render/layer_16="portal_5"
+3d_render/layer_17="portal_4"
+3d_render/layer_18="portal_3"
+3d_render/layer_19="portal_2"
+3d_render/layer_20="portal_1"
 3d_physics/layer_1="world"
 3d_physics/layer_2="player"
 3d_physics/layer_3="portal"

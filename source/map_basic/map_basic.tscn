@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://c3efvme541xmo"]
+[gd_scene load_steps=35 format=3 uid="uid://c3efvme541xmo"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_sb6f4"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_lqwfk"]
@@ -9,6 +9,8 @@
 [ext_resource type="PackedScene" uid="uid://bi36owxii4x7q" path="res://entities/info_player_start/info_player_start.tscn" id="6_mapoj"]
 [ext_resource type="PackedScene" uid="uid://d2jckptm66yoq" path="res://entities/portal/portal.tscn" id="8_gwoih"]
 [ext_resource type="Shader" path="res://entities/portal/slice.gdshader" id="9_5ilfk"]
+[ext_resource type="Script" path="res://entities/portal/slicer.gd" id="9_b5yii"]
+[ext_resource type="Script" path="res://map_basic/simple_mover.gd" id="9_qy61b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_eh1fb"]
 
@@ -186,13 +188,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.125, 3.375)
 
 [node name="player" parent="." instance=ExtResource("5_agohm")]
 
-[node name="portal" parent="." instance=ExtResource("8_gwoih")]
+[node name="portal" parent="." node_paths=PackedStringArray("linked_portal") instance=ExtResource("8_gwoih")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.132669, 0)
-linked_portal_path = NodePath("../portal2")
+linked_portal = NodePath("../portal2")
 
-[node name="portal2" parent="." instance=ExtResource("8_gwoih")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0.132669, 11.511)
-linked_portal_path = NodePath("../portal")
+[node name="portal2" parent="." node_paths=PackedStringArray("linked_portal") instance=ExtResource("8_gwoih")]
+transform = Transform3D(0.867696, 0, -0.497095, 0, 1, 0, 0.497095, 0, 0.867696, 0, 0.132669, 11.511)
+linked_portal = NodePath("../portal")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.258819, -0.482963, 0.836516, -1.29048e-08, 0.866025, 0.5, -0.965926, 0.12941, -0.224144, 0, 3.07972, 4.1938)
@@ -207,9 +209,13 @@ collision_layer = 9
 collision_mask = 5
 freeze = true
 freeze_mode = 1
+script = ExtResource("9_qy61b")
+
+[node name="Node" type="Node3D" parent="RigidBody3D" node_paths=PackedStringArray("graphics_node")]
+script = ExtResource("9_b5yii")
+graphics_node = NodePath("../MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 material_override = SubResource("ShaderMaterial_fao6c")
 mesh = SubResource("TorusMesh_e1y3c")
 skeleton = NodePath("")
