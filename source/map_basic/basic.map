@@ -144,3 +144,8 @@
 "origin" "432 -64 16"
 "angles" "0 0 0"
 }
+// entity 3
+{
+"classname" "light"
+"origin" "40 24 88"
+}
