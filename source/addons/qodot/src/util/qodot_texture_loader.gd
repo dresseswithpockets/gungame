@@ -151,12 +151,11 @@ func create_material(
     if not texture:
         return material
     
-    material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED if unshaded else BaseMaterial3D.SHADING_MODE_PER_PIXEL
-
     if material is StandardMaterial3D:
+        material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED if unshaded else BaseMaterial3D.SHADING_MODE_PER_PIXEL
         material.set_texture(StandardMaterial3D.TEXTURE_ALBEDO, texture)
     elif material is ShaderMaterial && default_material_albedo_uniform != "":
-        material.set_shader_param(default_material_albedo_uniform, texture)
+        material.set_shader_parameter(default_material_albedo_uniform, texture)
 
     var pbr_textures : Dictionary = get_pbr_textures(texture_name)
     
