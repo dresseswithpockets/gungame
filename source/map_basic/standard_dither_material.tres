@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dmltw6ivxro16"]
+
+[ext_resource type="Shader" path="res://map_basic/standard_dither_dance.gdshader" id="1_esam6"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_esam6")
+shader_parameter/dither_pos = Vector2(2.005, 0)
