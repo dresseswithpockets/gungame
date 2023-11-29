@@ -13,10 +13,14 @@ uniform vec3 uv1_scale = vec3(1);
 uniform vec3 uv1_offset = vec3(0);
 uniform vec3 uv2_scale = vec3(1);
 uniform vec3 uv2_offset = vec3(0);
-
+//uniform vec2 depth_viewport_size = vec2(0);
 
 void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
+//    disabling this until I figure out multi-portal recursion
+//    if (VIEWPORT_SIZE != depth_viewport_size) {
+//        VERTEX = CAMERA_POSITION_WORLD + vec3(0, 0, -50000);
+//    }
+    UV=UV*uv1_scale.xy+uv1_offset.xy;
 }
 
 void fragment() {
