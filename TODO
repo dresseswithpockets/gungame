@@ -35,8 +35,11 @@ TODO give the NPC frames for various perspectives from the player's PoV
 TODO give the NPC a death shitty animation
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
 DONE add basic seamless portal rendering between two linked portals
-TODO fix lighting through seamless portals (may just need to be multiplied?)
-TODO fix clipping protection on seamless portals (see protect_screen_clipping)
-TODO finish seamless portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
+DONE fix lighting through seamless portals (may just need to be multiplied?)
+DONE fix clipping protection on seamless portals (see protect_screen_clipping)
+TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
+TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
+TODO fix oblique projection on protals
+TODO fix object slicing on portals
 TODO default material adds dither to all surfaces
 TODO default material supports transparency (flag in TB? or maybe per-texture material)
