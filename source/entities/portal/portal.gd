@@ -5,10 +5,10 @@ class_name Portal extends Node3D
 # ref-loop bug in Godot when setting a breakpoint
 @export_node_path var linked_portal_path: NodePath
 
-@onready var sub_viewport: SubViewport = $PortalSubViewport
-@onready var viewport_cam: Camera3D = sub_viewport.get_camera_3d()
+@onready var sub_viewport: SubViewport = $PortalViewportDepth1
+@onready var viewport_cam: Camera3D = $PortalViewportDepth1/Camera
 
-@onready var surface: Node3D = $Surface1
+@onready var surface: Node3D = $SurfaceDepth1
 
 @onready var area: Area3D = $Area3D
 
@@ -18,6 +18,7 @@ var tracking: Array[PhysicsBody3D] = []
 var tracking_last_side: Array[int] = []
 var tracking_slicer: Array = []
 
+@onready var portal_shader: Shader = preload("res://entities/portal/fixed_shader.gdshader")
 @onready var slice_shader: Shader = preload("res://entities/portal/slice.gdshader")
 
 # Called when the node enters the scene tree for the first time.
@@ -32,7 +33,6 @@ func _ready():
 
     var player_camera: Camera3D = get_tree().get_first_node_in_group(player_group).camera
     viewport_cam.fov = player_camera.fov
-    # TODO: what about downsampling? this probably works even in that case tho
     sub_viewport.size = get_tree().get_root().get_viewport().size
     
     is_linked = true

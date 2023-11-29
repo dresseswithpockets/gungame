@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://d2jckptm66yoq"]
 
 [ext_resource type="Script" path="res://entities/portal/portal.gd" id="1_xkmpi"]
-[ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="3_7xr5d"]
+[ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="3_1n7i4"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jem3a"]
 albedo_color = Color(0.454902, 0.454902, 0.454902, 1)
@@ -9,16 +9,13 @@ albedo_color = Color(0.454902, 0.454902, 0.454902, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_iql6j"]
 size = Vector3(3, 1.688, 1.75)
 
-[sub_resource type="BoxMesh" id="BoxMesh_yilvq"]
-size = Vector3(2.999, 1.999, 1)
+[sub_resource type="ViewportTexture" id="ViewportTexture_vlnkn"]
+viewport_path = NodePath("PortalViewportDepth1")
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_gbwlg"]
-viewport_path = NodePath("PortalSubViewport")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jrwh4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xew4o"]
 resource_local_to_scene = true
 render_priority = 0
-shader = ExtResource("3_7xr5d")
+shader = ExtResource("3_1n7i4")
 shader_parameter/albedo = Color(1, 1, 1, 1)
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
@@ -29,26 +26,27 @@ shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/texture_albedo = SubResource("ViewportTexture_gbwlg")
+shader_parameter/texture_albedo = SubResource("ViewportTexture_vlnkn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_tjy17"]
+size = Vector3(2.999, 1.999, 0.15)
 
 [node name="portal" type="Node3D"]
 script = ExtResource("1_xkmpi")
 
 [node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
 aabb = AABB(-1.625, -0.12, -0.0906342, 3.25, 2, 0.181268)
-enable_node_path = NodePath("../PortalSubViewport")
+enable_node_path = NodePath("../PortalViewportDepth1")
 
-[node name="PortalSubViewport" type="SubViewport" parent="."]
+[node name="PortalViewportDepth1" type="SubViewport" parent="."]
 handle_input_locally = false
 gui_disable_input = true
-size = Vector2i(1280, 720)
+size = Vector2i(1279, 719)
 
-[node name="PortalCamera" type="Camera3D" parent="PortalSubViewport"]
+[node name="Camera" type="Camera3D" parent="PortalViewportDepth1"]
 keep_aspect = 0
-cull_mask = 32767
+cull_mask = 557055
 current = true
-
-[node name="CSGSphere3D" type="CSGSphere3D" parent="PortalSubViewport/PortalCamera"]
 
 [node name="Edge1" type="CSGBox3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.55, 1, 0)
@@ -76,10 +74,10 @@ collision_mask = 10
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.990762, 0)
 shape = SubResource("BoxShape3D_iql6j")
 
-[node name="Surface1" type="Node3D" parent="."]
+[node name="SurfaceDepth1" type="Node3D" parent="."]
 
-[node name="CSGMesh3D" type="CSGMesh3D" parent="Surface1"]
+[node name="CSGMesh3D" type="CSGMesh3D" parent="SurfaceDepth1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-layers = 524288
-mesh = SubResource("BoxMesh_yilvq")
-material = SubResource("ShaderMaterial_jrwh4")
+layers = 262144
+material_override = SubResource("ShaderMaterial_xew4o")
+mesh = SubResource("BoxMesh_tjy17")
