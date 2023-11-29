@@ -1,7 +1,9 @@
 class_name Portal extends Node3D
 
 @export var player_group: StringName = &"player"
-@export var linked_portal: Portal
+# NOTE: have to use NodePath instead of a direct Node reference because of a 
+# ref-loop bug in Godot when setting a breakpoint
+@export_node_path var linked_portal_path: NodePath
 
 @onready var sub_viewport: SubViewport = $PortalSubViewport
 @onready var viewport_cam: Camera3D = sub_viewport.get_camera_3d()
@@ -10,6 +12,7 @@ class_name Portal extends Node3D
 
 @onready var area: Area3D = $Area3D
 
+var linked_portal: Portal
 var is_linked: bool = false
 var tracking: Array[PhysicsBody3D] = []
 var tracking_last_side: Array[int] = []
@@ -19,11 +22,13 @@ var tracking_slicer: Array = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    if linked_portal == null:
+    var node = get_node_or_null(linked_portal_path)
+    if node == null:
         set_physics_process(false)
         return
         
-    assert(linked_portal != self)
+    assert(node != self)
+    linked_portal = node
 
     var player_camera: Camera3D = get_tree().get_first_node_in_group(player_group).camera
     viewport_cam.fov = player_camera.fov
