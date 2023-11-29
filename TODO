@@ -12,9 +12,33 @@ TODO create a simple quake-style drop-down developer console
 TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
-# mapping, design tools
+# mapping/design tools
+DONE add info_godot_scale
+DONE add info_player_start
+TODO make info_player_start actually function teehee
 DONE add env_sprite with billboard and modulate properties
 TODO add modulation-over-time to env_sprite
+TODO add env_sprite_animated
+TODO add light_point
+TODO add light_directional
+TODO add light_spot
+TODO add env_worldenv
+TODO add env_cam_attr_practical
+TODO add env_cam_attr_physical
+TODO add fog_volume
+TODO ensure support for emissive textures in map material
+TODO add env_lightmap for baked LightmapGI support?
+TODO add audio_global
+TODO add audio_positional
+TODO add trigger
+TODO add button
+TODO add decal
+TODO add particles_cpu
+TODO add particles_gpu
+TODO add logic_chance
+TODO add logic_relay
+TODO add monster_spawner
+TODO add portal
 
 # game stuff
 DONE simple WASD+jump movement
@@ -38,6 +62,7 @@ DONE add basic seamless portal rendering between two linked portals
 DONE fix lighting through seamless portals (may just need to be multiplied?)
 DONE fix clipping protection on seamless portals (see protect_screen_clipping)
 TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
+TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
 TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
 TODO fix oblique projection on protals
 TODO fix object slicing on portals
