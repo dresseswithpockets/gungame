@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="QodotFGDBaseClass" load_steps=2 format=3 uid="uid://c70xfst1srrne"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_81v1c"]
+
+[resource]
+script = ExtResource("1_81v1c")
+classname = "Light"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"bake_mode": {
+"Disabled": 0,
+"Dynamic": 2,
+"Static": 1
+},
+"color": Color(1, 1, 1, 1),
+"energy": 1.0,
+"shadows": false,
+"short_lived": false
+}
+class_property_descriptions = {
+"bake_mode": "The light's bake mode. This will affect the global illumination techniques that have an effect on the light's rendering.",
+"color": "Color of the light",
+"energy": "Intensity of the light's color.",
+"shadows": "If true, the light will cast real-time shadows. This has a significant performance cost. Only enable shadow rendering when it makes a noticeable difference in the scene's appearance.",
+"short_lived": "Whether or not a light is expected to be very short lived.
+
+If true, sets the volumetric fog energy on the light to 0, and computing volumetric fog will be skipped for this light, which can improve performance for large amounts of lights when volumetric fog is enabled."
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
