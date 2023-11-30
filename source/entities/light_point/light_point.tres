@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://c804x14hwgxjp"]
+
+[ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclass_light/baseclass_light.tres" id="1_6deoq"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_yqjev"]
+[ext_resource type="Script" path="res://entities/light_point/light_point.gd" id="2_t4ni5"]
+
+[resource]
+script = ExtResource("1_yqjev")
+script_class = ExtResource("2_t4ni5")
+classname = "light_point"
+description = "A point light"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_6deoq")])
+class_properties = {
+"attenuation": 1.0,
+"radius": 640.0
+}
+class_property_descriptions = {
+"attenuation": "The light's attenuation (drop-off) curve. Zero and negative values are allowed but can produce unusual effects.
+
+Note: Very high attenuation values (typically above 10) can impact performance negatively if the light is made to use a larger range to compensate. This is because culling opportunities will become less common and shading costs will be increased (as the light will cover more pixels on screen while resulting in the same amount of brightness). To improve performance, use the lowest attenuation value possible for the visuals you're trying to achieve.",
+"radius": "The light's radius. Note that the effectively lit area may appear to be smaller depending on the attenuation in use. No matter the attenuation in use, the light will never reach anything outside this radius."
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
