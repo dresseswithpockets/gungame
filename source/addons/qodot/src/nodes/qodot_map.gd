@@ -1070,6 +1070,8 @@ func apply_properties() -> void:
                             properties[property] = prop_string.to_int()
                         elif prop_default is float:
                             properties[property] = prop_string.to_float()
+                        elif prop_default is bool:
+                            properties[property] = prop_string in ["true", "1.0", "1"]
                         elif prop_default is Vector3:
                             var prop_comps = prop_string.split(" ")
                             properties[property] = Vector3(prop_comps[0].to_float(), prop_comps[1].to_float(), prop_comps[2].to_float())

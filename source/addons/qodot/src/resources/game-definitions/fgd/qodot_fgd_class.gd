@@ -102,6 +102,9 @@ func build_def_text() -> String:
         elif value is float:
             prop_type = "float"
             prop_val = "\"" + str(value) + "\""
+        elif value is bool:
+            prop_type = "boolean"
+            prop_val = "\"true\"" if value else "\"false\""
         elif value is String:
             prop_type = "string"
             prop_val = "\"" + value + "\""
