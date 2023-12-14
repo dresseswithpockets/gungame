@@ -17,8 +17,8 @@ If you're on MacOS... good luck (:
 
 ### First Time Setup
 1. Download and Install the [.NET 8](https://dotnet.microsoft.com/en-us/download/dotnet/8.0) SDK
-1. Download Godot 4.2 (Mono/.NET Build) for [Windows](https://github.com/godotengine/godot/releases/download/4.1.3-stable/Godot_v4.1.3-stable_mono_win64.zip), and extract into `vendor_godot/`
-1. Download Trenchbroom 2023.1 for [Windows](https://github.com/TrenchBroom/TrenchBroom/suites/18307704645/artifacts/1059032729), and extract into `vendor_trenchbroom/`
+1. Download Godot 4.2.1 (Mono/.NET Build) for [Windows](https://github.com/godotengine/godot/releases/download/4.2.1-stable/Godot_v4.2.1-stable_mono_win64.zip), and extract into `vendor_godot/`
+1. Download Trenchbroom Nightly for [Windows](https://github.com/TrenchBroom/TrenchBroom/suites/18307704645/artifacts/1059032729), and extract into `vendor_trenchbroom/`
 1. Open the project in Godot through one of these means:
     - run the Godot executable in `vendor_godot`, then select the `source/project.godot` project file.
     - run `open_project.bat` in the root of this repository
