@@ -22,7 +22,6 @@ TODO add modulation-over-time to env_sprite
 TODO add more flags/properties from Sprite3D to env_sprite
 TODO add env_sprite_animated
 DONE add light_point
-TODO finish light_point
 TODO add light_directional
 TODO add light_spot
 TODO add env_postprocess
@@ -52,6 +51,7 @@ TODO add func_portal
 TODO add func_ladder
 TODO add func_friction
 TODO add "Full Build, Unwrap, and Bake" button to QodotMap toolbar
+TODO enhance light_point (more shadows options? PCSS? any other customization?)
 
 # game stuff
 TODO fix worldspawn having an unusual offset?
