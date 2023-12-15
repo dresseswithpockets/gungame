@@ -74,9 +74,9 @@ func build_def_text() -> String:
 
     var normalized_description = description.replace("\n", " ").strip_edges()
     if normalized_description != "":
-        res += " : \"%s\" " % [normalized_description]
+        res += " : \"%s\"" % [normalized_description]
 
-    res += "[" + QodotUtil.newline()
+    res += " [" + QodotUtil.newline()
 
     # Class properties
     for prop in class_properties:
@@ -94,9 +94,19 @@ func build_def_text() -> String:
             else:
                 prop_description = "\"" + class_property_descriptions[prop] + "\""
         else:
-            prop_description = ""
+            prop_description = "\"\""
 
-        if value is int:
+        if value == null:
+            if prop == "target":
+                prop_type = "target_destination"
+                prop_description = "\"Target\""
+            elif prop == "targetname":
+                prop_type = "target_source"
+                prop_description = "\"Target Name\""
+            elif prop == "killtarget":
+                prop_type = "target_destination"
+                prop_description = "\"Kill Target\""
+        elif value is int:
             prop_type = "integer"
             prop_val = str(value)
         elif value is float:
@@ -141,7 +151,7 @@ func build_def_text() -> String:
         elif value is Object:
             prop_type = "target_source"
 
-        if(prop_val):
+        if prop_type:
             res += "\t"
             res += prop
             res += "("
@@ -152,12 +162,13 @@ func build_def_text() -> String:
                 res += " : "
                 res += prop_description
 
-            if value is Dictionary or value is Array:
-                res += " = "
-            else:
-                res += " : "
+            if prop_val:
+                if value is Dictionary or value is Array:
+                    res += " = "
+                else:
+                    res += " : "
 
-            res += prop_val
+                res += prop_val
             res += QodotUtil.newline()
 
     res += "]" + QodotUtil.newline()
