@@ -25,7 +25,9 @@ TODO add modulation-over-time to env_sprite
 TODO add more flags/properties from Sprite3D to env_sprite
 TODO add env_sprite_animated
 DONE add light_point
-TODO add light_directional
+DONE add light_directional
+TODO add more directional_show properties to light_directional
+TODO ensure Angles gets converted to Godot rotation correctly (see light_directional)
 TODO add light_spot
 TODO add env_postprocess
 TODO add env_campractical

@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://caevdeed667fv"]
+
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_0v3mo"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_xm2db"]
+[ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclasses/baseclass_light.tres" id="2_5biye"]
+[ext_resource type="Script" path="res://entities/light_directional/light_directional.gd" id="4_8jo8i"]
+
+[resource]
+script = ExtResource("1_xm2db")
+script_class = ExtResource("4_8jo8i")
+classname = "light_directional"
+description = "A directional light with no positional fall off"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_0v3mo"), ExtResource("2_5biye")])
+class_properties = {
+"sky_mode": {
+"Light And Sky": 0,
+"Light Only": 1,
+"Sky Only": 2
+}
+}
+class_property_descriptions = {
+"sky_mode": ["Set whether this DirectionalLight3D is visible in the sky, in the scene, or both in the sky and in the scene.
+'Light And Sky' makes the light visible in both scene lighting and sky rendering.
+'Light Only' Makes the light visible in scene lighting only (including direct lighting and global illumination). When using this mode, the light will not be visible from sky shaders.
+'Sky Only' Makes the light visible to sky shaders only. When using this mode the light will not cast light into the scene (either through direct lighting or through global illumination), but can be accessed through sky shaders. This can be useful, for example, when you want to control sky effects without illuminating the scene (during a night cycle, for example).", 0]
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
