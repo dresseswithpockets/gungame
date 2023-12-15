@@ -8,7 +8,10 @@ TODO research hot-reloading maps
 TODO create macos build scripts
 
 # game configuration, iteration, etc
-TODO create a simple quake-style drop-down developer console
+DONE create a simple quake-style drop-down developer console
+TODO make dev-console an autoload (maybe?)
+TODO add autocomplete suggestion box (with TAB completion) to dev console
+TODO add autocomplete suggestion box paging to dev console
 TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
