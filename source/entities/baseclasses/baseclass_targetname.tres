@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="QodotFGDBaseClass" load_steps=2 format=3 uid="uid://bv58uim48w85c"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_r7jy5"]
+
+[resource]
+script = ExtResource("1_r7jy5")
+classname = "Targetname"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"targetname": null
+}
+class_property_descriptions = {}
+meta_properties = {}
+node_class = ""
+transient_node = false

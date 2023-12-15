@@ -1,9 +1,9 @@
 [gd_resource type="Resource" script_class="QodotFGDBaseClass" load_steps=2 format=3 uid="uid://b74npv80q5mmx"]
 
-[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_ql7ue"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_xnwuc"]
 
 [resource]
-script = ExtResource("1_ql7ue")
+script = ExtResource("1_xnwuc")
 classname = "Angles"
 description = ""
 qodot_internal = false
