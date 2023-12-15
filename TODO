@@ -81,7 +81,7 @@ DONE fix clipping protection on seamless portals (see protect_screen_clipping)
 TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
 TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
 TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
-TODO fix oblique projection on protals
+TODO fix oblique projection on portals
 TODO fix object slicing on portals
 TODO ensure support for emissive textures in default material
 TODO default material adds dither to all surfaces
