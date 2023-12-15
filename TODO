@@ -87,7 +87,8 @@ TODO fix object slicing on portals
 TODO ensure support for emissive textures in default material
 TODO default material adds dither to all surfaces
 TODO default material supports transparency (flag in TB? or maybe per-texture material)
-TODO rewrite env_sprite in C#
+TODO rewrite env_sprite in C# (? maybe base qodot entities are always written in gdscript, since its only ever ran at build-time)
+TODO consider refactoring QodotEntity to support both gdscript and C# implementations (compositional approach?)
 
 # silly ideas
 we gotta make a level where if you let go of your grapple too soon you just go flying out into space and die
