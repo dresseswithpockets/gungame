@@ -11,7 +11,9 @@ base_classes = Array[Resource]([])
 class_properties = {
 "angles": Vector3(0, 0, 0)
 }
-class_property_descriptions = {}
+class_property_descriptions = {
+"angles": "Pitch Yaw Roll (X Y Z)"
+}
 meta_properties = {}
 node_class = ""
 transient_node = false
