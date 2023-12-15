@@ -150,3 +150,10 @@
 "origin" "40 24 88"
 "radius" "640"
 }
+// entity 4
+{
+"classname" "light_directional"
+"origin" "-24 -72 312"
+"angles" "45 30 0"
+"sky_mode" "0"
+}
