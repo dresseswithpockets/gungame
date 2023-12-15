@@ -16,7 +16,7 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
-TODO add targetname, target, and killtarget base FGD classes
+DONE add targetname, target, and killtarget base FGD classes
 DONE add info_godot_scale
 DONE add info_player_start
 TODO make info_player_start actually function teehee
