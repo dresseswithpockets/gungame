@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://c804x14hwgxjp"]
 
-[ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclass_light/baseclass_light.tres" id="1_6deoq"]
+[ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclasses/baseclass_light.tres" id="1_j87kg"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_yqjev"]
 [ext_resource type="Script" path="res://entities/light_point/light_point.gd" id="2_t4ni5"]
 
@@ -10,7 +10,7 @@ script_class = ExtResource("2_t4ni5")
 classname = "light_point"
 description = "A point light"
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("1_6deoq")])
+base_classes = Array[Resource]([ExtResource("1_j87kg")])
 class_properties = {
 "attenuation": 1.0,
 "radius": 640.0
