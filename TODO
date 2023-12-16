@@ -29,8 +29,16 @@ DONE add light_directional
 TODO add more directional_show properties to light_directional
 TODO ensure Angles gets converted to Godot rotation correctly (see light_directional)
 TODO add light_spot
-TODO add env_postprocess
+DONE add env_postprocess
+TODO add descriptions to env_postprocess properties
+TODO warn when there are multiple env_postprocess entities in a single map
+TODO add env_postprocesssky
+TODO add glow properties to env_postprocess
+TODO add support for other background modes in env_postprocess, since only Sky mode is supported
+TODO add support for adjustment_color_correction in env_postprocess
+TODO update enum properties in env_postprocess to use Choices instead of an integer
 TODO add env_campractical
+TODO warn when there are multiple env_campractical entities in a single map
 TODO add env_camphysical (probably not really necessary tbh)
 TODO add env_fog_volume
 TODO add env_lightmap for baked LightmapGI support?
