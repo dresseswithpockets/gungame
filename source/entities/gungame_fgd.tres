@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=8 format=3 uid="uid://bxopc4p21rvtw"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=9 format=3 uid="uid://bxopc4p21rvtw"]
 
 [ext_resource type="Resource" uid="uid://bejuidw1vcb53" path="res://entities/gungame_base_fgd.tres" id="1_jnnhq"]
+[ext_resource type="Resource" uid="uid://b1tgac42735ym" path="res://entities/env_postprocess/env_postprocess.tres" id="2_1fv4s"]
 [ext_resource type="Resource" uid="uid://dl4je7gnbbibp" path="res://entities/env_sprite/env_sprite_fgd_class.tres" id="2_16kin"]
 [ext_resource type="Resource" uid="uid://b0hhivnqbx5uc" path="res://entities/info_player_start/info_player_start_class.tres" id="3_tl7am"]
 [ext_resource type="Resource" uid="uid://cvo8yukcwnii3" path="res://entities/info_godot_scale/info_godot_scale_class.tres" id="4_j4wml"]
@@ -14,4 +15,4 @@ export_file = false
 target_folder = ""
 fgd_name = "GunGame"
 base_fgd_files = Array[Resource]([ExtResource("1_jnnhq")])
-entity_definitions = Array[Resource]([ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v")])
+entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v")])

@@ -157,3 +157,10 @@
 "angles" "45 30 0"
 "sky_mode" "0"
 }
+// entity 5
+{
+"classname" "env_postprocess"
+"origin" "-24 -72 8"
+"background_energy_multiplier" "0.84"
+"ssao_enabled" "true"
+}
