@@ -135,27 +135,29 @@
 }
 // entity 1
 {
-"classname" "info_godot_scale"
-"origin" "96 -48 16"
-}
-// entity 2
-{
 "classname" "info_player_start"
 "origin" "432 -64 16"
 "angles" "0 0 0"
 }
-// entity 3
+// entity 2
 {
-"classname" "light_point"
-"origin" "40 24 88"
-"radius" "640"
+"classname" "info_godot_scale"
+"origin" "96 -48 16"
 }
-// entity 4
+// entity 3
 {
 "classname" "light_directional"
 "origin" "-24 -72 312"
 "angles" "45 30 0"
 "sky_mode" "0"
+"shadows" "true"
+}
+// entity 4
+{
+"classname" "light_point"
+"origin" "40 24 88"
+"radius" "640"
+"shadows" "true"
 }
 // entity 5
 {
