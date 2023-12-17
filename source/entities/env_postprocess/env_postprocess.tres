@@ -7,7 +7,7 @@
 script = ExtResource("1_o2wk0")
 script_class = ExtResource("2_bguo3")
 classname = "env_postprocess"
-description = "Post Process and Environment parameters"
+description = "Post Process and Environment parameters. See https://docs.godotengine.org/en/stable/classes/class_environment.html for details on many of these properties."
 qodot_internal = false
 base_classes = Array[Resource]([])
 class_properties = {
