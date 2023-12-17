@@ -31,7 +31,7 @@ TODO ensure Angles gets converted to Godot rotation correctly (see light_directi
 TODO add light_spot
 DONE add env_postprocess
 TODO add descriptions to env_postprocess properties
-TODO warn when there are multiple env_postprocess entities in a single map
+DONE warn when there are multiple env_postprocess entities in a single map
 TODO add env_postprocesssky
 TODO add glow properties to env_postprocess
 TODO add support for other background modes in env_postprocess, since only Sky mode is supported
