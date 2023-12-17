@@ -1,16 +1,15 @@
 @tool
-extends QodotEntity
-
-static var existing_node: QodotEntity
+class_name EnvPostprocess extends QodotEntity
 
 func update_properties():
     if not Engine.is_editor_hint():
         return
     
-    if existing_node != null and is_instance_valid(existing_node):
-        push_warning("Multiple env_postprocess entities detected. Multiple env_postprocess may lead to unexpected behaviour.")
-    else:
-        existing_node = self
+    var parent := find_parent("QodotMap")
+    if parent != null:
+        for child in parent.get_children():
+            if child != self and child is EnvPostprocess:
+                push_warning("Multiple env_postprocess entities detected. Multiple env_postprocess may lead to unexpected behaviour.")
     
     # the docs say there can only be one WorldEnvironment in the scene tree...
     # but, I've instanced multiple in the tree at once with no problem
