@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://ccuhx3dr850e2"]
+
+[ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclasses/baseclass_light.tres" id="1_yqxir"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="2_ecl18"]
+[ext_resource type="Script" path="res://entities/light_spot/light_spot.gd" id="3_lvvrt"]
+
+[resource]
+script = ExtResource("2_ecl18")
+script_class = ExtResource("3_lvvrt")
+classname = "light_spot"
+description = "A spot light"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_yqxir")])
+class_properties = {
+"spot_angle": 45.0,
+"spot_angle_attenuation": 1.0,
+"spot_attenuation": 1.0,
+"spot_range": 5.0
+}
+class_property_descriptions = {
+"spot_angle": "The spotlight's angle in degrees.",
+"spot_angle_attenuation": "The spotlight's angular attenuation curve",
+"spot_attenuation": "The spotlight's light energy (drop-off) attenuation curve. A number of presets are available in the Inspector by right-clicking the curve. Zero and negative values are allowed but can produce unusual effects. See also spot_angle_attenuation.
+
+Note: Very high spot_attenuation values (typically above 10) can impact performance negatively if the light is made to use a larger spot_range to compensate. This is because culling opportunities will become less common and shading costs will be increased (as the light will cover more pixels on screen while resulting in the same amount of brightness). To improve performance, use the lowest spot_attenuation value possible for the visuals you're trying to achieve.",
+"spot_range": "The maximal range that can be reached by the spotlight. Note that the effectively lit area may appear to be smaller depending on the spot_attenuation in use. No matter the spot_attenuation in use, the light will never reach anything outside this range."
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false

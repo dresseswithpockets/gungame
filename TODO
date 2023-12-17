@@ -28,7 +28,8 @@ DONE add light_point
 DONE add light_directional
 TODO add more directional_show properties to light_directional
 TODO ensure Angles gets converted to Godot rotation correctly (see light_directional)
-TODO add light_spot
+DONE add light_spot
+TODO add more shadow settings to baseclass_light and the derived light_ point classes
 DONE add env_postprocess
 TODO add descriptions to env_postprocess properties
 DONE warn when there are multiple env_postprocess entities in a single map
