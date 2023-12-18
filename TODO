@@ -16,27 +16,25 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
-TODO add audio_global
-TODO add audio_positional
 TODO add trigger
 TODO add trigger_push
 TODO add trigger_gravity
 TODO add trigger_hurt
-TODO add trigger_postprocess
-TODO add trigger_campractical
-TODO add trigger_teleport (maybe I dont bother with this since we have portals)
-TODO add particles_cpu
-TODO add particles_gpu
+TODO add trigger_teleport
+TODO add audio_global
+TODO add audio_positional
 TODO add logic_chance
 TODO add logic_relay
 TODO add monster_spawner
+TODO add func_portal
 TODO add func_breakable
 TODO add func_button
 TODO add func_door
 TODO add func_conveyer
-TODO add func_portal
 TODO add func_ladder
 TODO add func_friction
+TODO add particles_cpu
+TODO add particles_gpu
 TODO add env_lightmap for baked LightmapGI support?
 TODO add "Full Build, Unwrap, and Bake" button to QodotMap toolbar
 DONE add targetname, target, and killtarget base FGD classes
@@ -62,6 +60,8 @@ TODO update enum properties in env_postprocess to use Choices instead of an inte
 TODO add env_campractical
 TODO warn when there are multiple env_campractical entities in a single map
 TODO add env_camphysical (probably not really necessary tbh)
+TODO add trigger_postprocess
+TODO add trigger_campractical
 TODO add env_fog_volume
 TODO add env_decal
 TODO add descriptions to env_postprocess properties
