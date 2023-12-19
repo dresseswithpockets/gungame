@@ -92,9 +92,6 @@ TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aestheti
 DONE add basic seamless portal rendering between two linked portals
 DONE fix lighting through seamless portals (may just need to be multiplied?)
 DONE fix clipping protection on seamless portals (see protect_screen_clipping)
-TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
-TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
-TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
 TODO fix oblique projection on portals
 TODO fix object slicing on portals
 TODO ensure support for emissive textures in default material
@@ -102,6 +99,9 @@ TODO default material adds dither to all surfaces
 TODO default material supports transparency (flag in TB? or maybe per-texture material)
 TODO rewrite env_sprite in C# (? maybe base qodot entities are always written in gdscript, since its only ever ran at build-time)
 TODO consider refactoring QodotEntity to support both gdscript and C# implementations (compositional approach?)
+TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
+TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
+TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
 
 # silly ideas
 we gotta make a level where if you let go of your grapple too soon you just go flying out into space and die
