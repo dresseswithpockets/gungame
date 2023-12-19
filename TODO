@@ -94,6 +94,7 @@ DONE fix lighting through seamless portals (may just need to be multiplied?)
 DONE fix clipping protection on seamless portals (see protect_screen_clipping)
 TODO fix oblique projection on portals
 TODO fix object slicing on portals
+TODO update portal-traveller velocity & rotation when they go through a portal, such that it is oriented correctly as they come out of the portal
 TODO ensure support for emissive textures in default material
 TODO default material adds dither to all surfaces
 TODO default material supports transparency (flag in TB? or maybe per-texture material)
