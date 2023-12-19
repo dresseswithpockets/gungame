@@ -1,6 +1,6 @@
 class_name Portal extends Node3D
 
-@export var player_group: StringName = &"player"
+@export var player_cam_group: StringName = &"player_cam"
 # NOTE: have to use NodePath instead of a direct Node reference because of a 
 # ref-loop bug in Godot when setting a breakpoint
 @export_node_path var linked_portal_path: NodePath
@@ -31,7 +31,7 @@ func _ready():
     assert(node != self)
     linked_portal = node
 
-    var player_camera: Camera3D = get_tree().get_first_node_in_group(player_group).camera
+    var player_camera: Camera3D = get_tree().get_first_node_in_group(player_cam_group)
     viewport_cam.fov = player_camera.fov
     sub_viewport.size = get_tree().get_root().get_viewport().size
     
@@ -41,8 +41,8 @@ func _ready():
     set_physics_process(true)
 
 func _process(_delta):
-    if !is_linked or !get_tree().has_group(player_group): return
-    var player_camera: Camera3D = get_tree().get_first_node_in_group(player_group).camera
+    if !is_linked or !get_tree().has_group(player_cam_group): return
+    var player_camera: Camera3D = get_tree().get_first_node_in_group(player_cam_group)
     var m = global_transform.inverse() * linked_portal.global_transform * player_camera.global_transform
     viewport_cam.global_transform = m
     
@@ -105,7 +105,7 @@ func side_of_portal(pos: Vector3) -> int:
     return sign(offset_from_portal.dot(-global_transform.basis.z))
 
 func fix_near_plane_clip():
-    var player_cam: Camera3D = get_tree().get_first_node_in_group(player_group).camera
+    var player_cam: Camera3D = get_tree().get_first_node_in_group(player_cam_group)
     var player_cam_proj := player_cam.get_camera_projection()
     var aspect := player_cam_proj.get_aspect()
     var half_width: float

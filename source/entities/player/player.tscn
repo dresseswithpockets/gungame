@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://dnrgqr8kfc21n"]
 
-[ext_resource type="Script" path="res://entities/player/player.gd" id="1_3pxxj"]
+[ext_resource type="Script" path="res://entities/player/Player.cs" id="1_jit2s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rwd8m"]
 height = 1.82
@@ -8,13 +8,13 @@ height = 1.82
 [node name="player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 2
 collision_mask = 5
-script = ExtResource("1_3pxxj")
+script = ExtResource("1_jit2s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
 shape = SubResource("CapsuleShape3D_rwd8m")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." groups=["player_cam"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 keep_aspect = 0
 cull_mask = 294909

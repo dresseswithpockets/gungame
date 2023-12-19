@@ -71,8 +71,8 @@ TODO enhance light_point and other light nodes (more shadows options? PCSS? any 
 TODO fix worldspawn having an unusual offset?
 DONE simple WASD+jump movement
 DONE simple camera movement
-TODO build engine WASD movement (faster/smoother accel and decel)
-TODO build engine camera bobbing (wait, does build engine even have camera bobbing?)
+DONE basic build engine WASD movement
+DONE basic build engine camera bobbing
 TODO build engine jumping (with jump squat)
 TODO toggle-able edge jump coyote time (for testing)
 TODO add grapple hook
