@@ -68,7 +68,7 @@ TODO add descriptions to env_postprocess properties
 TODO enhance light_point and other light nodes (more shadows options? PCSS? any other customization?)
 
 # game stuff
-TODO fix worldspawn having an unusual offset?
+DONE fix worldspawn having an unusual offset - was because of missing worldspawn entity in FGD used by QodotMap
 DONE simple WASD+jump movement
 DONE simple camera movement
 DONE basic build engine WASD movement
