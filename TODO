@@ -93,6 +93,7 @@ TODO give the NPC a shitty death animation
 TODO add blood particles gush animation when NPC is shot
 TODO add blood splatter decals around NPCs that are shot
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
+TODO make the player take damage & die
 DONE add basic seamless portal rendering between two linked portals
 DONE fix lighting through seamless portals (may just need to be multiplied?)
 DONE fix clipping protection on seamless portals (see protect_screen_clipping)
