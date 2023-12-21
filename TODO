@@ -73,13 +73,15 @@ DONE simple WASD+jump movement
 DONE simple camera movement
 DONE basic build engine WASD movement
 DONE basic build engine camera bobbing
-TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge 
+TODO clamp camera pitch (+/- 90 degrees)
+TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge
 TODO build engine jumping (with jump squat)
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
 TODO toggle-able edge jump coyote time (for testing)
 TODO add grapple hook
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
+TODO add decals when a hitscan weapon hits a solid wall
 TODO create ammo pickups that give ammo of specific types to the target
 TODO create some shitty developer art for viewmodels
 TODO build engine style viewmodel bobbing (it has this though right?)
@@ -88,6 +90,8 @@ TODO create a dumbass sprite NPC that wanders around on the nav mesh
 TODO make the dumbass NPC shootable, take damage, and die
 TODO give the NPC frames for various perspectives from the player's PoV
 TODO give the NPC a death shitty animation
+TODO add blood particles gush animation when NPC is shot
+TODO add blood splatter decals around NPCs that are shot
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
 DONE add basic seamless portal rendering between two linked portals
 DONE fix lighting through seamless portals (may just need to be multiplied?)
