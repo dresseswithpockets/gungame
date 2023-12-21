@@ -89,7 +89,7 @@ TODO research generating navigation meshes for qodot maps
 TODO create a dumbass sprite NPC that wanders around on the nav mesh
 TODO make the dumbass NPC shootable, take damage, and die
 TODO give the NPC frames for various perspectives from the player's PoV
-TODO give the NPC a death shitty animation
+TODO give the NPC a shitty death animation
 TODO add blood particles gush animation when NPC is shot
 TODO add blood splatter decals around NPCs that are shot
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
