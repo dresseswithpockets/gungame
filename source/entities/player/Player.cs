@@ -85,7 +85,7 @@ public partial class Player : CharacterBody3D
         Velocity = _groundVelocity with { Y = verticalSpeed };
         MoveAndSlide();
 
-        PostMove_CameraBob(deltaF, useSpeed, direction);
+        PostMove_RunBob(deltaF, useSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
     }
 
@@ -120,7 +120,7 @@ public partial class Player : CharacterBody3D
         _cameraAggregateOffset += Vector3.Zero.Lerp(CameraJumpBob, _cameraJumpBobTimer);
     }
 
-    private void PostMove_CameraBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
+    private void PostMove_RunBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
     {
         Debug.Assert(maxSpeedThisFrame != 0f);
         
