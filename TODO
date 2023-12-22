@@ -74,7 +74,7 @@ DONE simple camera movement
 DONE basic build engine WASD movement
 DONE basic build engine camera bobbing
 DONE clamp camera pitch (+/- 90 degrees)
-TODO add simple initial-jump jump-squat, inspired by build engine jumping
+DONE add simple initial-jump jump-squat, inspired by build engine jumping
 TODO add jump landing squat, like build engine jump landing
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
