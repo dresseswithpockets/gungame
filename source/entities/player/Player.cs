@@ -7,15 +7,18 @@ public partial class Player : CharacterBody3D
     public const float Decel = 50f;
     public const float Speed = 10.0f;
     public const float BoostSpeedMultiplier = 1.15f;
-    public const float JumpVelocity = 4.5f;
+    public const float JumpVelocity = 3f;
     public const float YawSpeed = 0.022f;
     public const float PitchSpeed = 0.022f;
     public const float Sensitivity = 2f;
     public static readonly Vector3 CameraRunBob = new(0f, -0.15f, 0f);
     public const float CameraRunBobSpeed = 3f;
     public const float CameraRunBobResetSpeed = 10f;
-    public static readonly Vector3 CameraJumpBob = new(0f, -0.1f, 0f);
-    public const float CameraJumpBobSpeed = 15f;
+    public static readonly Vector3 CameraJumpBob = new(0f, -0.1f, 0f); 
+    public const float CameraJumpBobSpeed = 20f;
+    public static readonly Vector3 CameraLandingBob = new(0f, -0.15f, 0f);
+    public const float CameraLandingBobDownSpeed = 15f;
+    public const float CameraLandingBobUpSpeed = 5f;
     public const bool FullJumpSquatCoyoteTime = true;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -28,8 +31,11 @@ public partial class Player : CharacterBody3D
     private bool _cameraRunBobGoingDown = true;
     private float _cameraJumpBobTimer;
     private bool _cameraJumpBobGoingDown = true;
+    private float _cameraLandingBobTimer;
+    private bool _cameraLandingBobGoingDown = true;
 
     private bool _jumpSquatting;
+    private bool _landing;
     // velocity without any Y component
     private Vector3 _groundVelocity;
 
@@ -82,9 +88,15 @@ public partial class Player : CharacterBody3D
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 
+        var preMoveOnFloor = IsOnFloor();
+
         Velocity = _groundVelocity with { Y = verticalSpeed };
         MoveAndSlide();
 
+        if (IsOnFloor() && !preMoveOnFloor)
+            _landing = true;
+
+        PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
     }
@@ -118,6 +130,35 @@ public partial class Player : CharacterBody3D
         }
 
         _cameraAggregateOffset += Vector3.Zero.Lerp(CameraJumpBob, _cameraJumpBobTimer);
+    }
+
+    private void PostMove_LandingBob(float delta)
+    {
+        if (_landing || _cameraLandingBobTimer > 0f)
+        {
+            _landing = false;
+            
+            if (_cameraLandingBobGoingDown)
+            {
+                _cameraLandingBobTimer += delta * CameraLandingBobDownSpeed;
+                if (_cameraLandingBobTimer > 1f)
+                {
+                    _cameraLandingBobTimer = Mathf.PingPong(_cameraLandingBobTimer, 1f);
+                    _cameraLandingBobGoingDown = false;
+                }
+            }
+            else
+            {
+                _cameraLandingBobTimer -= delta * CameraLandingBobUpSpeed;
+                if (_cameraLandingBobTimer < 0f)
+                {
+                    _cameraLandingBobTimer = 0f;
+                    _cameraLandingBobGoingDown = true;
+                }
+            }
+        }
+
+        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraLandingBob, _cameraLandingBobTimer);
     }
 
     private void PostMove_RunBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
