@@ -1,5 +1,5 @@
+using System.Diagnostics;
 using Godot;
-using System;
 
 public partial class Player : CharacterBody3D
 {
@@ -23,12 +23,13 @@ public partial class Player : CharacterBody3D
 
     private Camera3D _camera;
     private Vector3 _cameraStart;
+    private Vector3 _cameraAggregateOffset;
     private float _cameraRunBobTimer;
     private bool _cameraRunBobGoingDown = true;
     private float _cameraJumpBobTimer;
     private bool _cameraJumpBobGoingDown = true;
 
-    private bool _startingJump;
+    private bool _jumpSquatting;
     // velocity without any Y component
     private Vector3 _groundVelocity;
 
@@ -52,6 +53,8 @@ public partial class Player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        _cameraAggregateOffset = Vector3.Zero;
+        
         var verticalSpeed = Velocity.Y;
         var deltaF = (float)delta;
 
@@ -59,9 +62,9 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor())
             verticalSpeed -= gravity * deltaF;
 
-        // Handle Jump.
-        if (IsOnFloor() && !_startingJump && Input.IsActionJustPressed("move_jump"))
-            _startingJump = true;
+        // player can only start a jump squat if they havent already started one
+        if (IsOnFloor() && !_jumpSquatting && Input.IsActionJustPressed("move_jump"))
+            _jumpSquatting = true;
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
@@ -77,9 +80,20 @@ public partial class Player : CharacterBody3D
         var useSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? Speed * BoostSpeedMultiplier : Speed;
         _groundVelocity = _groundVelocity.LimitLength(useSpeed);
 
-        if (_startingJump)
+        PreMove_JumpSquat(deltaF, ref verticalSpeed);
+
+        Velocity = _groundVelocity with { Y = verticalSpeed };
+        MoveAndSlide();
+
+        PostMove_CameraBob(deltaF, useSpeed, direction);
+        _camera.Position = _cameraStart + _cameraAggregateOffset;
+    }
+
+    private void PreMove_JumpSquat(float delta, ref float verticalSpeed)
+    {
+        if (_jumpSquatting)
         {
-            var bobDelta = deltaF * CameraJumpBobSpeed;
+            var bobDelta = delta * CameraJumpBobSpeed;
             if (_cameraJumpBobGoingDown)
             {
                 _cameraJumpBobTimer += bobDelta;
@@ -96,23 +110,20 @@ public partial class Player : CharacterBody3D
                 {
                     _cameraJumpBobTimer = 0f;
                     _cameraJumpBobGoingDown = true;
-                    _startingJump = false;
+                    _jumpSquatting = false;
                     if (FullJumpSquatCoyoteTime || IsOnFloor())
                         verticalSpeed = JumpVelocity;
                 }
             }
         }
-        
-        var additionalCameraOffset = Vector3.Zero.Lerp(CameraJumpBob, _cameraJumpBobTimer);
-        
-        Velocity = _groundVelocity with { Y = verticalSpeed };
-        MoveAndSlide();
 
-        PostMove_CameraBob(useSpeed, direction, deltaF, additionalCameraOffset);
+        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraJumpBob, _cameraJumpBobTimer);
     }
 
-    private void PostMove_CameraBob(float maxSpeedThisFrame, Vector3 wishDirection, float deltaF, Vector3 additionalOffset)
+    private void PostMove_CameraBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
     {
+        Debug.Assert(maxSpeedThisFrame != 0f);
+        
         // camera bobbing takes into account the *actual* horizontal speed of the player after MoveAndSlide 
         var speedFraction = (Velocity with {Y = 0}).Length() / maxSpeedThisFrame;
 
@@ -120,7 +131,7 @@ public partial class Player : CharacterBody3D
         {
             // scale the bob speed with the player's current speed, so they arent bobbing so much when running directly
             // into a wall
-            var bobDelta = deltaF * CameraRunBobSpeed * speedFraction;
+            var bobDelta = delta * CameraRunBobSpeed * speedFraction;
             if (_cameraRunBobGoingDown)
             {
                 _cameraRunBobTimer += bobDelta;
@@ -142,13 +153,12 @@ public partial class Player : CharacterBody3D
         }
         else if (_cameraRunBobTimer > 0f)
         {
-            _cameraRunBobTimer -= deltaF * CameraRunBobResetSpeed;
+            _cameraRunBobTimer -= delta * CameraRunBobResetSpeed;
             _cameraRunBobGoingDown = true;
             if (_cameraRunBobTimer < 0f)
                 _cameraRunBobTimer = 0f;
         }
         
-        var runBob = Vector3.Zero.Lerp(CameraRunBob, _cameraRunBobTimer);
-        _camera.Position = _cameraStart + runBob + additionalOffset;
+        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraRunBob, _cameraRunBobTimer);
     }
 }
