@@ -11,31 +11,37 @@ public partial class Player : CharacterBody3D
     public const float YawSpeed = 0.022f;
     public const float PitchSpeed = 0.022f;
     public const float Sensitivity = 2f;
-    public static readonly Vector3 CameraRunBob = new(0f, -0.15f, 0f);
-    public const float CameraRunBobSpeed = 3f;
-    public const float CameraRunBobResetSpeed = 10f;
-    public static readonly Vector3 CameraJumpBob = new(0f, -0.1f, 0f); 
-    public const float CameraJumpBobSpeed = 20f;
-    public static readonly Vector3 CameraLandingBob = new(0f, -0.15f, 0f);
-    public const float CameraLandingBobDownSpeed = 15f;
-    public const float CameraLandingBobUpSpeed = 5f;
-    public const bool FullJumpSquatCoyoteTime = true;
+    
+    [ExportCategory("Run Bobbing")]
+    [Export]
+    public Vector3 cameraRunBob = new(0f, -0.15f, 0f);
+    [Export] public Curve cameraRunBobCurve;
+    [Export] public float cameraRunBobTime = 0.33f;
+    [Export] public float cameraRunBobResetTime = 0.1f;
 
-    // Get the gravity from the project settings to be synced with RigidBody nodes.
-    public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
+    [ExportCategory("Jump Squatting & Landing")]
+    [Export]
+    public Vector3 cameraJumpBob = new(0f, -0.1f, 0f);
+
+    [Export] public Curve cameraJumpSquatCurve;
+    [Export] public float cameraJumpSquatTime = 0.1f;
+    [Export] public bool fullJumpSquatCoyoteTime = true;
+    [Export] public Vector3 cameraLandingBob = new(0f, -0.15f, 0f);
+    [Export] public Curve cameraLandingBobCurve;
+    [Export] public float cameraLandingBobTime = 0.27f;
+
+    [ExportCategory("Falling")]
+    [Export]
+    public float gravity = 20f;
 
     private Camera3D _camera;
     private Vector3 _cameraStart;
     private Vector3 _cameraAggregateOffset;
     private float _cameraRunBobTimer;
-    private bool _cameraRunBobGoingDown = true;
+    private float _cameraRunBobResetTimer;
     private float _cameraJumpBobTimer;
-    private bool _cameraJumpBobGoingDown = true;
     private float _cameraLandingBobTimer;
-    private bool _cameraLandingBobGoingDown = true;
 
-    private bool _jumpSquatting;
-    private bool _landing;
     // velocity without any Y component
     private Vector3 _groundVelocity;
 
@@ -60,7 +66,7 @@ public partial class Player : CharacterBody3D
     public override void _PhysicsProcess(double delta)
     {
         _cameraAggregateOffset = Vector3.Zero;
-        
+
         var verticalSpeed = Velocity.Y;
         var deltaF = (float)delta;
 
@@ -68,13 +74,14 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor())
             verticalSpeed -= gravity * deltaF;
 
-        // player can only start a jump squat if they havent already started one
-        if (IsOnFloor() && !_jumpSquatting && Input.IsActionJustPressed("move_jump"))
-            _jumpSquatting = true;
+        // player can only start a jump squat if they havent already started one - _cameraJumpBobTimer is non-zero when
+        // jump squatting
+        if (IsOnFloor() && _cameraJumpBobTimer == 0f && Input.IsActionJustPressed("move_jump"))
+            _cameraJumpBobTimer = cameraJumpSquatTime;
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
-        var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward"); 
+        var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
         var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
             _groundVelocity += direction * Accel * deltaF;
@@ -94,7 +101,7 @@ public partial class Player : CharacterBody3D
         MoveAndSlide();
 
         if (IsOnFloor() && !preMoveOnFloor)
-            _landing = true;
+            _cameraLandingBobTimer = cameraLandingBobTime;
 
         PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useSpeed, direction);
@@ -103,103 +110,74 @@ public partial class Player : CharacterBody3D
 
     private void PreMove_JumpSquat(float delta, ref float verticalSpeed)
     {
-        if (_jumpSquatting)
+        if (_cameraJumpBobTimer <= 0f) return;
+        
+        _cameraJumpBobTimer -= delta;
+        if (_cameraJumpBobTimer < 0f)
         {
-            var bobDelta = delta * CameraJumpBobSpeed;
-            if (_cameraJumpBobGoingDown)
-            {
-                _cameraJumpBobTimer += bobDelta;
-                if (_cameraJumpBobTimer > 1f)
-                {
-                    _cameraJumpBobTimer = Mathf.PingPong(_cameraJumpBobTimer, 1f);
-                    _cameraJumpBobGoingDown = false;
-                }
-            }
-            else
-            {
-                _cameraJumpBobTimer -= bobDelta;
-                if (_cameraJumpBobTimer < 0f)
-                {
-                    _cameraJumpBobTimer = 0f;
-                    _cameraJumpBobGoingDown = true;
-                    _jumpSquatting = false;
-                    if (FullJumpSquatCoyoteTime || IsOnFloor())
-                        verticalSpeed = JumpVelocity;
-                }
-            }
+            _cameraJumpBobTimer = 0f;
+            if (fullJumpSquatCoyoteTime || IsOnFloor())
+                verticalSpeed = JumpVelocity;
         }
 
-        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraJumpBob, _cameraJumpBobTimer);
+        var alpha = 1f - (_cameraJumpBobTimer / cameraJumpSquatTime);
+        var blend = cameraJumpSquatCurve.Sample(alpha);
+        _cameraAggregateOffset += Vector3.Zero.Lerp(cameraJumpBob, blend);
     }
 
     private void PostMove_LandingBob(float delta)
     {
-        if (_landing || _cameraLandingBobTimer > 0f)
-        {
-            _landing = false;
-            
-            if (_cameraLandingBobGoingDown)
-            {
-                _cameraLandingBobTimer += delta * CameraLandingBobDownSpeed;
-                if (_cameraLandingBobTimer > 1f)
-                {
-                    _cameraLandingBobTimer = Mathf.PingPong(_cameraLandingBobTimer, 1f);
-                    _cameraLandingBobGoingDown = false;
-                }
-            }
-            else
-            {
-                _cameraLandingBobTimer -= delta * CameraLandingBobUpSpeed;
-                if (_cameraLandingBobTimer < 0f)
-                {
-                    _cameraLandingBobTimer = 0f;
-                    _cameraLandingBobGoingDown = true;
-                }
-            }
-        }
+        if (_cameraLandingBobTimer <= 0f) return;
 
-        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraLandingBob, _cameraLandingBobTimer);
+        _cameraLandingBobTimer -= delta;
+        if (_cameraLandingBobTimer < 0f)
+            _cameraLandingBobTimer = 0f;
+
+        var alpha = 1f - (_cameraLandingBobTimer / cameraLandingBobTime);
+        var blend = cameraLandingBobCurve.Sample(alpha);
+        _cameraAggregateOffset += Vector3.Zero.Lerp(cameraLandingBob, blend);
     }
 
     private void PostMove_RunBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
     {
         Debug.Assert(maxSpeedThisFrame != 0f);
         
-        // camera bobbing takes into account the *actual* horizontal speed of the player after MoveAndSlide 
-        var speedFraction = (Velocity with {Y = 0}).Length() / maxSpeedThisFrame;
-
         if (IsOnFloor() && wishDirection != Vector3.Zero)
         {
-            // scale the bob speed with the player's current speed, so they arent bobbing so much when running directly
-            // into a wall
-            var bobDelta = delta * CameraRunBobSpeed * speedFraction;
-            if (_cameraRunBobGoingDown)
+            if (_cameraRunBobResetTimer > 0f)
             {
-                _cameraRunBobTimer += bobDelta;
-                if (_cameraRunBobTimer > 1f)
-                {
-                    _cameraRunBobTimer = Mathf.PingPong(_cameraRunBobTimer, 1f);
-                    _cameraRunBobGoingDown = false;
-                }
+                _cameraRunBobResetTimer = 0f;
+                _cameraRunBobTimer = cameraRunBobTime * _cameraRunBobResetTimer / cameraRunBobResetTime;
             }
-            else
-            {
-                _cameraRunBobTimer -= bobDelta;
-                if (_cameraRunBobTimer < 0f)
-                {
-                    _cameraRunBobTimer = Mathf.PingPong(_cameraRunBobTimer, 1f);
-                    _cameraRunBobGoingDown = true;
-                }
-            }
+            
+            // camera bobbing takes into account the *actual* horizontal speed of the player after MoveAndSlide, so
+            // they arent bobbing so much when running directly into a wall.
+            var speedFraction = (Velocity with { Y = 0 }).Length() / maxSpeedThisFrame; 
+            _cameraRunBobTimer += delta * speedFraction;
+            
+            // the run bob is looping/wrapping while they're moving
+            var t = Mathf.PingPong(_cameraRunBobTimer, cameraRunBobTime);
+            
+            var alpha = t / cameraRunBobTime;
+            var blend = cameraRunBobCurve.Sample(alpha);
+            _cameraAggregateOffset += cameraRunBob * blend;
         }
-        else if (_cameraRunBobTimer > 0f)
+        else if (_cameraRunBobTimer > 0f || _cameraRunBobResetTimer > 0f)
         {
-            _cameraRunBobTimer -= delta * CameraRunBobResetSpeed;
-            _cameraRunBobGoingDown = true;
-            if (_cameraRunBobTimer < 0f)
+            if (_cameraRunBobTimer > 0f && _cameraRunBobResetTimer == 0f)
+            {
+                var realRunBobTimer = Mathf.PingPong(_cameraRunBobTimer, cameraRunBobTime);
+                _cameraRunBobResetTimer = cameraRunBobResetTime * (realRunBobTimer / cameraRunBobTime);
                 _cameraRunBobTimer = 0f;
+            }
+            
+            _cameraRunBobResetTimer -= delta;
+            if (_cameraRunBobResetTimer < 0f)
+                _cameraRunBobResetTimer = 0f;
+            
+            var alpha = _cameraRunBobResetTimer / cameraRunBobResetTime;
+            var blend = cameraRunBobCurve.Sample(alpha);
+            _cameraAggregateOffset += cameraRunBob * blend;
         }
-        
-        _cameraAggregateOffset += Vector3.Zero.Lerp(CameraRunBob, _cameraRunBobTimer);
     }
 }

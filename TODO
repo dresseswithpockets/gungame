@@ -76,6 +76,7 @@ DONE basic build engine camera bobbing
 DONE clamp camera pitch (+/- 90 degrees)
 DONE add simple initial-jump jump-squat, inspired by build engine jumping
 DONE add jump landing squat, like build engine jump landing
+DONE refactor run, jump, and land bobbing to use Curves
 TODO make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
 TODO make jump arc more cartoonish, like build engine jump speeds being not physically accurate
 TODO edge-jump coyote time
