@@ -38,6 +38,10 @@ public partial class Player : CharacterBody3D
         if (@event is not InputEventMouseMotion mouseMotion) return;        
         RotateY(Mathf.DegToRad(Sensitivity * YawSpeed * -mouseMotion.Relative.X));
         _camera.RotateX(Mathf.DegToRad(Sensitivity * PitchSpeed * -mouseMotion.Relative.Y));
+        // clamping camera's pitch to +/- 90 to prevent inversion
+        var rot = _camera.RotationDegrees;
+        rot.X = Mathf.Clamp(rot.X, -90, 90);
+        _camera.RotationDegrees = rot;
     }
 
     public override void _PhysicsProcess(double delta)
