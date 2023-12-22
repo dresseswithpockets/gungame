@@ -11,17 +11,17 @@ public partial class Player : CharacterBody3D
     public const float YawSpeed = 0.022f;
     public const float PitchSpeed = 0.022f;
     public const float Sensitivity = 2f;
-    public static readonly Vector3 CameraBob = new(0f, -0.15f, 0f);
-    public const float CameraBobSpeed = 3f;
-    public const float CameraBobResetSpeed = 10f;
+    public static readonly Vector3 CameraRunBob = new(0f, -0.15f, 0f);
+    public const float CameraRunBobSpeed = 3f;
+    public const float CameraRunBobResetSpeed = 10f;
 
     // Get the gravity from the project settings to be synced with RigidBody nodes.
     public float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
     private Camera3D _camera;
     private Vector3 _cameraStart;
-    private float _cameraBobTimer;
-    private bool _cameraGoingDown = true;
+    private float _cameraRunBobTimer;
+    private bool _cameraRunBobGoingDown = true;
 
     // velocity without any Y component
     private Vector3 _groundVelocity;
@@ -35,7 +35,7 @@ public partial class Player : CharacterBody3D
     public override void _Input(InputEvent @event)
     {
         if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
-        if (@event is not InputEventMouseMotion mouseMotion) return;        
+        if (@event is not InputEventMouseMotion mouseMotion) return;
         RotateY(Mathf.DegToRad(Sensitivity * YawSpeed * -mouseMotion.Relative.X));
         _camera.RotateX(Mathf.DegToRad(Sensitivity * PitchSpeed * -mouseMotion.Relative.Y));
         // clamping camera's pitch to +/- 90 to prevent inversion
@@ -86,34 +86,35 @@ public partial class Player : CharacterBody3D
         {
             // scale the bob speed with the player's current speed, so they arent bobbing so much when running directly
             // into a wall
-            var bobDelta = deltaF * CameraBobSpeed * speedFraction;
-            if (_cameraGoingDown)
+            var bobDelta = deltaF * CameraRunBobSpeed * speedFraction;
+            if (_cameraRunBobGoingDown)
             {
-                _cameraBobTimer += bobDelta;
-                if (_cameraBobTimer > 1f)
+                _cameraRunBobTimer += bobDelta;
+                if (_cameraRunBobTimer > 1f)
                 {
-                    _cameraBobTimer = Mathf.PingPong(_cameraBobTimer, 1f);
-                    _cameraGoingDown = false;
+                    _cameraRunBobTimer = Mathf.PingPong(_cameraRunBobTimer, 1f);
+                    _cameraRunBobGoingDown = false;
                 }
             }
             else
             {
-                _cameraBobTimer -= bobDelta;
-                if (_cameraBobTimer < 0f)
+                _cameraRunBobTimer -= bobDelta;
+                if (_cameraRunBobTimer < 0f)
                 {
-                    _cameraBobTimer = Mathf.PingPong(_cameraBobTimer, 1f);
-                    _cameraGoingDown = true;
+                    _cameraRunBobTimer = Mathf.PingPong(_cameraRunBobTimer, 1f);
+                    _cameraRunBobGoingDown = true;
                 }
             }
         }
-        else if (_cameraBobTimer > 0f)
+        else if (_cameraRunBobTimer > 0f)
         {
-            _cameraBobTimer -= deltaF * CameraBobResetSpeed;
-            _cameraGoingDown = true;
-            if (_cameraBobTimer < 0f)
-                _cameraBobTimer = 0f;
+            _cameraRunBobTimer -= deltaF * CameraRunBobResetSpeed;
+            _cameraRunBobGoingDown = true;
+            if (_cameraRunBobTimer < 0f)
+                _cameraRunBobTimer = 0f;
         }
         
-        _camera.Position = _cameraStart + Vector3.Zero.Lerp(CameraBob, _cameraBobTimer);
+        var runBob = Vector3.Zero.Lerp(CameraRunBob, _cameraRunBobTimer);
+        _camera.Position = _cameraStart + runBob;
     }
 }
