@@ -74,7 +74,8 @@ DONE simple camera movement
 DONE basic build engine WASD movement
 DONE basic build engine camera bobbing
 DONE clamp camera pitch (+/- 90 degrees)
-TODO build engine jumping (with jump squat)
+TODO add simple initial-jump jump-squat, inspired by build engine jumping
+TODO add jump landing squat, like build engine jump landing
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
 TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge
