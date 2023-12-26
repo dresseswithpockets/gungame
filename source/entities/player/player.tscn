@@ -1,6 +1,18 @@
-[gd_scene load_steps=3 format=3 uid="uid://dnrgqr8kfc21n"]
+[gd_scene load_steps=6 format=3 uid="uid://dnrgqr8kfc21n"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_jit2s"]
+
+[sub_resource type="Curve" id="Curve_ndggg"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, -1.99441, 1, 1]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_r5f5j"]
+_data = [Vector2(0, 0), 0.0, 2.83001, 0, 0, Vector2(0.501401, 1), 0.0, -2.00562, 0, 0, Vector2(1, 0), -1.98306, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_tofiy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252101, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rwd8m"]
 height = 1.82
@@ -9,6 +21,9 @@ height = 1.82
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_jit2s")
+cameraRunBobCurve = SubResource("Curve_ndggg")
+cameraJumpSquatCurve = SubResource("Curve_r5f5j")
+cameraLandingBobCurve = SubResource("Curve_tofiy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
