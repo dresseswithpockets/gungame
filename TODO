@@ -80,7 +80,7 @@ DONE refactor run, jump, and land bobbing to use Curves
 DONE fix double-bobbing when landing while still rising in the jump
 DONE "vault" ledges when jumping into them, build engine style
 TODO make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
-TODO make jump arc more cartoonish, like build engine jump speeds being not physically accurate
+DONE make jump arc more cartoonish, like build engine jump speeds being not physically accurate
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
 TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge
