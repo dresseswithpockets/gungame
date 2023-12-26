@@ -101,7 +101,12 @@ public partial class Player : CharacterBody3D
         MoveAndSlide();
 
         if (IsOnFloor() && !preMoveOnFloor)
+        {
             _cameraLandingBobTimer = cameraLandingBobTime;
+            // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
+            // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
+            Velocity = Velocity with { Y = 0f };
+        }
 
         PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useSpeed, direction);
