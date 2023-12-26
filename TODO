@@ -82,7 +82,6 @@ TODO make jump arc more cartoonish, like build engine jump speeds being not phys
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
 TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge
-TODO toggle-able edge jump coyote time (for testing)
 TODO add grapple hook
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
 TODO add decals when a hitscan weapon hits a solid wall
