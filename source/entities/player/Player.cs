@@ -3,13 +3,13 @@ using Godot;
 
 public partial class Player : CharacterBody3D
 {
-    public const float Accel = 150f;
-    public const float Decel = 50f;
-    public const float Speed = 10.0f;
-    public const float BoostSpeedMultiplier = 1.15f;
-    public const float YawSpeed = 0.022f;
-    public const float PitchSpeed = 0.022f;
-    public const float Sensitivity = 2f;
+    public const float RunAccel = 150f;
+    public const float RunDecel = 50f;
+    public const float RunSpeed = 10.0f;
+    public const float RunBoostSpeedMultiplier = 1.15f;
+    public const float MouseYawSpeed = 0.022f;
+    public const float MousePitchSpeed = 0.022f;
+    public const float MouseSensitivity = 2f;
     
     [ExportCategory("Run Bobbing")]
     [Export]
@@ -55,8 +55,8 @@ public partial class Player : CharacterBody3D
     {
         if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
         if (@event is not InputEventMouseMotion mouseMotion) return;
-        RotateY(Mathf.DegToRad(Sensitivity * YawSpeed * -mouseMotion.Relative.X));
-        _camera.RotateX(Mathf.DegToRad(Sensitivity * PitchSpeed * -mouseMotion.Relative.Y));
+        RotateY(Mathf.DegToRad(MouseSensitivity * MouseYawSpeed * -mouseMotion.Relative.X));
+        _camera.RotateX(Mathf.DegToRad(MouseSensitivity * MousePitchSpeed * -mouseMotion.Relative.Y));
         // clamping camera's pitch to +/- 90 to prevent inversion
         var rot = _camera.RotationDegrees;
         rot.X = Mathf.Clamp(rot.X, -90, 90);
@@ -84,13 +84,13 @@ public partial class Player : CharacterBody3D
         var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
         var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
         if (direction != Vector3.Zero)
-            _groundVelocity += direction * Accel * deltaF;
+            _groundVelocity += direction * RunAccel * deltaF;
         else
-            _groundVelocity = _groundVelocity.MoveToward(Vector3.Zero, Decel * deltaF);
+            _groundVelocity = _groundVelocity.MoveToward(Vector3.Zero, RunDecel * deltaF);
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
-        var useSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? Speed * BoostSpeedMultiplier : Speed;
+        var useSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
         _groundVelocity = _groundVelocity.LimitLength(useSpeed);
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
