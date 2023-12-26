@@ -308,13 +308,9 @@ environment = SubResource("Environment_1hvkw")
 
 [node name="player" parent="." instance=ExtResource("5_agohm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.48692)
-cameraRunBob = Vector3(0, -0.3, 0)
 cameraRunBobCurve = SubResource("Curve_ndggg")
-cameraJumpBob = Vector3(0, -0.15, 0)
 cameraJumpSquatCurve = SubResource("Curve_r5f5j")
-cameraLandingBob = Vector3(0, -0.3, 0)
 cameraLandingBobCurve = SubResource("Curve_tofiy")
-gravity = 15.0
 
 [node name="portal" parent="." instance=ExtResource("8_gwoih")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.132669, 0)

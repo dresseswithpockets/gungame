@@ -14,25 +14,25 @@ public partial class Player : CharacterBody3D
     
     [ExportCategory("Run Bobbing")]
     [Export]
-    public Vector3 cameraRunBob = new(0f, -0.15f, 0f);
+    public Vector3 cameraRunBob = new(0f, -0.3f, 0f);
     [Export] public Curve cameraRunBobCurve;
     [Export] public float cameraRunBobTime = 0.33f;
     [Export] public float cameraRunBobResetTime = 0.1f;
 
     [ExportCategory("Jump Squatting & Landing")]
     [Export]
-    public Vector3 cameraJumpBob = new(0f, -0.1f, 0f);
+    public Vector3 cameraJumpBob = new(0f, -0.15f, 0f);
 
     [Export] public Curve cameraJumpSquatCurve;
     [Export] public float cameraJumpSquatTime = 0.1f;
     [Export] public bool fullJumpSquatCoyoteTime = true;
-    [Export] public Vector3 cameraLandingBob = new(0f, -0.15f, 0f);
+    [Export] public Vector3 cameraLandingBob = new(0f, -0.3f, 0f);
     [Export] public Curve cameraLandingBobCurve;
     [Export] public float cameraLandingBobTime = 0.27f;
 
     [ExportCategory("Falling")]
     [Export]
-    public float gravity = 20f;
+    public float gravity = 15f;
 
     private Camera3D _camera;
     private Vector3 _cameraStart;
