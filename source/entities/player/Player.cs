@@ -7,7 +7,7 @@ public partial class Player : CharacterBody3D
     public const float Decel = 50f;
     public const float Speed = 10.0f;
     public const float BoostSpeedMultiplier = 1.15f;
-    public const float JumpVelocity = 3f;
+    public const float JumpVelocity = 4.6f;
     public const float YawSpeed = 0.022f;
     public const float PitchSpeed = 0.022f;
     public const float Sensitivity = 2f;
