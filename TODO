@@ -79,7 +79,7 @@ DONE add jump landing squat, like build engine jump landing
 DONE refactor run, jump, and land bobbing to use Curves
 DONE fix double-bobbing when landing while still rising in the jump
 DONE "vault" ledges when jumping into them, build engine style
-TODO make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
+DONE make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
 DONE make jump arc more cartoonish, like build engine jump speeds being not physically accurate
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)

@@ -33,6 +33,10 @@ public partial class Player : CharacterBody3D
     [Export]
     public float gravity = 15f;
     [Export] public float jumpSpeed = 4.6f;
+    [Export] public float jumpBufferTime = 0.3f;
+
+    private float _jumpBufferTimer;
+    private bool _shouldDoBufferJump;
 
     private Camera3D _camera;
     private Vector3 _cameraStart;
@@ -74,10 +78,23 @@ public partial class Player : CharacterBody3D
         if (!IsOnFloor())
             verticalSpeed -= gravity * deltaF;
 
-        // player can only start a jump squat if they havent already started one - _cameraJumpBobTimer is non-zero when
-        // jump squatting
-        if (IsOnFloor() && _cameraJumpBobTimer == 0f && Input.IsActionJustPressed("move_jump"))
-            _cameraJumpBobTimer = cameraJumpSquatTime;
+        if (Input.IsActionJustPressed("move_jump"))
+        {
+            if (IsOnFloor() || _shouldDoBufferJump)
+            {
+                // player can only start a jump squat if they haven't already started one - _cameraJumpBobTimer is
+                // non-zero when jump squatting
+                if (_cameraJumpBobTimer == 0f)
+                    _cameraJumpBobTimer = cameraJumpSquatTime;
+            }
+            else
+            {
+                // if the player is in the air, buffer their jump input a bit
+                _jumpBufferTimer = jumpBufferTime;
+            }
+        }
+
+        _shouldDoBufferJump = false;
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
@@ -106,6 +123,9 @@ public partial class Player : CharacterBody3D
             // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
             // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
             Velocity = Velocity with { Y = 0f };
+
+            if (_jumpBufferTimer > 0f)
+                _shouldDoBufferJump = true;
         }
 
         PostMove_LandingBob(deltaF);
