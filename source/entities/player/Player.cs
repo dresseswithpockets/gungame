@@ -10,10 +10,11 @@ public partial class Player : CharacterBody3D
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
-    
+
     [ExportCategory("Run Bobbing")]
     [Export]
     public Vector3 cameraRunBob = new(0f, -0.3f, 0f);
+
     [Export] public Curve cameraRunBobCurve;
     [Export] public float cameraRunBobTime = 0.33f;
     [Export] public float cameraRunBobResetTime = 0.1f;
@@ -32,6 +33,7 @@ public partial class Player : CharacterBody3D
     [ExportCategory("Jumping & Falling")]
     [Export]
     public float gravity = 15f;
+
     [Export] public float jumpSpeed = 4.6f;
     [Export] public float jumpBufferTime = 0.3f;
 
@@ -145,7 +147,7 @@ public partial class Player : CharacterBody3D
     private void PreMove_JumpSquat(float delta, ref float verticalSpeed)
     {
         if (_cameraJumpBobTimer <= 0f) return;
-        
+
         _cameraJumpBobTimer -= delta;
         if (_cameraJumpBobTimer < 0f)
         {
@@ -175,7 +177,7 @@ public partial class Player : CharacterBody3D
     private void PostMove_RunBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
     {
         Debug.Assert(maxSpeedThisFrame != 0f);
-        
+
         if (IsOnFloor() && wishDirection != Vector3.Zero)
         {
             if (_cameraRunBobResetTimer > 0f)
@@ -183,15 +185,15 @@ public partial class Player : CharacterBody3D
                 _cameraRunBobResetTimer = 0f;
                 _cameraRunBobTimer = cameraRunBobTime * _cameraRunBobResetTimer / cameraRunBobResetTime;
             }
-            
+
             // camera bobbing takes into account the *actual* horizontal speed of the player after MoveAndSlide, so
             // they arent bobbing so much when running directly into a wall.
-            var speedFraction = (Velocity with { Y = 0 }).Length() / maxSpeedThisFrame; 
+            var speedFraction = (Velocity with { Y = 0 }).Length() / maxSpeedThisFrame;
             _cameraRunBobTimer += delta * speedFraction;
-            
+
             // the run bob is looping/wrapping while they're moving
             var t = Mathf.PingPong(_cameraRunBobTimer, cameraRunBobTime);
-            
+
             var alpha = t / cameraRunBobTime;
             var blend = cameraRunBobCurve.Sample(alpha);
             _cameraAggregateOffset += cameraRunBob * blend;
@@ -204,11 +206,11 @@ public partial class Player : CharacterBody3D
                 _cameraRunBobResetTimer = cameraRunBobResetTime * (realRunBobTimer / cameraRunBobTime);
                 _cameraRunBobTimer = 0f;
             }
-            
+
             _cameraRunBobResetTimer -= delta;
             if (_cameraRunBobResetTimer < 0f)
                 _cameraRunBobResetTimer = 0f;
-            
+
             var alpha = _cameraRunBobResetTimer / cameraRunBobResetTime;
             var blend = cameraRunBobCurve.Sample(alpha);
             _cameraAggregateOffset += cameraRunBob * blend;
