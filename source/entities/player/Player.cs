@@ -58,9 +58,18 @@ public partial class Player : CharacterBody3D
     public override void _Input(InputEvent @event)
     {
         if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
-        if (@event is not InputEventMouseMotion mouseMotion) return;
-        RotateY(Mathf.DegToRad(MouseSensitivity * MouseYawSpeed * -mouseMotion.Relative.X));
-        _camera.RotateX(Mathf.DegToRad(MouseSensitivity * MousePitchSpeed * -mouseMotion.Relative.Y));
+        switch (@event)
+        {
+            case InputEventMouseMotion mouseMotion:
+                MoveCamera(mouseMotion.Relative);
+                break;
+        }
+    }
+
+    private void MoveCamera(Vector2 relative)
+    {
+        RotateY(Mathf.DegToRad(MouseSensitivity * MouseYawSpeed * -relative.X));
+        _camera.RotateX(Mathf.DegToRad(MouseSensitivity * MousePitchSpeed * -relative.Y));
         // clamping camera's pitch to +/- 90 to prevent inversion
         var rot = _camera.RotationDegrees;
         rot.X = Mathf.Clamp(rot.X, -90, 90);
