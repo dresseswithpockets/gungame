@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dexxr3wcnc0y2"]
+
+[ext_resource type="Script" path="res://entities/player_grapple_hook/PlayerGrappleHook.cs" id="1_oaupa"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_i26wt"]
+top_radius = 0.125
+bottom_radius = 0.0
+height = 0.5
+
+[node name="PlayerGrappleHook" type="Node3D"]
+script = ExtResource("1_oaupa")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+mesh = SubResource("CylinderMesh_i26wt")
