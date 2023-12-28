@@ -81,7 +81,7 @@ DONE fix double-bobbing when landing while still rising in the jump
 DONE "vault" ledges when jumping into them, build engine style
 DONE make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
 DONE make jump arc more cartoonish, like build engine jump speeds being not physically accurate
-TODO add grapple hook
+DONE add grapple hook
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
 TODO add decals when a hitscan weapon hits a solid wall
 TODO create ammo pickups that give ammo of specific types to the target

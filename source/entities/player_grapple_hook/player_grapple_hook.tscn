@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://dexxr3wcnc0y2"]
+[gd_scene load_steps=5 format=3 uid="uid://dexxr3wcnc0y2"]
 
 [ext_resource type="Script" path="res://entities/player_grapple_hook/PlayerGrappleHook.cs" id="1_oaupa"]
 
@@ -7,9 +7,29 @@ top_radius = 0.125
 bottom_radius = 0.0
 height = 0.5
 
-[node name="PlayerGrappleHook" type="Node3D"]
-script = ExtResource("1_oaupa")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ob7m1"]
+cull_mode = 2
+albedo_color = Color(0, 0, 0, 1)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1.31134e-07, 1, 0, -1, 1.31134e-07, 0, 0, 0)
+[sub_resource type="QuadMesh" id="QuadMesh_h1pkf"]
+material = SubResource("StandardMaterial3D_ob7m1")
+size = Vector2(0.1, 0.1)
+orientation = 1
+
+[node name="PlayerGrappleHook" type="Node3D" node_paths=PackedStringArray("ropeMesh", "ropeOrigin")]
+script = ExtResource("1_oaupa")
+forwardSpeed = 20.0
+collisionMask = 1
+ropeMesh = NodePath("RopeMesh")
+ropeOrigin = NodePath("RopeOrigin")
+
+[node name="TipMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -2.18557e-07, -1, 0, 1, -2.18557e-07, 0, 0, 0)
 mesh = SubResource("CylinderMesh_i26wt")
+
+[node name="RopeMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+mesh = SubResource("QuadMesh_h1pkf")
+
+[node name="RopeOrigin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)

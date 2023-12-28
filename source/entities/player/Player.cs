@@ -37,6 +37,13 @@ public partial class Player : CharacterBody3D
     [Export] public float jumpSpeed = 4.6f;
     [Export] public float jumpBufferTime = 0.3f;
 
+    [ExportCategory("Grappling")]
+    [Export]
+    public PackedScene grappleHookPrefab;
+
+    [Export] public Node3D grappleHookStart;
+    [Export] public float grappleHookPullAccel = 50f;
+
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
 
@@ -50,6 +57,8 @@ public partial class Player : CharacterBody3D
 
     // velocity without any Y component
     private Vector3 _groundVelocity;
+
+    private PlayerGrappleHook _grappleHook;
 
     public override void _Ready()
     {
@@ -65,7 +74,27 @@ public partial class Player : CharacterBody3D
             case InputEventMouseMotion mouseMotion:
                 MoveCamera(mouseMotion.Relative);
                 break;
+            default:
+                if (@event.IsActionPressed("grapple_hook"))
+                    TryFireGrappleHook();
+                break;
         }
+    }
+
+    private void TryFireGrappleHook()
+    {
+        if (_grappleHook != null && IsInstanceValid(_grappleHook))
+        {
+            _grappleHook.QueueFree();
+            _grappleHook = null;
+            return;
+        }
+
+        _grappleHook = grappleHookPrefab.Instantiate<PlayerGrappleHook>();
+        GetParent().AddChild(_grappleHook);
+        _grappleHook.GlobalPosition = grappleHookStart.GlobalPosition;
+        _grappleHook.GlobalRotation = _camera.GlobalRotation;
+        _grappleHook.player = this;
     }
 
     private void MoveCamera(Vector2 relative)
@@ -120,6 +149,13 @@ public partial class Player : CharacterBody3D
         // so if the player is trying to move in a diagonal direction, give them a speed boost
         var useSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
         _groundVelocity = _groundVelocity.LimitLength(useSpeed);
+        
+        if (_grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling)
+        {
+            // FIXME: this acceleration gets overriden/negated in the next frame
+            var grappleDirection = (_grappleHook.GlobalPosition - GlobalPosition).Normalized();
+            _groundVelocity += grappleDirection * grappleHookPullAccel * deltaF;
+        }
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 

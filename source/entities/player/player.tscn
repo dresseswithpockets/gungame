@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnrgqr8kfc21n"]
+[gd_scene load_steps=7 format=3 uid="uid://dnrgqr8kfc21n"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_jit2s"]
+[ext_resource type="PackedScene" uid="uid://dexxr3wcnc0y2" path="res://entities/player_grapple_hook/player_grapple_hook.tscn" id="2_rd5lf"]
 
 [sub_resource type="Curve" id="Curve_ndggg"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, -1.99441, 1, 1]
@@ -17,13 +18,15 @@ point_count = 3
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rwd8m"]
 height = 1.82
 
-[node name="player" type="CharacterBody3D" groups=["player"]]
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("grappleHookStart") groups=["player"]]
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_jit2s")
 cameraRunBobCurve = SubResource("Curve_ndggg")
 cameraJumpSquatCurve = SubResource("Curve_r5f5j")
 cameraLandingBobCurve = SubResource("Curve_tofiy")
+grappleHookPrefab = ExtResource("2_rd5lf")
+grappleHookStart = NodePath("Camera3D/GrappleHookStart")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
@@ -34,3 +37,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 keep_aspect = 0
 cull_mask = 294909
 fov = 90.0
+
+[node name="GrappleHookStart" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -0.45)
