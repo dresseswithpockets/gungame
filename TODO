@@ -66,6 +66,7 @@ TODO add env_fog_volume
 TODO add env_decal
 TODO add descriptions to env_postprocess properties
 TODO enhance light_point and other light nodes (more shadows options? PCSS? any other customization?)
+TODO add texture for simple prism godray (off white light gradient)
 
 # game stuff
 DONE fix worldspawn having an unusual offset - was because of missing worldspawn entity in FGD used by QodotMap
@@ -90,8 +91,9 @@ TODO grapple hook bhopping
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
 TODO add decals when a hitscan weapon hits a solid wall
 TODO create ammo pickups that give ammo of specific types to the target
-TODO create some shitty developer art for viewmodels
-TODO build engine style viewmodel bobbing (it has this though right?)
+TODO create some shitty developer art for 2d viewmodels
+TODO build engine style 2d viewmodel bobbing (it has this though right?)
+TODO normal, diffuse, metallic mapping on 2d viewmodel
 TODO research generating navigation meshes for qodot maps
 TODO create a dumbass sprite NPC that wanders around on the nav mesh
 TODO make the dumbass NPC shootable, take damage, and die
