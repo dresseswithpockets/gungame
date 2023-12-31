@@ -7,13 +7,14 @@ public partial class Player : CharacterBody3D
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
 
-    [ExportCategory("Running")]
+    [ExportCategory("Basic Movement")]
     [Export(hintString: "suffix:m/s²")]
     public float runAcceleration = 150f;
 
     [Export(hintString: "suffix:m/s²")] public float runDeceleration = 50f;
     [Export(hintString: "suffix:m/s")] public float runNormalSpeedCap = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
+
 
     [ExportCategory("Run Bobbing")]
     [Export]
@@ -48,9 +49,14 @@ public partial class Player : CharacterBody3D
     [Export] public Node3D grappleHookStart;
     [Export(hintString: "suffix:m/s²")] public float grappleHookPullAccel = 30f;
     [Export(hintString: "suffix:m/s")] public float grappleHookMaxSpeed = 20f;
+    [Export(hintString: "suffix:m/s²")] public float grappleHookMaxSpeedDeceleration = 10f;
+    [Export(hintString: "suffix:m/s²")] public float runDecelerationDuringGrappleMomentum = 20f;
     [Export(hintString: "suffix:m/s")] public float grappleHookMinimumSpeed = 10f;
     [Export(hintString: "suffix:s")] public float grappleHookCooldown = 0.3f;
     private float _grappleHookCooldownTimer;
+    private bool _isPulledByGrappleHook;
+    private bool _wasPulledByGrappleHookLastFrame;
+    private float _maxSpeedFromGrapple;
 
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
@@ -65,12 +71,6 @@ public partial class Player : CharacterBody3D
 
     // horizontal running velocity without any Y component
     private Vector3 _horizontalRunVelocity;
-
-    // this is additional momentum added to the player via the grapple hook
-    private Vector3 _grappleMomentum;
-    private bool _isPulledByGrappleHook;
-    private bool _wasPulledByGrappleHookLastFrame;
-    private float _maxSpeedFromGrapple;
 
     private PlayerGrappleHook _grappleHook;
 
@@ -100,6 +100,7 @@ public partial class Player : CharacterBody3D
         _grappleHookCooldownTimer = grappleHookCooldown;
         _grappleHook.QueueFree();
         _grappleHook = null;
+        _isPulledByGrappleHook = false;
     }
 
     private void TryFireGrappleHook()
@@ -137,15 +138,30 @@ public partial class Player : CharacterBody3D
 
         _cameraAggregateOffset = Vector3.Zero;
 
+        // the vertical part of the player's movement isn't subject to normal run acceleration/deceleration, but
+        // is subject to adjustments made by MoveAndSlide, so the vertical part is not maintained in
+        // _horizontalRunVelocity
         var verticalSpeed = Velocity.Y;
         var deltaF = (float)delta;
 
         if (Input.IsActionJustPressed("move_jump"))
         {
-            if (IsOnFloor())
-                StartJump();
+            if (_isPulledByGrappleHook)
+            {
+                var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
+                var speed = momentum.Length();
+                momentum = momentum.Normalized().Slerp(Vector3.Up, 0.5f) * speed;
+                _horizontalRunVelocity = momentum with { Y = 0f };
+                verticalSpeed = momentum.Y;
+                RemoveGrappleHook();
+            }
             else
-                BeginJumpBuffer();
+            {
+                if (IsOnFloor())
+                    StartJump();
+                else
+                    BeginJumpBuffer();
+            }
         }
         else if (Input.IsActionPressed("move_jump"))
         {
@@ -209,11 +225,15 @@ public partial class Player : CharacterBody3D
             if (direction != Vector3.Zero)
                 _horizontalRunVelocity += direction * runAcceleration * deltaF;
             else
-                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, runDeceleration * deltaF);
+            {
+                var useDeceleration =
+                    _maxSpeedFromGrapple > 0f ? runDecelerationDuringGrappleMomentum : runDeceleration;
+                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, useDeceleration * deltaF);
+            }
 
             // cap max ground speed if we're not being pulled by the grapple hook
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
-            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, runDeceleration * deltaF);
+            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
 
             // gravity is only applied when not grappling
             if (!IsOnFloor())
