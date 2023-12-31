@@ -108,6 +108,8 @@ TODO add blood particles gush animation when NPC is shot
 TODO add blood splatter decals around NPCs that are shot
 TODO figure out if we actually wanna go the 2d-sprite-in-3d-environment aesthetic
 TODO make the player take damage & die
+TODO grapple hook viewmodel animation
+TODO UI for grapple hook status/cooldown
 TODO edge-jump coyote time
 TODO make coyote time toggle-able for testing purposes (we may not actually want coyote time)
 TODO wall-edge-landing - if the player is standing perfectly still and jumps when touching a short wall with a ledge, they will land on the ledge
@@ -127,7 +129,6 @@ TODO fix lighting around portals (since the portal camera renders the portal wit
 TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
 
 # polish
-TODO grapple hook viewmodel animation
 TODO dry fire sfx/animation grapple hook during cooldown
 
 # silly ideas
