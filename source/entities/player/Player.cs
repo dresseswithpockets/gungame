@@ -8,11 +8,11 @@ public partial class Player : CharacterBody3D
     public const float MouseSensitivity = 2f;
 
     [ExportCategory("Running")]
-    [Export]
-    public float runAccel = 150f;
+    [Export(hintString: "suffix:m/s²")]
+    public float runAcceleration = 150f;
 
-    [Export] public float runDecel = 50f;
-    [Export] public float runSpeed = 10.0f;
+    [Export(hintString: "suffix:m/s²")] public float runDeceleration = 50f;
+    [Export(hintString: "suffix:m/s")] public float runNormalSpeedCap = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
 
     [ExportCategory("Run Bobbing")]
@@ -20,35 +20,37 @@ public partial class Player : CharacterBody3D
     public Vector3 cameraRunBob = new(0f, -0.3f, 0f);
 
     [Export] public Curve cameraRunBobCurve;
-    [Export] public float cameraRunBobTime = 0.33f;
-    [Export] public float cameraRunBobResetTime = 0.1f;
+    [Export(hintString: "suffix:s")] public float cameraRunBobTime = 0.33f;
+    [Export(hintString: "suffix:s")] public float cameraRunBobResetTime = 0.1f;
 
     [ExportCategory("Jump Squatting & Landing")]
     [Export]
     public Vector3 cameraJumpBob = new(0f, -0.15f, 0f);
 
     [Export] public Curve cameraJumpSquatCurve;
-    [Export] public float cameraJumpSquatTime = 0.1f;
-    [Export] public bool fullJumpSquatCoyoteTime = true;
+    [Export(hintString: "suffix:s")] public float cameraJumpSquatTime = 0.1f;
+    [Export(hintString: "suffix:s")] public bool fullJumpSquatCoyoteTime = true;
     [Export] public Vector3 cameraLandingBob = new(0f, -0.3f, 0f);
     [Export] public Curve cameraLandingBobCurve;
-    [Export] public float cameraLandingBobTime = 0.27f;
+    [Export(hintString: "suffix:s")] public float cameraLandingBobTime = 0.27f;
 
     [ExportCategory("Jumping & Falling")]
-    [Export]
+    [Export(hintString: "suffix:m/s²")]
     public float gravity = 15f;
 
-    [Export] public float jumpSpeed = 4.6f;
-    [Export] public float jumpBufferTime = 0.3f;
+    [Export(hintString: "suffix:m/s")] public float jumpSpeed = 4.6f;
+    [Export(hintString: "suffix:s")] public float jumpBufferTime = 0.3f;
 
     [ExportCategory("Grappling")]
     [Export]
     public PackedScene grappleHookPrefab;
 
     [Export] public Node3D grappleHookStart;
-    [Export] public float grappleHookPullAccel = 30f;
-    [Export] public float grappleHookMaxSpeed = 20f;
-    [Export] public float grappleHookMinimumSpeed = 10f;
+    [Export(hintString: "suffix:m/s²")] public float grappleHookPullAccel = 30f;
+    [Export(hintString: "suffix:m/s")] public float grappleHookMaxSpeed = 20f;
+    [Export(hintString: "suffix:m/s")] public float grappleHookMinimumSpeed = 10f;
+    [Export(hintString: "suffix:s")] public float grappleHookCooldown = 0.3f;
+    private float _grappleHookCooldownTimer;
 
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
@@ -160,7 +162,7 @@ public partial class Player : CharacterBody3D
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
-        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? runSpeed * runBoostSpeedMultiplier : runSpeed;
+        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? runNormalSpeedCap * runBoostSpeedMultiplier : runNormalSpeedCap;
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
@@ -197,13 +199,13 @@ public partial class Player : CharacterBody3D
             // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
 
             if (direction != Vector3.Zero)
-                _horizontalRunVelocity += direction * runAccel * deltaF;
+                _horizontalRunVelocity += direction * runAcceleration * deltaF;
             else
-                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, runDecel * deltaF);
+                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, runDeceleration * deltaF);
 
             // cap max ground speed if we're not being pulled by the grapple hook
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
-            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, runDecel * deltaF);
+            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, runDeceleration * deltaF);
 
             // gravity is only applied when not grappling
             if (!IsOnFloor())
