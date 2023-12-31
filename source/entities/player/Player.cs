@@ -41,6 +41,8 @@ public partial class Player : CharacterBody3D
 
     [Export] public Node3D grappleHookStart;
     [Export] public float grappleHookPullAccel = 30f;
+    [Export] public float grappleHookMaxSpeed = 20f;
+    [Export] public float grappleHookMinimumSpeed = 10f;
 
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
@@ -58,6 +60,7 @@ public partial class Player : CharacterBody3D
     // this is additional momentum added to the player via the grapple hook
     private Vector3 _grappleMomentum;
     private bool _isPulledByGrappleHook;
+    private bool _wasPulledByGrappleHookLastFrame;
     private float _maxSpeedFromGrapple;
 
     private PlayerGrappleHook _grappleHook;
@@ -83,12 +86,17 @@ public partial class Player : CharacterBody3D
         }
     }
 
+    public void RemoveGrappleHook()
+    {
+        _grappleHook.QueueFree();
+        _grappleHook = null;
+    }
+
     private void TryFireGrappleHook()
     {
         if (_grappleHook != null && IsInstanceValid(_grappleHook))
         {
-            _grappleHook.QueueFree();
-            _grappleHook = null;
+            RemoveGrappleHook();
             return;
         }
 
@@ -111,6 +119,7 @@ public partial class Player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
         
         _cameraAggregateOffset = Vector3.Zero;
@@ -147,16 +156,23 @@ public partial class Player : CharacterBody3D
         var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
-        
+
         if (_isPulledByGrappleHook)
         {
-            // no speed cap when not pulled by the grapple hook. Also apply the grapple hook force
             var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
+            if (!_wasPulledByGrappleHookLastFrame)
+            {
+                // we just started grapple-hooking, so transpose the player's current momentum into the direction of
+                // the grapple hook, but always ensure at least grappleHookMinimumSpeed speed and at most
+                // useMaxRunSpeed speed
+                var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
+                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed, useMaxRunSpeed);
+                var transposed = grappleDirection * newSpeed;
+                _horizontalRunVelocity = transposed with { Y = 0f };
+                verticalSpeed = transposed.Y;
+            }
             
-            // accelerate half way between wish-move direction (`direction`) and the grappleDirection
-            if (direction != Vector3.Zero)
-                grappleDirection = grappleDirection.Slerp(direction, 0.5f);
-            
+            // accelerate player directly towards where they're grappling, up to a max speed
             var accel = grappleDirection * grappleHookPullAccel * deltaF;
             _horizontalRunVelocity += accel with { Y = 0f };
             // since _horizontalRunVelocity.Y is always overwritten by verticalSpeed, we never see the fruits of
@@ -164,12 +180,15 @@ public partial class Player : CharacterBody3D
             // grapple. so, add the Y accel explicitly to verticalSpeed instead of to _horizontalRunVelocity.Y
             verticalSpeed += accel.Y;
 
-            var currentSpeed = _horizontalRunVelocity.Length();
-            if (currentSpeed > _maxSpeedFromGrapple)
-                _maxSpeedFromGrapple = currentSpeed;
+            _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(grappleHookMaxSpeed);
+            _maxSpeedFromGrapple = Mathf.Max(_maxSpeedFromGrapple, _horizontalRunVelocity.Length());
+            
+            // also, grappling completely disables gravity
         }
         else
         {
+            // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
+            
             if (direction != Vector3.Zero)
                 _horizontalRunVelocity += direction * RunAccel * deltaF;
             else
@@ -178,23 +197,23 @@ public partial class Player : CharacterBody3D
             // cap max ground speed if we're not being pulled by the grapple hook
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
             _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, RunDecel * deltaF);
-        }
 
-        if (!IsOnFloor())
-            verticalSpeed -= gravity * deltaF;
+            // gravity is only applied when not grappling
+            if (!IsOnFloor())
+                verticalSpeed -= gravity * deltaF;
+        }
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 
         var preMoveOnFloor = IsOnFloor();
-
         Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
         MoveAndSlide();
 
+        // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
+        // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
         if (IsOnFloor() && !preMoveOnFloor)
         {
             _cameraLandingBobTimer = cameraLandingBobTime;
-            // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
-            // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
             Velocity = Velocity with { Y = 0f };
 
             if (_jumpBufferTimer > 0f)

@@ -84,13 +84,12 @@ DONE make consecutive bhops more fluid (jumping as you land shouldnt incur anoth
 DONE make jump arc more cartoonish, like build engine jump speeds being not physically accurate
 DONE add grapple hook
 DONE clean up interaction between ground movement and grapple hook (maybe move grapple accel code into the movement code)
-TODO constrain the length of the grapple hook rope?
-TODO fix "speed storage"/speed buildup when holding down a movement direction into a wall while grapple hooking (maybe don't accelerate in a particular direction if they're touching a wall in that direction)
-TODO fix vertical stutter when near ground & grapple pulls upwards less than gravity
+DONE replace grapple hook with more cartoonish utrakill-like grapple
+DONE fix "speed storage"/speed buildup when holding down a movement direction into a wall while grapple hooking (maybe don't accelerate in a particular direction if they're touching a wall in that direction)
+DONE fix vertical stutter when near ground & grapple pulls upwards less than gravity
+DONE give "burst accel" at start of grapple
+DONE experiment with different grapple accel strengths
 TODO add grapple hook cooldown
-TODO give "burst accel" at start of grapple
-TODO add accel halfway between player's momentum and the grapple direction, instead of directly towards the grapple
-TODO experiment with different grapple accel strengths
 TODO grapple hook bhopping
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
 TODO add decals when a hitscan weapon hits a solid wall
