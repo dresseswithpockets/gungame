@@ -37,12 +37,10 @@ public partial class Player : CharacterBody3D
     [Export] public float jumpSpeed = 4.6f;
     [Export] public float jumpBufferTime = 0.3f;
 
-    [ExportCategory("Grappling")]
-    [Export]
-    public PackedScene grappleHookPrefab;
+    [ExportCategory("Grappling")] [Export] public PackedScene grappleHookPrefab;
 
     [Export] public Node3D grappleHookStart;
-    [Export] public float grappleHookPullAccel = 50f;
+    [Export] public float grappleHookPullAccel = 30f;
 
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
@@ -55,8 +53,12 @@ public partial class Player : CharacterBody3D
     private float _cameraJumpBobTimer;
     private float _cameraLandingBobTimer;
 
-    // velocity without any Y component
-    private Vector3 _groundVelocity;
+    // horizontal running velocity without any Y component
+    private Vector3 _horizontalRunVelocity;
+    // this is additional momentum added to the player via the grapple hook
+    private Vector3 _grappleMomentum;
+    private bool _isPulledByGrappleHook;
+    private float _maxSpeedFromGrapple;
 
     private PlayerGrappleHook _grappleHook;
 
@@ -109,29 +111,28 @@ public partial class Player : CharacterBody3D
 
     public override void _PhysicsProcess(double delta)
     {
+        _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
+        
         _cameraAggregateOffset = Vector3.Zero;
 
         var verticalSpeed = Velocity.Y;
         var deltaF = (float)delta;
 
-        // Add the gravity.
-        if (!IsOnFloor())
-            verticalSpeed -= gravity * deltaF;
-
         if (Input.IsActionJustPressed("move_jump"))
         {
-            if (IsOnFloor() || _shouldDoBufferJump)
-            {
-                // player can only start a jump squat if they haven't already started one - _cameraJumpBobTimer is
-                // non-zero when jump squatting
-                if (_cameraJumpBobTimer == 0f)
-                    _cameraJumpBobTimer = cameraJumpSquatTime;
-            }
+            if (IsOnFloor())
+                StartJump();
             else
-            {
-                // if the player is in the air, buffer their jump input a bit
-                _jumpBufferTimer = jumpBufferTime;
-            }
+                BeginJumpBuffer();
+        }
+        else if (Input.IsActionPressed("move_jump"))
+        {
+            if (_shouldDoBufferJump)
+                StartJump();
+        }
+        else if (Input.IsActionJustReleased("move_jump"))
+        {
+            ResetJumpBuffer();
         }
 
         _shouldDoBufferJump = false;
@@ -140,28 +141,53 @@ public partial class Player : CharacterBody3D
         // As good practice, you should replace UI actions with custom gameplay actions.
         var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
         var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
-        if (direction != Vector3.Zero)
-            _groundVelocity += direction * RunAccel * deltaF;
-        else
-            _groundVelocity = _groundVelocity.MoveToward(Vector3.Zero, RunDecel * deltaF);
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
-        var useSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
-        _groundVelocity = _groundVelocity.LimitLength(useSpeed);
+        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
+        if (_maxSpeedFromGrapple > useMaxRunSpeed)
+            useMaxRunSpeed = _maxSpeedFromGrapple;
         
-        if (_grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling)
+        if (_isPulledByGrappleHook)
         {
-            // FIXME: this acceleration gets overriden/negated in the next frame
-            var grappleDirection = (_grappleHook.GlobalPosition - GlobalPosition).Normalized();
-            _groundVelocity += grappleDirection * grappleHookPullAccel * deltaF;
+            // no speed cap when not pulled by the grapple hook. Also apply the grapple hook force
+            var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
+            
+            // accelerate half way between wish-move direction (`direction`) and the grappleDirection
+            if (direction != Vector3.Zero)
+                grappleDirection = grappleDirection.Slerp(direction, 0.5f);
+            
+            var accel = grappleDirection * grappleHookPullAccel * deltaF;
+            _horizontalRunVelocity += accel with { Y = 0f };
+            // since _horizontalRunVelocity.Y is always overwritten by verticalSpeed, we never see the fruits of
+            // this acceleration vertically, resulting in a funny bobbing motion and a really slow pull by the
+            // grapple. so, add the Y accel explicitly to verticalSpeed instead of to _horizontalRunVelocity.Y
+            verticalSpeed += accel.Y;
+
+            var currentSpeed = _horizontalRunVelocity.Length();
+            if (currentSpeed > _maxSpeedFromGrapple)
+                _maxSpeedFromGrapple = currentSpeed;
         }
+        else
+        {
+            if (direction != Vector3.Zero)
+                _horizontalRunVelocity += direction * RunAccel * deltaF;
+            else
+                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, RunDecel * deltaF);
+            
+            // cap max ground speed if we're not being pulled by the grapple hook
+            _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
+            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, RunDecel * deltaF);
+        }
+
+        if (!IsOnFloor())
+            verticalSpeed -= gravity * deltaF;
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 
         var preMoveOnFloor = IsOnFloor();
 
-        Velocity = _groundVelocity with { Y = verticalSpeed };
+        Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
         MoveAndSlide();
 
         if (IsOnFloor() && !preMoveOnFloor)
@@ -176,8 +202,27 @@ public partial class Player : CharacterBody3D
         }
 
         PostMove_LandingBob(deltaF);
-        PostMove_RunBob(deltaF, useSpeed, direction);
+        PostMove_RunBob(deltaF, useMaxRunSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
+    }
+
+    private void ResetJumpBuffer()
+    {
+        _jumpBufferTimer = 0f;
+    }
+
+    private void BeginJumpBuffer()
+    {
+        // if the player is in the air, buffer their jump input a bit
+        _jumpBufferTimer = jumpBufferTime;
+    }
+
+    private void StartJump()
+    {
+        // player can only start a jump squat if they haven't already started one - _cameraJumpBobTimer is
+        // non-zero when jump squatting
+        if (_cameraJumpBobTimer == 0f)
+            _cameraJumpBobTimer = cameraJumpSquatTime;
     }
 
     private void PreMove_JumpSquat(float delta, ref float verticalSpeed)

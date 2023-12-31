@@ -83,7 +83,7 @@ DONE "vault" ledges when jumping into them, build engine style
 DONE make consecutive bhops more fluid (jumping as you land shouldnt incur another jump squat)
 DONE make jump arc more cartoonish, like build engine jump speeds being not physically accurate
 DONE add grapple hook
-TODO clean up interaction between ground movement and grapple hook (maybe move grapple accel code into the movement code)
+DONE clean up interaction between ground movement and grapple hook (maybe move grapple accel code into the movement code)
 TODO give "burst accel" at start of grapple
 TODO add accel halfway between player's momentum and the grapple direction, instead of directly towards the grapple
 TODO experiment with different grapple accel strengths
