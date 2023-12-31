@@ -89,6 +89,7 @@ DONE fix "speed storage"/speed buildup when holding down a movement direction in
 DONE fix vertical stutter when near ground & grapple pulls upwards less than gravity
 DONE give "burst accel" at start of grapple
 DONE experiment with different grapple accel strengths
+DONE remove grapple hook when player gets close to it
 TODO add grapple hook cooldown
 TODO grapple hook bhopping
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)

@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dexxr3wcnc0y2"]
+[gd_scene load_steps=6 format=3 uid="uid://dexxr3wcnc0y2"]
 
 [ext_resource type="Script" path="res://entities/player_grapple_hook/PlayerGrappleHook.cs" id="1_oaupa"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v60vb"]
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_i26wt"]
 top_radius = 0.125
@@ -16,12 +18,17 @@ material = SubResource("StandardMaterial3D_ob7m1")
 size = Vector2(0.1, 0.1)
 orientation = 1
 
-[node name="PlayerGrappleHook" type="Node3D" node_paths=PackedStringArray("ropeMesh", "ropeOrigin")]
+[node name="PlayerGrappleHook" type="Area3D" node_paths=PackedStringArray("ropeMesh", "ropeOrigin")]
+collision_layer = 24
+collision_mask = 2
 script = ExtResource("1_oaupa")
-forwardSpeed = 20.0
+forwardSpeed = 100.0
 collisionMask = 1
 ropeMesh = NodePath("RopeMesh")
 ropeOrigin = NodePath("RopeOrigin")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_v60vb")
 
 [node name="TipMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -2.18557e-07, -1, 0, 1, -2.18557e-07, 0, 0, 0)

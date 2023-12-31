@@ -1,10 +1,9 @@
 using System.Collections.Generic;
-using System.Diagnostics;
 using Godot;
 
-public partial class PlayerGrappleHook : Node3D
+public partial class PlayerGrappleHook : Area3D
 {
-    [Export] public float forwardSpeed = 10f;
+    [Export] public float forwardSpeed = 20f;
     [Export(PropertyHint.Layers3DPhysics)] public uint collisionMask;
     [Export] public MeshInstance3D ropeMesh;
     [Export] public Node3D ropeOrigin;
@@ -18,6 +17,13 @@ public partial class PlayerGrappleHook : Node3D
 
     public override void _Ready()
     {
+        BodyEntered += OnBodyEntered;
+    }
+
+    private void OnBodyEntered(Node3D body)
+    {
+        if (IsPulling && body == player)
+            player.RemoveGrappleHook();
     }
 
     public override void _PhysicsProcess(double delta)
