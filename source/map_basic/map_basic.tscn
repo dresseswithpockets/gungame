@@ -296,6 +296,7 @@ environment = SubResource("Environment_efmq3")
 
 [node name="player" parent="." instance=ExtResource("5_agohm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.48692)
+wall_min_slide_angle = 0.0
 floor_constant_speed = true
 
 [node name="portal" parent="." instance=ExtResource("8_gwoih")]
