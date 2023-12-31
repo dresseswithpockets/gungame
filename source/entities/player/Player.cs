@@ -97,6 +97,7 @@ public partial class Player : CharacterBody3D
 
     public void RemoveGrappleHook()
     {
+        _grappleHookCooldownTimer = grappleHookCooldown;
         _grappleHook.QueueFree();
         _grappleHook = null;
     }
@@ -108,6 +109,9 @@ public partial class Player : CharacterBody3D
             RemoveGrappleHook();
             return;
         }
+
+        if (_grappleHookCooldownTimer != 0f)
+            return;
 
         _grappleHook = grappleHookPrefab.Instantiate<PlayerGrappleHook>();
         GetParent().AddChild(_grappleHook);
@@ -198,8 +202,10 @@ public partial class Player : CharacterBody3D
         }
         else
         {
-            // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
+            if (_grappleHookCooldownTimer > 0f)
+                _grappleHookCooldownTimer = Mathf.Max(0f, _grappleHookCooldownTimer - deltaF);
 
+            // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
             if (direction != Vector3.Zero)
                 _horizontalRunVelocity += direction * runAcceleration * deltaF;
             else
