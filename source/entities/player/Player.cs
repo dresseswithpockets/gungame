@@ -6,10 +6,11 @@ public partial class Player : CharacterBody3D
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
-    
+
     [ExportCategory("Running")]
     [Export]
     public float runAccel = 150f;
+
     [Export] public float runDecel = 50f;
     [Export] public float runSpeed = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
@@ -40,7 +41,9 @@ public partial class Player : CharacterBody3D
     [Export] public float jumpSpeed = 4.6f;
     [Export] public float jumpBufferTime = 0.3f;
 
-    [ExportCategory("Grappling")] [Export] public PackedScene grappleHookPrefab;
+    [ExportCategory("Grappling")]
+    [Export]
+    public PackedScene grappleHookPrefab;
 
     [Export] public Node3D grappleHookStart;
     [Export] public float grappleHookPullAccel = 30f;
@@ -60,6 +63,7 @@ public partial class Player : CharacterBody3D
 
     // horizontal running velocity without any Y component
     private Vector3 _horizontalRunVelocity;
+
     // this is additional momentum added to the player via the grapple hook
     private Vector3 _grappleMomentum;
     private bool _isPulledByGrappleHook;
@@ -124,7 +128,7 @@ public partial class Player : CharacterBody3D
     {
         _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
-        
+
         _cameraAggregateOffset = Vector3.Zero;
 
         var verticalSpeed = Velocity.Y;
@@ -174,7 +178,7 @@ public partial class Player : CharacterBody3D
                 _horizontalRunVelocity = transposed with { Y = 0f };
                 verticalSpeed = transposed.Y;
             }
-            
+
             // accelerate player directly towards where they're grappling, up to a max speed
             var accel = grappleDirection * grappleHookPullAccel * deltaF;
             _horizontalRunVelocity += accel with { Y = 0f };
@@ -185,18 +189,18 @@ public partial class Player : CharacterBody3D
 
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(grappleHookMaxSpeed);
             _maxSpeedFromGrapple = Mathf.Max(_maxSpeedFromGrapple, _horizontalRunVelocity.Length());
-            
+
             // also, grappling completely disables gravity
         }
         else
         {
             // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
-            
+
             if (direction != Vector3.Zero)
                 _horizontalRunVelocity += direction * runAccel * deltaF;
             else
                 _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, runDecel * deltaF);
-            
+
             // cap max ground speed if we're not being pulled by the grapple hook
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
             _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, runDecel * deltaF);
