@@ -68,6 +68,9 @@ TODO add descriptions to env_postprocess properties
 TODO enhance light_point and other light nodes (more shadows options? PCSS? any other customization?)
 TODO add texture for simple prism godray (off white light gradient)
 
+# playtests
+TODO create simple environment with many platforms and shapes that the player can run and grapple on
+
 # game stuff
 DONE fix worldspawn having an unusual offset - was because of missing worldspawn entity in FGD used by QodotMap
 DONE simple WASD+jump movement
