@@ -126,6 +126,10 @@ TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_W
 TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
 TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
 
+# polish
+TODO grapple hook viewmodel animation
+TODO dry fire sfx/animation grapple hook during cooldown
+
 # silly ideas
 we gotta make a level where if you let go of your grapple too soon you just go flying out into space and die
 BLACK HOLE SUN!!!! https://www.youtube.com/watch?v=hNkPHPhzXVA
