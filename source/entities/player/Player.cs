@@ -162,7 +162,9 @@ public partial class Player : CharacterBody3D
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
-        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? runNormalSpeedCap * runBoostSpeedMultiplier : runNormalSpeedCap;
+        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0)
+            ? runNormalSpeedCap * runBoostSpeedMultiplier
+            : runNormalSpeedCap;
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
