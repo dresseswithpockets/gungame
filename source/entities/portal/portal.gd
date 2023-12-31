@@ -152,4 +152,4 @@ func _get_slicer_or_null(in_node: Node):
     if in_node is Slicer:
         return in_node
     for child in in_node.get_children():
-        return _get_slicer_or_null(child) 
+        return _get_slicer_or_null(child)
