@@ -92,7 +92,7 @@ DONE experiment with different grapple accel strengths
 DONE remove grapple hook when player gets close to it
 DONE add grapple hook cooldown
 TODO fix osclliation with grapple hook when player stuck behind an obstacle (maybe apply a friction when the player is touching a wall or something?)
-TODO grapple hook bhopping
+TODO grapple hook bhopping? this may not be realistic with the ultrakill-like grapple hook anymore
 DONE add jump out of grapple hook, transposing some of the grapple momentum upwards, towards the direction the player is inputting
 TODO create simple hitscan weapon behaviour (shoots, reloads, consumes ammo)
 TODO add decals when a hitscan weapon hits a solid wall
