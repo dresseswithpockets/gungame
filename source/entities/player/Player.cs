@@ -3,13 +3,16 @@ using Godot;
 
 public partial class Player : CharacterBody3D
 {
-    public const float RunAccel = 150f;
-    public const float RunDecel = 50f;
-    public const float RunSpeed = 10.0f;
-    public const float RunBoostSpeedMultiplier = 1.15f;
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
+    
+    [ExportCategory("Running")]
+    [Export]
+    public float runAccel = 150f;
+    [Export] public float runDecel = 50f;
+    [Export] public float runSpeed = 10.0f;
+    [Export] public float runBoostSpeedMultiplier = 1.15f;
 
     [ExportCategory("Run Bobbing")]
     [Export]
@@ -153,7 +156,7 @@ public partial class Player : CharacterBody3D
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
-        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? RunSpeed * RunBoostSpeedMultiplier : RunSpeed;
+        var useMaxRunSpeed = (inputDir.X != 0 && inputDir.Y != 0) ? runSpeed * runBoostSpeedMultiplier : runSpeed;
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
@@ -190,13 +193,13 @@ public partial class Player : CharacterBody3D
             // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
             
             if (direction != Vector3.Zero)
-                _horizontalRunVelocity += direction * RunAccel * deltaF;
+                _horizontalRunVelocity += direction * runAccel * deltaF;
             else
-                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, RunDecel * deltaF);
+                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, runDecel * deltaF);
             
             // cap max ground speed if we're not being pulled by the grapple hook
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
-            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, RunDecel * deltaF);
+            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, runDecel * deltaF);
 
             // gravity is only applied when not grappling
             if (!IsOnFloor())
