@@ -127,6 +127,10 @@ func create_qodot_map_control() -> Control:
     var unwrap_uv2_button = Button.new()
     unwrap_uv2_button.text = "Unwrap UV2"
     unwrap_uv2_button.connect("pressed",Callable(self,"qodot_map_unwrap_uv2"))
+    
+    var build_and_unwrap_button = Button.new()
+    build_and_unwrap_button.text = "Full Build & Unwrap UV2"
+    build_and_unwrap_button.connect("pressed", Callable(self, "qodot_map_full_build_and_unwrap_uv2"))
 
     var control = HBoxContainer.new()
     control.add_child(separator)
@@ -134,6 +138,7 @@ func create_qodot_map_control() -> Control:
     control.add_child(quick_build_button)
     control.add_child(full_build_button)
     control.add_child(unwrap_uv2_button)
+    control.add_child(build_and_unwrap_button)
 
     return control
 
@@ -201,9 +206,15 @@ func qodot_map_unwrap_uv2() -> void:
         return
 
     set_qodot_map_control_disabled(true)
-    edited_object.connect("unwrap_uv2_complete", qodot_map_build_complete.bind(edited_object))
+    var binding = qodot_map_build_complete.bind(edited_object)
+    if !edited_object.is_connected("unwrap_uv2_complete", binding):
+        edited_object.connect("unwrap_uv2_complete", binding)
 
     edited_object.unwrap_uv2()
+
+func qodot_map_full_build_and_unwrap_uv2() -> void:
+    qodot_map_full_build()
+    qodot_map_unwrap_uv2()
 
 ## Enable or disable the control for [QodotMap]s in the editor
 func set_qodot_map_control_disabled(disabled: bool) -> void:

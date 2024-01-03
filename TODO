@@ -36,7 +36,8 @@ TODO add func_friction
 TODO add particles_cpu
 TODO add particles_gpu
 TODO add env_lightmap for baked LightmapGI support?
-TODO add "Full Build, Unwrap, and Bake" button to QodotMap toolbar
+DONE add "Full Build & Unwrap UV2" button to QodotMap toolbar
+TODO update "Full Build & Unwrap UV2" button to also bake lighting
 DONE add targetname, target, and killtarget base FGD classes
 DONE add info_godot_scale
 DONE add info_player_start
