@@ -181,7 +181,7 @@ func qodot_map_quick_build() -> void:
     edited_object.verify_and_build()
 
 ## Create the "Full Build" button for [QodotMap]s in the editor
-func qodot_map_full_build() -> void:
+func qodot_map_full_build(unwrap_after_build: bool = false) -> void:
     var edited_object : QodotMap = edited_object_ref.get_ref()
     if not edited_object:
         return
@@ -193,6 +193,8 @@ func qodot_map_full_build() -> void:
     edited_object.build_progress.connect(qodot_map_build_progress)
     edited_object.build_complete.connect(qodot_map_build_complete.bind(edited_object))
     edited_object.build_failed.connect(qodot_map_build_complete.bind(edited_object))
+    if unwrap_after_build:
+        edited_object.build_complete.connect(qodot_map_unwrap_uv2)
 
     edited_object.verify_and_build()
 
@@ -213,8 +215,8 @@ func qodot_map_unwrap_uv2() -> void:
     edited_object.unwrap_uv2()
 
 func qodot_map_full_build_and_unwrap_uv2() -> void:
-    qodot_map_full_build()
-    qodot_map_unwrap_uv2()
+    # unwraps UV2 after build
+    qodot_map_full_build(true)
 
 ## Enable or disable the control for [QodotMap]s in the editor
 func set_qodot_map_control_disabled(disabled: bool) -> void:
