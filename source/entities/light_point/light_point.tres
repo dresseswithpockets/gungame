@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("1_yqjev")
 script_class = ExtResource("2_t4ni5")
+apply_rotation_on_map_build = true
 classname = "light_point"
 description = "A point light"
 qodot_internal = false

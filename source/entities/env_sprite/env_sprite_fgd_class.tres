@@ -6,6 +6,7 @@
 [resource]
 script = ExtResource("1_80aji")
 script_class = ExtResource("2_rr0yc")
+apply_rotation_on_map_build = true
 classname = "env_sprite"
 description = "Single static sprite entity"
 qodot_internal = false

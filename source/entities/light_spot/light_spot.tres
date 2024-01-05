@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_ecl18")
 script_class = ExtResource("3_lvvrt")
+apply_rotation_on_map_build = true
 classname = "light_spot"
 description = "A spot light"
 qodot_internal = false

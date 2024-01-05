@@ -12,10 +12,6 @@ func update_properties():
         child.queue_free()
     
     # directional light settings
-    var angles: Vector3 = properties.get("angles", Vector3.ZERO)
-    # TB pitch is clockwise instead of counter clockwise, so we negate them
-    angles.x = -angles.x
-    angles.y += 180 # TODO: is this correct? the worldspawn mesh is kinda broken
     var sky_mode: DirectionalLight3D.SkyMode = properties.get("sky_mode", 0)
     
     # General Light settings
@@ -31,7 +27,6 @@ func update_properties():
     # TODO: directional shadow settings
     
     var light_node := DirectionalLight3D.new()
-    light_node.rotation_degrees = angles
     light_node.sky_mode = sky_mode
     
     light_node.light_color = color

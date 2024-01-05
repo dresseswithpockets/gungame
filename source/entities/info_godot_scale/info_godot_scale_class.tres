@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_wvf7x")
+apply_rotation_on_map_build = true
 classname = "info_godot_scale"
 description = ""
 qodot_internal = false

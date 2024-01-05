@@ -7,6 +7,7 @@
 [resource]
 script = ExtResource("2_s4mgj")
 scene_file = ExtResource("1_roq70")
+apply_rotation_on_map_build = true
 classname = "info_player_start"
 description = "Player start"
 qodot_internal = false
