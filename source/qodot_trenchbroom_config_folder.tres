@@ -15,7 +15,22 @@ export_file = false
 trenchbroom_games_folder = "..\\vendor_trenchbroom\\games"
 game_name = "GunGame"
 icon = ExtResource("2_ukn3q")
+map_formats = Array[Dictionary]([{
+"format": "Valve",
+"initialmap": "initial_valve.map"
+}, {
+"format": "Standard",
+"initialmap": "initial_standard.map"
+}, {
+"format": "Quake2",
+"initialmap": "initial_quake2.map"
+}, {
+"format": "Quake3"
+}])
+texture_exclusion_patterns = Array[String](["*_ao", "*_emission", "*_heightmap", "*_metallic", "*_normal", "*_orm", "*_roughness", "*_sss"])
 fgd_files = Array[Resource]([ExtResource("1_ktf01"), ExtResource("8_xudke")])
+entity_scale = "1"
+default_uv_scale = Vector2(1, 1)
 brush_tags = Array[Resource]([ExtResource("1_goktq"), ExtResource("2_7pnwt")])
 face_tags = Array[Resource]([ExtResource("3_5xtab"), ExtResource("4_1tlgo")])
 face_attrib_surface_flags = Array[Resource]([])
