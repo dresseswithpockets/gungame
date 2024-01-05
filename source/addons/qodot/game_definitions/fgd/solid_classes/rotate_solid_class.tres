@@ -5,10 +5,15 @@
 
 [resource]
 script = ExtResource("1")
+spawn = "----------------------------------------------------------------"
 spawn_type = 2
+visual_build = "================================================================"
 build_visuals = true
+collision_build = "----------------------------------------------------------------"
 collision_shape_type = 1
+scripting = "----------------------------------------------------------------"
 script_class = ExtResource("2_kxqod")
+class_options = "----------------------------------------------------------------"
 classname = "rotate"
 description = "Rotating Brush"
 qodot_internal = false
@@ -22,5 +27,6 @@ class_property_descriptions = {
 "speed": "Rotation Speed"
 }
 meta_properties = {}
+node_options = "----------------------------------------------------------------"
 node_class = "CharacterBody3D"
 transient_node = false

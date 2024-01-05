@@ -9,4 +9,4 @@ extends Resource
 @export var script_class: Script = null
 
 func _init():
-	resource_name = "Worldspawn Layer"
+    resource_name = "Worldspawn Layer"
