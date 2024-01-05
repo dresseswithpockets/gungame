@@ -16,7 +16,7 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
-TODO add trigger
+DONE add trigger
 TODO add trigger_push
 TODO add trigger_gravity
 TODO add trigger_hurt
