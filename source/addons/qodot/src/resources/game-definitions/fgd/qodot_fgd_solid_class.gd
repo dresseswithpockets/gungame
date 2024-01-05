@@ -3,16 +3,16 @@ class_name QodotFGDSolidClass
 extends QodotFGDClass
 
 enum SpawnType {
-	WORLDSPAWN = 0, ## Is worldspawn
-	MERGE_WORLDSPAWN = 1, ## Should be combined with worldspawn
-	ENTITY = 2, ## Is its own separate entity
-	GROUP = 3 ## Is a group
+    WORLDSPAWN = 0, ## Is worldspawn
+    MERGE_WORLDSPAWN = 1, ## Should be combined with worldspawn
+    ENTITY = 2, ## Is its own separate entity
+    GROUP = 3 ## Is a group
 }
 
 enum CollisionShapeType {
-	NONE, ## Should have no collision shape
-	CONVEX, ## Should have a convex collision shape
-	CONCAVE ## Should have a concave collision shape
+    NONE, ## Should have no collision shape
+    CONVEX, ## Should have a convex collision shape
+    CONCAVE ## Should have a concave collision shape
 }
 
 @export_group("Spawn")
@@ -33,4 +33,4 @@ enum CollisionShapeType {
 @export var script_class: Script
 
 func _init():
-	prefix = "@SolidClass"
+    prefix = "@SolidClass"

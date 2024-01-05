@@ -4,4 +4,4 @@ extends Resource
 @export var textures: Dictionary
 
 func _init(textures: Dictionary):
-	self.textures = textures
+    self.textures = textures
