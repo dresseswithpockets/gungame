@@ -16,6 +16,7 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
+TODO fixup gungame_fgd to inherit qodot essentials FGD, and remove worldspawn_solid entity definition from gungame_fgd
 DONE add trigger
 TODO add trigger_push
 TODO add trigger_gravity
@@ -25,7 +26,6 @@ TODO add audio_global
 TODO add audio_positional
 TODO add logic_chance
 TODO add logic_relay
-TODO add monster_spawner
 TODO add func_portal
 TODO add func_breakable
 TODO add func_button
@@ -35,6 +35,7 @@ TODO add func_ladder
 TODO add func_friction
 TODO add particles_cpu
 TODO add particles_gpu
+TODO add monster_spawner
 TODO add env_lightmap for baked LightmapGI support?
 DONE add "Full Build & Unwrap UV2" button to QodotMap toolbar
 TODO update "Full Build & Unwrap UV2" button to also bake lighting
@@ -95,6 +96,7 @@ DONE give "burst accel" at start of grapple
 DONE experiment with different grapple accel strengths
 DONE remove grapple hook when player gets close to it
 DONE add grapple hook cooldown
+TODO rewrite portal logic in C#
 TODO fix osclliation with grapple hook when player stuck behind an obstacle (apply friction when player is touching a wall or something?)
 TODO grapple hook bhopping? this may not be realistic with the ultrakill-like grapple hook anymore
 DONE add jump out of grapple hook, transposing some of the grapple momentum upwards, towards the direction the player is inputting
