@@ -74,6 +74,7 @@ TODO add texture for simple prism godray (off white light gradient)
 TODO create simple environment with many platforms and shapes that the player can run and grapple on
 
 # game stuff
+TODO fix console not working in actual game dev scene
 DONE fix worldspawn having an unusual offset - was because of missing worldspawn entity in FGD used by QodotMap
 DONE simple WASD+jump movement
 DONE simple camera movement
