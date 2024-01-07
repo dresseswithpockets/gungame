@@ -18,7 +18,8 @@ TODO research crash logging, tracing, and reporting in godot
 # mapping/design tools
 TODO fixup gungame_fgd to inherit qodot essentials FGD, and remove worldspawn_solid entity definition from gungame_fgd
 DONE add trigger
-TODO add trigger_push
+DONE add trigger_push
+TODO add additional mode OverrideVelocityOnce
 TODO add trigger_gravity
 TODO add trigger_hurt
 TODO add trigger_teleport

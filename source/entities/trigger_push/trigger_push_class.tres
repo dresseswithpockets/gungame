@@ -1,0 +1,45 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=3 format=3 uid="uid://8utq80hki6us"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_iw3vq"]
+[ext_resource type="Script" path="res://entities/trigger_push/TriggerPush.cs" id="2_c5ghd"]
+
+[resource]
+script = ExtResource("1_iw3vq")
+spawn_type = 2
+build_visuals = true
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 1
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = ExtResource("2_c5ghd")
+classname = "trigger_push"
+description = "Pushes a body in a direction, either continuously or instantaneously"
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"amount": Vector3(0, 0, 0),
+"axis_mask": [["X", 1, 1], ["Y", 2, 1], ["Z", 4, 1]],
+"collision_mask": [["world", 1, 0], ["player", 2, 1], ["portal", 4, 0], ["portal_traveller", 8, 0], ["grapple_hook", 16, 0]],
+"mode": {
+"Continuous": 0,
+"Impulse": 1,
+"OverrideVelocity": 2
+}
+}
+class_property_descriptions = {
+"amount": "The amount in each direction to push the body",
+"axis_mask": "Which axes to consider when mode is OverrideVelocity. If an axis is disabled, the trigger will not override velocity in that direction.",
+"collision_mask": "Only triggers if the object that enters the trigger is on one of the collision layers selected. Defaults to the player layer.",
+"mode": "The kind of force to add. Continuous applies a constant force over time. Impulse applies an instantaneous force at once. OverrideVelocity sets the target's velocity instead of adding a force."
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false
