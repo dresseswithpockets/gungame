@@ -12,7 +12,7 @@ const DEFAULT_MASK := 1 << 1
             properties = new_properties
             update_properties()
 
-signal trigger()
+signal trigger(activator: Node3D)
 
 func update_properties():
     if not Engine.is_editor_hint():
@@ -24,6 +24,5 @@ func update_properties():
 func _ready():
     body_entered.connect(_body_entered)
 
-func _body_entered():
-    # TODO: store the body that triggered this I/O
-    trigger.emit()
+func _body_entered(body: Node3D):
+    trigger.emit(body)
