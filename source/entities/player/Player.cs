@@ -1,4 +1,3 @@
-using System;
 using System.Diagnostics;
 using Godot;
 
@@ -367,26 +366,10 @@ public partial class Player : CharacterBody3D, IPushable
 
     public void AddImpulse(Vector3 amount) => _impulse += amount;
 
-    public void OverrideVelocity(Vector3 amount, AxisMask axisMask)
+    public void OverrideVelocity(Vector3 amount)
     {
-        var velocity = Velocity;
-
-        if (axisMask.HasFlag(AxisMask.X))
-        {
-            velocity.X = amount.X;
-            _horizontalRunVelocity.X = amount.X;
-        }
-
-        // _horizontalRunVelocity.Y is discarded always, and vertical speed is instead retained through Velocity.Y
-        if (axisMask.HasFlag(AxisMask.Y))
-            velocity.Y = amount.Y;
-
-        if (axisMask.HasFlag(AxisMask.Z))
-        {
-            velocity.Z = amount.Z;
-            _horizontalRunVelocity.Z = amount.Z;
-        }
-
-        Velocity = velocity;
+        Velocity = Velocity with { Y = amount.Y };
+        _horizontalRunVelocity.X = amount.X;
+        _horizontalRunVelocity.Z = amount.Z;
     }
 }

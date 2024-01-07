@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=4 format=3 uid="uid://c728rm3p2rd3h"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_0nxvf"]
+[ext_resource type="Resource" uid="uid://dofvuwf0rwsw2" path="res://entities/baseclasses/baseclass_collisionmask.tres" id="1_bpmag"]
+[ext_resource type="Script" path="res://entities/trigger_impulse/TriggerImpulse.cs" id="2_jhmj6"]
+
+[resource]
+script = ExtResource("1_0nxvf")
+spawn_type = 2
+build_visuals = false
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 1
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = ExtResource("2_jhmj6")
+classname = "trigger_impulse"
+description = "Pushes a body instantaneously upon contact"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_bpmag")])
+class_properties = {
+"amount": Vector3(0, 0, 0),
+"axis_mask": [["X", 1, 1], ["Y", 2, 1], ["Z", 4, 1]],
+"only_once": false,
+"override_velocity": false
+}
+class_property_descriptions = {
+"amount": "The amount in each direction to push the body",
+"axis_mask": "Which axes to consider only when overriding velocity. If an axis is disabled, the trigger will not override velocity in that direction.",
+"only_once": "Only triggers once, then disables.",
+"override_velocity": "If true, completely overrides any existing velocity on the target body, instead of adding the impulse to the existing momentum."
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false
