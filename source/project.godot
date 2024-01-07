@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 InputGlobal="*res://input_global.gd"
 Constants="*res://constants.gd"
+ConsoleGlobal="*res://console/Console.cs"
 
 [display]
 
