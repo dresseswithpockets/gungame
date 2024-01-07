@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="QodotFGDBaseClass" load_steps=2 format=3 uid="uid://dofvuwf0rwsw2"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_base_class.gd" id="1_3g5pb"]
+
+[resource]
+script = ExtResource("1_3g5pb")
+classname = "Collisionmask"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"collision_mask": [["world", 1, 0], ["player", 2, 1], ["portal", 4, 0], ["portal_traveller", 8, 0], ["grapple_hook", 16, 0]]
+}
+class_property_descriptions = {
+"collision_mask": "Only detects if the object that enters the brush is on one of the collision layers selected. Defaults to the player layer."
+}
+meta_properties = {}
+node_class = ""
+transient_node = false
