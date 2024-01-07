@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=4 format=3 uid="uid://di8epnwx84cjs"]
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=5 format=3 uid="uid://di8epnwx84cjs"]
 
 [ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="1_2bqiw"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_f6n2m"]
+[ext_resource type="Resource" uid="uid://dofvuwf0rwsw2" path="res://entities/baseclasses/baseclass_collisionmask.tres" id="2_bqk7d"]
 [ext_resource type="Script" path="res://entities/trigger/trigger.gd" id="2_jeyaw"]
 
 [resource]
@@ -21,13 +22,9 @@ script_class = ExtResource("2_jeyaw")
 classname = "trigger"
 description = "An area that, when entered, triggers another entity"
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("1_2bqiw")])
-class_properties = {
-"collision_mask": [["world", 1, 0], ["player", 2, 1], ["portal", 4, 0], ["portal_traveller", 8, 0], ["grapple_hook", 16, 0]]
-}
-class_property_descriptions = {
-"collision_mask": "Only triggers if the object that enters the trigger is on one of the collision layers selected. Defaults to the player layer."
-}
+base_classes = Array[Resource]([ExtResource("1_2bqiw"), ExtResource("2_bqk7d")])
+class_properties = {}
+class_property_descriptions = {}
 meta_properties = {
 "color": Color(0.8, 0.8, 0.8, 1),
 "size": AABB(-8, -8, -8, 8, 8, 8)
