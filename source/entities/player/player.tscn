@@ -16,6 +16,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252101, 1), 0.0, 0.0, 0, 0, Ve
 point_count = 3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rwd8m"]
+radius = 0.25
 height = 1.82
 
 [node name="player" type="CharacterBody3D" node_paths=PackedStringArray("grappleHookStart") groups=["player"]]
