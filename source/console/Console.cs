@@ -81,7 +81,6 @@ public partial class Console : Node2D
                 QueueRedraw();
                 break;
             case Key.Enter when _text.Length > 0:
-                // TODO: submit to history, parse command, execute command
                 ExecuteCommand(_text);
                 _text = "";
                 QueueRedraw();
