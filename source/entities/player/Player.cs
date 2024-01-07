@@ -1,7 +1,8 @@
+using System;
 using System.Diagnostics;
 using Godot;
 
-public partial class Player : CharacterBody3D
+public partial class Player : CharacterBody3D, IPushable
 {
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
@@ -74,6 +75,9 @@ public partial class Player : CharacterBody3D
 
     private PlayerGrappleHook _grappleHook;
 
+    private Vector3 _continuousForce;
+    private Vector3 _impulse;
+
     public override void _Ready()
     {
         _camera = GetNode<Camera3D>("Camera3D");
@@ -143,6 +147,9 @@ public partial class Player : CharacterBody3D
         // _horizontalRunVelocity
         var verticalSpeed = Velocity.Y;
         var deltaF = (float)delta;
+
+        verticalSpeed += _impulse.Y + (_continuousForce.Y * deltaF);
+        _horizontalRunVelocity += _impulse with { Y = 0f } + (_continuousForce with { Y = 0f } * deltaF);
 
         if (Input.IsActionJustPressed("move_jump"))
         {
@@ -260,6 +267,8 @@ public partial class Player : CharacterBody3D
         PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useMaxRunSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
+
+        _impulse = Vector3.Zero;
     }
 
     private void ResetJumpBuffer()
@@ -352,5 +361,32 @@ public partial class Player : CharacterBody3D
             var blend = cameraRunBobCurve.Sample(alpha);
             _cameraAggregateOffset += cameraRunBob * blend;
         }
+    }
+
+    public void AddContinuousForce(Vector3 amount) => _continuousForce += amount;
+
+    public void AddImpulse(Vector3 amount) => _impulse += amount;
+
+    public void OverrideVelocity(Vector3 amount, AxisMask axisMask)
+    {
+        var velocity = Velocity;
+
+        if (axisMask.HasFlag(AxisMask.X))
+        {
+            velocity.X = amount.X;
+            _horizontalRunVelocity.X = amount.X;
+        }
+
+        // _horizontalRunVelocity.Y is discarded always, and vertical speed is instead retained through Velocity.Y
+        if (axisMask.HasFlag(AxisMask.Y))
+            velocity.Y = amount.Y;
+
+        if (axisMask.HasFlag(AxisMask.Z))
+        {
+            velocity.Z = amount.Z;
+            _horizontalRunVelocity.Z = amount.Z;
+        }
+
+        Velocity = velocity;
     }
 }
