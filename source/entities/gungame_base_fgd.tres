@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=7 format=3 uid="uid://bejuidw1vcb53"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=8 format=3 uid="uid://bejuidw1vcb53"]
 
 [ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_a3t0h"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_em64t"]
@@ -6,6 +6,7 @@
 [ext_resource type="Resource" uid="uid://cho723jlxybdd" path="res://entities/baseclasses/baseclass_killtarget.tres" id="3_471v3"]
 [ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="4_qddcb"]
 [ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="5_atfom"]
+[ext_resource type="Resource" uid="uid://dofvuwf0rwsw2" path="res://entities/baseclasses/baseclass_collisionmask.tres" id="6_nc45g"]
 
 [resource]
 script = ExtResource("1_em64t")
@@ -13,4 +14,4 @@ export_file = false
 target_folder = ""
 fgd_name = "Qodot"
 base_fgd_files = Array[Resource]([])
-entity_definitions = Array[Resource]([ExtResource("1_a3t0h"), ExtResource("2_p2ts8"), ExtResource("3_471v3"), ExtResource("4_qddcb"), ExtResource("5_atfom")])
+entity_definitions = Array[Resource]([ExtResource("1_a3t0h"), ExtResource("2_p2ts8"), ExtResource("3_471v3"), ExtResource("4_qddcb"), ExtResource("5_atfom"), ExtResource("6_nc45g")])
