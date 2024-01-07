@@ -124,6 +124,7 @@
 // entity 6
 {
 "classname" "trigger"
+"target" "TriggerTest_DebugPrint"
 // brush 0
 {
 ( -240 80 176 ) ( -240 -80 176 ) ( -240 -80 32 ) __TB_empty 16 0 0 1 1
@@ -133,4 +134,12 @@
 ( -224 80 32 ) ( -224 80 176 ) ( -240 80 176 ) __TB_empty 16 0 0 1 1
 ( -224 -80 176 ) ( -224 80 176 ) ( -224 80 32 ) __TB_empty 16 0 0 1 1
 }
+}
+// entity 7
+{
+"classname" "debug_print"
+"origin" "-200 -8 104"
+"targetname" "TriggerTest_DebugPrint"
+"message" "Triggered!"
+"print_activator" "true"
 }
