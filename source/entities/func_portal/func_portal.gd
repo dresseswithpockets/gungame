@@ -6,6 +6,8 @@ class_name FuncPortal extends Area3D
 
 @export var sub_viewport: SubViewport
 @export var viewport_cam: Camera3D
+@export var shader_material: ShaderMaterial
+@export var viewport_texture: ViewportTexture
 
 @export var surface: GeometryInstance3D
 
@@ -61,44 +63,36 @@ func update_properties():
         if child is MeshInstance3D:
             surface = child
             break
+
+    sub_viewport = SubViewport.new()
+    sub_viewport.name = "SubViewport1"
+    sub_viewport.size = get_viewport().size
+    sub_viewport.handle_input_locally = false
+    sub_viewport.gui_disable_input = true
+    viewport_cam = Camera3D.new()
+    viewport_cam.keep_aspect = Camera3D.KEEP_WIDTH
+    viewport_cam.name = "ViewportCam"
+    viewport_cam.current = true
+    # remove portals layer (layer 19)
+    viewport_cam.cull_mask = ~(viewport_cam.cull_mask & (1 << 18))
+    sub_viewport.add_child(viewport_cam)
+    add_child(sub_viewport)
     
-    var members = members_prefab.instantiate()
-    add_child(members)
+    shader_material = ShaderMaterial.new()
+    shader_material.resource_local_to_scene = true
+    shader_material.shader = portal_shader
+    viewport_texture = sub_viewport.get_texture()
+    print(viewport_texture)
+    shader_material.set_shader_parameter("texture_albedo", viewport_texture)
+    surface.material_override = shader_material
+    
     if is_inside_tree():
         var tree = get_tree()
         if tree:
             var edited_scene_root = tree.get_edited_scene_root()
             if edited_scene_root:
-                members.set_owner(edited_scene_root)
-    
-    sub_viewport = members.sub_viewport
-    viewport_cam = members.viewport_cam
-    
-    var shader_material = ShaderMaterial.new()
-    shader_material.shader = portal_shader
-    shader_material.set_shader_parameter("texture_albedo", sub_viewport.get_texture())
-    surface.material_override = shader_material
-
-    #sub_viewport = SubViewport.new()
-    #sub_viewport.name = "SubViewport1"
-    #sub_viewport.size = get_viewport().size
-    #sub_viewport.handle_input_locally = false
-    #sub_viewport.gui_disable_input = true
-    #viewport_cam = Camera3D.new()
-    #viewport_cam.name = "ViewportCam"
-    #viewport_cam.current = true
-    #sub_viewport.add_child(viewport_cam)
-    #add_child(sub_viewport)
-    #if is_inside_tree():
-        #var tree = get_tree()
-        #if tree:
-            #var edited_scene_root = tree.get_edited_scene_root()
-            #if edited_scene_root:
-                #sub_viewport.set_owner(edited_scene_root)
-    
-    #surface.material_override = ShaderMaterial.new()
-    #surface.material_override.setup_local_to_scene()
-
+                sub_viewport.set_owner(edited_scene_root)
+                viewport_cam.set_owner(edited_scene_root)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

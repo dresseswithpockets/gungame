@@ -35,9 +35,10 @@ TODO add more features for attenuation, positional emission, doppler, etc, in au
 DONE add logic_chance
 DONE add logic_relay
 DONE add func_portal
-TODO fix viewport in func_portal (why is it pink lol)
 DONE update func_portal's viewport size dynamically whenever the player's viewport size changes
+DONE fix viewport in func_portal (why is it pink lol)
 TODO use angles or a surface normal to clip the brush-generated surface, instead of always using -z
+TODO find MVP for bug with func_portal viewports breaking in basic.map, submit to Godot github
 TODO add func_breakable
 TODO add func_button
 TODO add func_door
