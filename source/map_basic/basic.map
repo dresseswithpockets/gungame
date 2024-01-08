@@ -336,3 +336,46 @@
 "text" "trigger_gravity"
 "billboard" "2"
 }
+// entity 19
+{
+"classname" "illusionary"
+// brush 0
+{
+( -512 -736 208 ) ( -512 -800 208 ) ( -512 -800 16 ) layers/water 32 0 0 1 1
+( -512 -800 208 ) ( -448 -800 208 ) ( -448 -800 16 ) layers/water -448 0 0 1 1
+( -448 -800 16 ) ( -448 -736 16 ) ( -512 -736 16 ) layers/water -448 -32 0 1 1
+( -512 -736 208 ) ( -448 -736 208 ) ( -448 -800 208 ) layers/water -448 -32 0 1 1
+( -448 -736 16 ) ( -448 -736 208 ) ( -512 -736 208 ) layers/water -448 0 0 1 1
+( -448 -800 208 ) ( -448 -736 208 ) ( -448 -736 16 ) layers/water 32 0 0 1 1
+}
+}
+// entity 20
+{
+"classname" "trigger"
+"target" "AudioTest_CanOpenOneshot"
+// brush 0
+{
+( -512 -736 208 ) ( -512 -800 208 ) ( -512 -800 16 ) __TB_empty -16 -16 0 1 1
+( -512 -800 208 ) ( -448 -800 208 ) ( -448 -800 16 ) __TB_empty 0 -16 0 1 1
+( -448 -800 16 ) ( -448 -736 16 ) ( -512 -736 16 ) __TB_empty 0 16 0 1 1
+( -512 -736 208 ) ( -448 -736 208 ) ( -448 -800 208 ) __TB_empty 0 16 0 1 1
+( -448 -736 16 ) ( -448 -736 208 ) ( -512 -736 208 ) __TB_empty 0 -16 0 1 1
+( -448 -800 208 ) ( -448 -736 208 ) ( -448 -736 16 ) __TB_empty -16 -16 0 1 1
+}
+}
+// entity 21
+{
+"classname" "point_label"
+"origin" "-480 -768 304"
+"text" "trigger -> audio_global"
+"billboard" "2"
+}
+// entity 22
+{
+"classname" "audio_global"
+"origin" "-456 -792 104"
+"sound" "sounds/can_open_oneshot.wav"
+"targetname" "AudioTest_CanOpenOneshot"
+"volume_db" "-15"
+"pitch_scale" "0.5"
+}
