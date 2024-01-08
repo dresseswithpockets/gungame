@@ -40,11 +40,21 @@ public partial class AudioPositional : AudioStreamPlayer3D
         PitchScale = properties.GetOrDefault("pitch_scale", 1f);
     }
     
-    // silly gdscript naming
     // ReSharper disable once InconsistentNaming
-    public void use(Node3D _) => Use(_);
-    public void Use(Node3D _)
+    public void use(Node3D _)
     {
-        Play();
+        if (StreamPaused)
+            StreamPaused = false;
+        else
+            Play();
     }
+
+    // ReSharper disable once InconsistentNaming
+    public void pause(Node3D _) => StreamPaused = true;
+
+    // ReSharper disable once InconsistentNaming
+    public void reset(Node3D _) => Stop();
+    
+    // ReSharper disable once InconsistentNaming
+    public void restart(Node3D _) => Play();
 }
