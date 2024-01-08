@@ -506,3 +506,46 @@
 "volume_db" "-30"
 "pitch_scale" "1"
 }
+// entity 36
+{
+"classname" "trigger"
+"target" "test_relay"
+// brush 0
+{
+( 64 -736 208 ) ( 64 -800 208 ) ( 64 -800 16 ) __TB_empty 16 -16 0 1 1
+( 64 -800 208 ) ( 128 -800 208 ) ( 128 -800 16 ) __TB_empty 0 -16 0 1 1
+( 128 -800 16 ) ( 128 -736 16 ) ( 64 -736 16 ) __TB_empty 0 -16 0 1 1
+( 64 -736 208 ) ( 128 -736 208 ) ( 128 -800 208 ) __TB_empty 0 -16 0 1 1
+( 128 -736 16 ) ( 128 -736 208 ) ( 64 -736 208 ) __TB_empty 0 -16 0 1 1
+( 128 -800 208 ) ( 128 -736 208 ) ( 128 -736 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 37
+{
+"classname" "logic_relay"
+"origin" "72 -792 216"
+"target" "AudioGlobal_CanOpen_Chance"
+"targetname" "test_relay"
+"target255" "AudioPositional_CanOpenOneshot"
+"only_once" "true"
+}
+// entity 38
+{
+"classname" "illusionary"
+// brush 0
+{
+( 64 -736 208 ) ( 64 -800 208 ) ( 64 -800 16 ) layers/water 32 0 0 1 1
+( 64 -800 208 ) ( 128 -800 208 ) ( 128 -800 16 ) layers/water 0 0 0 1 1
+( 128 -800 16 ) ( 128 -736 16 ) ( 64 -736 16 ) layers/water 0 -32 0 1 1
+( 64 -736 208 ) ( 128 -736 208 ) ( 128 -800 208 ) layers/water 0 -32 0 1 1
+( 128 -736 16 ) ( 128 -736 208 ) ( 64 -736 208 ) layers/water 0 0 0 1 1
+( 128 -800 208 ) ( 128 -736 208 ) ( 128 -736 16 ) layers/water 32 0 0 1 1
+}
+}
+// entity 39
+{
+"classname" "point_label"
+"origin" "96 -768 304"
+"text" "*once -> multiple"
+"billboard" "2"
+}
