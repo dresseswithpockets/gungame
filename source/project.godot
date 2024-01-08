@@ -83,6 +83,10 @@ grapple_hook={
 3d_physics/layer_4="portal_traveller"
 3d_physics/layer_5="grapple_hook"
 
+[physics]
+
+3d/default_gravity=15.0
+
 [rendering]
 
 occlusion_culling/use_occlusion_culling=true
