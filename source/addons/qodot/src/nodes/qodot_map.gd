@@ -1234,16 +1234,30 @@ func connect_signals() -> void:
         var entity_dict := entity_dicts[entity_idx] as Dictionary
         var entity_properties := entity_dict['properties'] as Dictionary
         
-        if not 'target' in entity_properties:
-            continue
+        if 'target' in entity_properties:
+            var target_prop = entity_properties['target']
+            if target_prop != null:
+                var target_nodes := get_nodes_by_targetname(target_prop)
+                for target_node in target_nodes:
+                    connect_signal(entity_node, target_node)
+            else:
+                push_warning("A '%s' entity that expects a target has no target assigned!" % entity_properties["classname"])
         
-        var target_prop = entity_properties['target']
-        if target_prop != null:
+        for property_name in entity_properties:
+            if !property_name.begins_with("target"):
+                continue
+            
+            var target_name_end: String = property_name.substr(6)
+            if !target_name_end.is_valid_int():
+                continue
+
+            var target_prop = entity_properties.get(property_name)
+            if target_prop == null:
+                continue
+
             var target_nodes := get_nodes_by_targetname(target_prop)
             for target_node in target_nodes:
                 connect_signal(entity_node, target_node)
-        else:
-            push_warning("A '%s' entity that expects a target has no target assigned!" % entity_properties["classname"])
 
 ## Connect a signal on [code]entity_node[/code] to [code]target_node[/code], possibly mediated by the contents of a [code]signal[/code] or [code]receiver[/code] entity
 func connect_signal(entity_node: Node, target_node: Node) -> void:
