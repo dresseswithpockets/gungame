@@ -1251,6 +1251,7 @@ func connect_signal(entity_node: Node, target_node: Node) -> void:
         return
     
     if target_node.properties['classname'] == 'signal':
+        # entity -> signal -> receiver -> entity
         var signal_name = target_node.properties['signal_name']
         
         var receiver_nodes := get_nodes_by_targetname(target_node.properties['target'])
@@ -1263,7 +1264,18 @@ func connect_signal(entity_node: Node, target_node: Node) -> void:
             var target_nodes := get_nodes_by_targetname(receiver_node.properties['target'])
             for node in target_nodes:
                 entity_node.connect(signal_name,Callable(node,receiver_name),CONNECT_PERSIST)
+    elif target_node.properties['classname'] == 'receiver':
+        # entity -> receiver -> entity
+        var receiver_name = target_node.properties['receiver_name']
+        var target_nodes := get_nodes_by_targetname(target_node.properties['target'])
+        for node in target_nodes:
+            var signal_list = entity_node.get_signal_list()
+            for signal_dict in signal_list:
+                if signal_dict['name'] == 'trigger':
+                    entity_node.connect("trigger",Callable(node,receiver_name),CONNECT_PERSIST)
+                    break
     else:
+        # entity -> entity
         var signal_list = entity_node.get_signal_list()
         for signal_dict in signal_list:
             if signal_dict['name'] == 'trigger':
