@@ -32,6 +32,7 @@ func update_properties():
     label.outline_modulate = outline_modulate
     label.text = text
     label.texture_filter = BaseMaterial3D.TEXTURE_FILTER_NEAREST
+    label.alpha_cut = Label3D.ALPHA_CUT_DISCARD
 
     add_child(label)
     if is_inside_tree():
