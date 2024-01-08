@@ -17,6 +17,19 @@ export_file = false
 trenchbroom_games_folder = ""
 game_name = "Qodot"
 icon = ExtResource("2_jej4n")
+map_formats = Array[Dictionary]([{
+"format": "Valve",
+"initialmap": "initial_valve.map"
+}, {
+"format": "Standard",
+"initialmap": "initial_standard.map"
+}, {
+"format": "Quake2",
+"initialmap": "initial_quake2.map"
+}, {
+"format": "Quake3"
+}])
+texture_exclusion_patterns = Array[String](["*_ao", "*_emission", "*_heightmap", "*_metallic", "*_normal", "*_orm", "*_roughness", "*_sss"])
 fgd_files = Array[Resource]([ExtResource("5_lvbhp"), ExtResource("5_j6v5h"), ExtResource("6_8ndd7"), ExtResource("6_6fyp8")])
 entity_scale = "1"
 default_uv_scale = Vector2(1, 1)

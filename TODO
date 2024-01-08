@@ -41,6 +41,7 @@ TODO add func_door
 TODO add func_conveyer
 TODO add func_ladder
 TODO add func_friction
+TODO add prop_static (maybe a better name?), clean up the existing demo_model and test_model stuff
 TODO add particles_cpu
 TODO add particles_gpu
 TODO add monster_spawner

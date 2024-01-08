@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="QodotFGDModelPointClass" load_steps=2 format=3 uid="uid://bbw6fpy0q6156"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_model_point_class.gd" id="1_keucf"]
+
+[resource]
+script = ExtResource("1_keucf")
+trenchbroom_working_folder = ""
+trenchbroom_models_folder = ""
+scale_expression = ""
+generate_size_property = true
+generate_gd_ignore_file = true
+apply_rotation_on_map_build = true
+classname = "test_model"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false

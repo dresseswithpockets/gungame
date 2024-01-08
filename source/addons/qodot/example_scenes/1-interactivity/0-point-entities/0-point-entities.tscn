@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1"]
 [ext_resource type="Resource" uid="uid://c36hv0o6g0udo" path="res://addons/qodot/game_definitions/fgd/qodot_fgd.tres" id="2"]
-[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://addons/qodot/textures/base/checkerboard.png" id="3"]
-[ext_resource type="Texture2D" uid="uid://bw7tponn4vieu" path="res://addons/qodot/textures/base/grid.png" id="5"]
+[ext_resource type="Texture2D" uid="uid://c31tbmy4phf2h" path="res://trenchbroom/textures/base/checkerboard.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://bw7tponn4vieu" path="res://trenchbroom/textures/base/grid.png" id="5"]
 [ext_resource type="PackedScene" uid="uid://b7ccfkajnmn64" path="res://addons/qodot/game_definitions/fgd/point_classes/physics_ball.tscn" id="6"]
 [ext_resource type="Script" path="res://addons/qodot/game_definitions/fgd/point_classes/physics_ball.gd" id="6_hcttl"]
 
@@ -129,22 +129,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -40, 1
 [node name="QodotMap" type="Node3D" parent="."]
 script = ExtResource("1")
 map_file = "C:/Users/Embyr/Desktop/qmap-development/addons/qodot/example_scenes/1-interactivity/0-point-entities/0-point-entities.map"
-inverse_scale_factor = 16.0
 entity_fgd = ExtResource("2")
 base_texture_dir = "res://addons/qodot/textures"
 texture_file_extensions = PackedStringArray("png")
-worldspawn_layers = []
-brush_clip_texture = "special/clip"
-face_skip_texture = "special/skip"
-texture_wads = []
-material_file_extension = "tres"
-unshaded = false
-default_material_albedo_uniform = ""
 default_material = SubResource("4")
-uv_unwrap_texel_size = 1.0
-print_profiling_data = false
-use_trenchbroom_group_hierarchy = false
-tree_attach_batch_size = null
 set_owner_batch_size = 16
 
 [node name="entity_0_worldspawn" type="StaticBody3D" parent="QodotMap"]

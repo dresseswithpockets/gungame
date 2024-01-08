@@ -47,22 +47,10 @@ far = 500.0
 [node name="QodotMap" type="Node3D" parent="."]
 script = ExtResource("3")
 map_file = "P:/Personal/Godot/Qodot/qodot-example/addons/qodot/example_scenes/2-miscallaneous/1-runtime-map-building/1-runtime-map-building.map"
-inverse_scale_factor = 16.0
 entity_fgd = ExtResource("14")
 base_texture_dir = "res://addons/qodot/textures"
 texture_file_extensions = PackedStringArray("png")
-worldspawn_layers = []
-brush_clip_texture = "special/clip"
-face_skip_texture = "special/skip"
-texture_wads = []
-material_file_extension = "tres"
-unshaded = false
-default_material_albedo_uniform = ""
 default_material = SubResource("3")
-uv_unwrap_texel_size = 1.0
-print_profiling_data = false
-use_trenchbroom_group_hierarchy = true
-tree_attach_batch_size = null
 set_owner_batch_size = 16
 
 [node name="UI" type="Control" parent="."]

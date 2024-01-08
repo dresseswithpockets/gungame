@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_gjc4m")
+apply_rotation_on_map_build = true
 classname = "demo_model"
 description = "A demonstration of importing a model into trenchbroom from Godot."
 qodot_internal = false
@@ -13,7 +14,7 @@ class_property_descriptions = {}
 meta_properties = {
 "color": Color(1, 1, 1, 1),
 "frame": 0,
-"path": "",
+"path": "models/suzanne.gltf",
 "scale": "",
 "size": AABB(-8, -8, -8, 8, 8, 8),
 "skin": 0
