@@ -45,8 +45,13 @@ TODO add func_door
 TODO add func_conveyer
 TODO add func_friction
 TODO add prop_static (maybe a better name?), clean up the existing demo_model and test_model stuff
-TODO add particles_cpu
-TODO add particles_gpu
+TODO add particles_generic
+TODO add particles_drip
+TODO add env_particles
+TODO add env_bubbles - particles prefab for bubbles
+TODO add env_rain - particles prefab for rain
+TODO add env_snow - particles prefab for snow
+TODO add env_drip - particles prefab for dripping water
 TODO add monster_spawner
 TODO add env_lightmap for baked LightmapGI support?
 DONE add "Full Build & Unwrap UV2" button to QodotMap toolbar
@@ -59,6 +64,10 @@ DONE add env_sprite with billboard and modulate properties
 TODO add modulation-over-time to env_sprite
 TODO add more flags/properties from Sprite3D to env_sprite
 TODO add env_sprite_animated
+TODO add env_glow - sprite prefab for a glow sprite
+TODO add env_beam - sprite prefab for a laser sprite between two points, with a flag for travelling through solids
+TODO add env_spark - multi-sprite prefab for a lightning-esque spark between two points, with random variation
+TODO add env_explosion - triggers an animated sprite, some particles, a decal, and a sound
 DONE add light_point
 DONE add light_directional
 TODO add more directional_show properties to light_directional
