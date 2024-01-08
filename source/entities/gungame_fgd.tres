@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=19 format=3 uid="uid://bxopc4p21rvtw"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=20 format=3 uid="uid://bxopc4p21rvtw"]
 
 [ext_resource type="Resource" uid="uid://bejuidw1vcb53" path="res://entities/gungame_base_fgd.tres" id="1_jnnhq"]
 [ext_resource type="Resource" uid="uid://b1tgac42735ym" path="res://entities/env_postprocess/env_postprocess.tres" id="2_1fv4s"]
@@ -18,6 +18,7 @@
 [ext_resource type="Resource" uid="uid://8utq80hki6us" path="res://entities/trigger_push/trigger_push_class.tres" id="14_2nsv0"]
 [ext_resource type="Resource" uid="uid://c728rm3p2rd3h" path="res://entities/trigger_impulse/trigger_impulse_class.tres" id="15_prbna"]
 [ext_resource type="Resource" uid="uid://bjjyp0s4n5w0a" path="res://entities/audio_global/audio_global_class.tres" id="17_u31qj"]
+[ext_resource type="Resource" uid="uid://6qr4i4450jt5" path="res://entities/audio_positional/audio_positional_class.tres" id="18_upomh"]
 
 [resource]
 script = ExtResource("5_20u7v")
@@ -25,4 +26,4 @@ export_file = false
 target_folder = ""
 fgd_name = "GunGame"
 base_fgd_files = Array[Resource]([ExtResource("1_jnnhq")])
-entity_definitions = Array[Resource]([ExtResource("2_k61cs"), ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("13_pn6gu"), ExtResource("17_u31qj")])
+entity_definitions = Array[Resource]([ExtResource("2_k61cs"), ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("13_pn6gu"), ExtResource("17_u31qj"), ExtResource("18_upomh")])

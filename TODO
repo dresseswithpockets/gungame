@@ -23,8 +23,9 @@ DONE refactor the impulse part of trigger_push into its own trigger_impulse enti
 DONE add trigger_gravity
 TODO add trigger_hurt
 TODO add trigger_teleport
-TODO add audio_positional
 DONE add audio_global
+DONE add audio_positional
+TODO add more features for attenuation, positional emission, doppler, etc, in audio_positional
 TODO add logic_chance
 TODO add logic_relay
 TODO add func_portal
