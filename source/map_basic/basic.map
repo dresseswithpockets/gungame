@@ -455,3 +455,54 @@
 "receiver_name" "pause"
 "targetname" "AudioGlobal_CanOpenOneshot_Reset"
 }
+// entity 31
+{
+"classname" "logic_chance"
+"origin" "-120 -792 24"
+"target" "AudioGlobal_CanOpen_Chance"
+"targetname" "Chance_CanOpen"
+"chance" "0.5"
+}
+// entity 32
+{
+"classname" "trigger"
+"target" "Chance_CanOpen"
+// brush 0
+{
+( -128 -736 208 ) ( -128 -800 208 ) ( -128 -800 16 ) __TB_empty -16 -16 0 1 1
+( -128 -800 208 ) ( -64 -800 208 ) ( -64 -800 16 ) __TB_empty 0 -16 0 1 1
+( -64 -800 16 ) ( -64 -736 16 ) ( -128 -736 16 ) __TB_empty 0 16 0 1 1
+( -128 -736 208 ) ( -64 -736 208 ) ( -64 -800 208 ) __TB_empty 0 16 0 1 1
+( -64 -736 16 ) ( -64 -736 208 ) ( -128 -736 208 ) __TB_empty 0 -16 0 1 1
+( -64 -800 208 ) ( -64 -736 208 ) ( -64 -736 16 ) __TB_empty -16 -16 0 1 1
+}
+}
+// entity 33
+{
+"classname" "illusionary"
+// brush 0
+{
+( -128 -736 208 ) ( -128 -800 208 ) ( -128 -800 16 ) layers/water 32 0 0 1 1
+( -128 -800 208 ) ( -64 -800 208 ) ( -64 -800 16 ) layers/water -320 0 0 1 1
+( -64 -800 16 ) ( -64 -736 16 ) ( -128 -736 16 ) layers/water -320 -32 0 1 1
+( -128 -736 208 ) ( -64 -736 208 ) ( -64 -800 208 ) layers/water -320 -32 0 1 1
+( -64 -736 16 ) ( -64 -736 208 ) ( -128 -736 208 ) layers/water -320 0 0 1 1
+( -64 -800 208 ) ( -64 -736 208 ) ( -64 -736 16 ) layers/water 32 0 0 1 1
+}
+}
+// entity 34
+{
+"classname" "point_label"
+"origin" "-96 -768 304"
+"text" "50% -> audio_global"
+"billboard" "2"
+}
+// entity 35
+{
+"classname" "audio_global"
+"origin" "-72 -792 104"
+"sound" "sounds/can_open_oneshot.wav"
+"targetname" "AudioGlobal_CanOpen_Chance"
+"volume_db" "-30"
+"pitch_scale" "1"
+}

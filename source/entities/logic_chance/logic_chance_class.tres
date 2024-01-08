@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://cayn1i8xlh23a"]
+
+[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="1_4tkb7"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_nwqbk"]
+[ext_resource type="Script" path="res://entities/logic_chance/LogicChance.cs" id="2_uhlyc"]
+[ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="2_vjq52"]
+
+[resource]
+script = ExtResource("1_nwqbk")
+script_class = ExtResource("2_uhlyc")
+apply_rotation_on_map_build = true
+classname = "logic_chance"
+description = "When used, has a set chance to trigger"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_4tkb7"), ExtResource("2_vjq52")])
+class_properties = {
+"chance": 0.5
+}
+class_property_descriptions = {
+"chance": "The chance, between 0.0 and 1.0, for the trigger to occur when used"
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Node"
+transient_node = false
