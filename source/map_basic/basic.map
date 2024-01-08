@@ -422,3 +422,45 @@
 "text" "trigger -> audio_positional"
 "billboard" "2"
 }
+// entity 27
+{
+"classname" "trigger"
+"target" "AudioGlobal_CanOpenOneshot_Reset"
+// brush 0
+{
+( -512 -896 208 ) ( -512 -960 208 ) ( -512 -960 16 ) __TB_empty 16 -16 0 1 1
+( -512 -960 208 ) ( -448 -960 208 ) ( -448 -960 16 ) __TB_empty 0 -16 0 1 1
+( -448 -960 16 ) ( -448 -896 16 ) ( -512 -896 16 ) __TB_empty 0 -16 0 1 1
+( -512 -896 208 ) ( -448 -896 208 ) ( -448 -960 208 ) __TB_empty 0 -16 0 1 1
+( -448 -896 16 ) ( -448 -896 208 ) ( -512 -896 208 ) __TB_empty 0 -16 0 1 1
+( -448 -960 208 ) ( -448 -896 208 ) ( -448 -896 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 28
+{
+"classname" "illusionary"
+// brush 0
+{
+( -512 -896 208 ) ( -512 -960 208 ) ( -512 -960 16 ) layers/water 192 0 0 1 1
+( -512 -960 208 ) ( -448 -960 208 ) ( -448 -960 16 ) layers/water -448 0 0 1 1
+( -448 -960 16 ) ( -448 -896 16 ) ( -512 -896 16 ) layers/water -448 -192 0 1 1
+( -512 -896 208 ) ( -448 -896 208 ) ( -448 -960 208 ) layers/water -448 -192 0 1 1
+( -448 -896 16 ) ( -448 -896 208 ) ( -512 -896 208 ) layers/water -448 0 0 1 1
+( -448 -960 208 ) ( -448 -896 208 ) ( -448 -896 16 ) layers/water 192 0 0 1 1
+}
+}
+// entity 29
+{
+"classname" "point_label"
+"origin" "-480 -928 304"
+"text" "trigger -> receiver(reset) -> audio_global"
+"billboard" "2"
+}
+// entity 30
+{
+"classname" "receiver"
+"origin" "-456 -904 200"
+"target" "AudioGlobal_CanOpenOneshot"
+"receiver_name" "pause"
+"targetname" "AudioGlobal_CanOpenOneshot_Reset"
+}
