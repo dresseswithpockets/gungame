@@ -16,7 +16,7 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
-TODO fixup gungame_fgd to inherit qodot essentials FGD, and remove worldspawn_solid entity definition from gungame_fgd
+DONE fixup gungame_fgd to inherit an essentials FGD, and remove worldspawn_solid entity definition from gungame_fgd
 DONE add trigger
 DONE add trigger_push
 DONE refactor the impulse part of trigger_push into its own trigger_impulse entity

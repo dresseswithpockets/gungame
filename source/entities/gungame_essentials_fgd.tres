@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=9 format=3 uid="uid://dxwdud3bpohve"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="1_6aew7"]
+[ext_resource type="Resource" uid="uid://dxp37dladbquv" path="res://addons/qodot/game_definitions/fgd/solid_classes/worldspawn_solid_class.tres" id="1_yogim"]
+[ext_resource type="Resource" uid="uid://dy7undvxjvodx" path="res://addons/qodot/game_definitions/fgd/solid_classes/illusionary_solid_class.tres" id="2_rayvd"]
+[ext_resource type="Resource" uid="uid://b8aisardk4k4u" path="res://addons/qodot/game_definitions/fgd/solid_classes/detail_solid_class.tres" id="3_o43jh"]
+[ext_resource type="Resource" uid="uid://bnbdy0cky2bo" path="res://addons/qodot/game_definitions/fgd/solid_classes/group_solid_class.tres" id="4_kabsa"]
+[ext_resource type="Resource" uid="uid://cw4s1hnxqetee" path="res://addons/qodot/game_definitions/fgd/solid_classes/func_group_solid_class.tres" id="5_lw6jl"]
+[ext_resource type="Resource" uid="uid://bu3h1cvdigp1i" path="res://addons/qodot/game_definitions/fgd/point_classes/signal_point_class.tres" id="6_t5we0"]
+[ext_resource type="Resource" uid="uid://dbh35xj5q8gvc" path="res://addons/qodot/game_definitions/fgd/point_classes/receiver_point_class.tres" id="7_honvw"]
+
+[resource]
+script = ExtResource("1_6aew7")
+export_file = false
+target_folder = ""
+fgd_name = "Qodot"
+base_fgd_files = Array[Resource]([])
+entity_definitions = Array[Resource]([ExtResource("1_yogim"), ExtResource("2_rayvd"), ExtResource("3_o43jh"), ExtResource("4_kabsa"), ExtResource("5_lw6jl"), ExtResource("6_t5we0"), ExtResource("7_honvw")])

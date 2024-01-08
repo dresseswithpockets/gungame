@@ -1,9 +1,9 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=20 format=3 uid="uid://bxopc4p21rvtw"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=19 format=3 uid="uid://bxopc4p21rvtw"]
 
 [ext_resource type="Resource" uid="uid://bejuidw1vcb53" path="res://entities/gungame_base_fgd.tres" id="1_jnnhq"]
 [ext_resource type="Resource" uid="uid://b1tgac42735ym" path="res://entities/env_postprocess/env_postprocess.tres" id="2_1fv4s"]
 [ext_resource type="Resource" uid="uid://dl4je7gnbbibp" path="res://entities/env_sprite/env_sprite_fgd_class.tres" id="2_16kin"]
-[ext_resource type="Resource" uid="uid://dxp37dladbquv" path="res://addons/qodot/game_definitions/fgd/solid_classes/worldspawn_solid_class.tres" id="2_k61cs"]
+[ext_resource type="Resource" uid="uid://dxwdud3bpohve" path="res://entities/gungame_essentials_fgd.tres" id="2_wmth6"]
 [ext_resource type="Resource" uid="uid://b0hhivnqbx5uc" path="res://entities/info_player_start/info_player_start_class.tres" id="3_tl7am"]
 [ext_resource type="Resource" uid="uid://cvo8yukcwnii3" path="res://entities/info_godot_scale/info_godot_scale_class.tres" id="4_j4wml"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_file.gd" id="5_20u7v"]
@@ -14,7 +14,6 @@
 [ext_resource type="Resource" uid="uid://beb75reolbqds" path="res://entities/debug_print/debug_print_class.tres" id="11_efcr4"]
 [ext_resource type="Resource" uid="uid://qe1b3eu3avvc" path="res://entities/point_label/point_label_class.tres" id="12_f2tlw"]
 [ext_resource type="Resource" uid="uid://caaugrrasoqjw" path="res://entities/trigger_gravity/trigger_gravity_class.tres" id="13_8t1lc"]
-[ext_resource type="Resource" uid="uid://dy7undvxjvodx" path="res://addons/qodot/game_definitions/fgd/solid_classes/illusionary_solid_class.tres" id="13_pn6gu"]
 [ext_resource type="Resource" uid="uid://8utq80hki6us" path="res://entities/trigger_push/trigger_push_class.tres" id="14_2nsv0"]
 [ext_resource type="Resource" uid="uid://c728rm3p2rd3h" path="res://entities/trigger_impulse/trigger_impulse_class.tres" id="15_prbna"]
 [ext_resource type="Resource" uid="uid://bjjyp0s4n5w0a" path="res://entities/audio_global/audio_global_class.tres" id="17_u31qj"]
@@ -25,5 +24,5 @@ script = ExtResource("5_20u7v")
 export_file = false
 target_folder = ""
 fgd_name = "GunGame"
-base_fgd_files = Array[Resource]([ExtResource("1_jnnhq")])
-entity_definitions = Array[Resource]([ExtResource("2_k61cs"), ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("13_pn6gu"), ExtResource("17_u31qj"), ExtResource("18_upomh")])
+base_fgd_files = Array[Resource]([ExtResource("1_jnnhq"), ExtResource("2_wmth6")])
+entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("17_u31qj"), ExtResource("18_upomh")])
