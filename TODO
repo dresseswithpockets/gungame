@@ -34,7 +34,10 @@ DONE add signal/receiver entities and test pause, reset, and restart audio_posit
 TODO add more features for attenuation, positional emission, doppler, etc, in audio_positional
 DONE add logic_chance
 DONE add logic_relay
-TODO add func_portal
+DONE add func_portal
+TODO update func_portal's viewport size dynamically whenever the player's viewport size changes
+TODO fix viewport in func_portal (why is it pink lol)
+TODO use angles or a surface normal to clip the brush-generated surface, instead of always using -z
 TODO add func_breakable
 TODO add func_button
 TODO add func_door

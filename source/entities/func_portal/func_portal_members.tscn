@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dy0fd3gfdngdy"]
+
+[ext_resource type="Script" path="res://entities/func_portal/func_portal_members.gd" id="1_0kxdg"]
+[ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="2_ulkij"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uhfkd"]
+viewport_path = NodePath("PortalViewportDepth1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3w3fm"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_ulkij")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = SubResource("ViewportTexture_uhfkd")
+
+[node name="FuncPortalMembers" type="Node3D"]
+script = ExtResource("1_0kxdg")
+material = SubResource("ShaderMaterial_3w3fm")
+
+[node name="PortalViewportDepth1" type="SubViewport" parent="."]
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1279, 719)
+
+[node name="Camera" type="Camera3D" parent="PortalViewportDepth1"]
+keep_aspect = 0
+cull_mask = 557055
+current = true

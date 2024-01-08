@@ -1,0 +1,51 @@
+[gd_scene load_steps=6 format=3 uid="uid://b4xftjqrht4nu"]
+
+[ext_resource type="Script" path="res://entities/func_portal/func_portal.gd" id="1_ad8xv"]
+[ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="2_ddckg"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_vlnkn"]
+viewport_path = NodePath("PortalViewportDepth1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tqle0"]
+resource_local_to_scene = true
+render_priority = 0
+shader = ExtResource("2_ddckg")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = SubResource("ViewportTexture_vlnkn")
+
+[sub_resource type="BoxMesh" id="BoxMesh_nyb8m"]
+size = Vector3(2.999, 1.999, 0.15)
+
+[node name="FuncPortal" type="Area3D"]
+script = ExtResource("1_ad8xv")
+
+[node name="VisibleOnScreenEnabler3D" type="VisibleOnScreenEnabler3D" parent="."]
+aabb = AABB(-1.625, -0.12, -0.0906342, 3.25, 2, 0.181268)
+enable_node_path = NodePath("../PortalViewportDepth1")
+
+[node name="PortalViewportDepth1" type="SubViewport" parent="."]
+handle_input_locally = false
+gui_disable_input = true
+size = Vector2i(1279, 719)
+
+[node name="Camera" type="Camera3D" parent="PortalViewportDepth1"]
+keep_aspect = 0
+cull_mask = 557055
+current = true
+
+[node name="SurfaceDepth1" type="Node3D" parent="."]
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="SurfaceDepth1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+layers = 262144
+material_override = SubResource("ShaderMaterial_tqle0")
+mesh = SubResource("BoxMesh_nyb8m")
