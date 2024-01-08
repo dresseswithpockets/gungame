@@ -243,7 +243,10 @@ public partial class Player : CharacterBody3D, IPushable
 
             // gravity is only applied when not grappling
             if (!IsOnFloor())
-                verticalSpeed -= gravity * deltaF;
+            {
+                var totalGravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity;
+                verticalSpeed += totalGravity.Y * deltaF;
+            }
         }
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
