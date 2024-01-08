@@ -20,7 +20,7 @@ TODO fixup gungame_fgd to inherit qodot essentials FGD, and remove worldspawn_so
 DONE add trigger
 DONE add trigger_push
 DONE refactor the impulse part of trigger_push into its own trigger_impulse entity
-TODO add trigger_gravity
+DONE add trigger_gravity
 TODO add trigger_hurt
 TODO add trigger_teleport
 TODO add audio_global
