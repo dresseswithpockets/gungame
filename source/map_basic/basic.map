@@ -367,7 +367,7 @@
 {
 "classname" "point_label"
 "origin" "-480 -768 304"
-"text" "trigger -> audio_global"
+"text" "-> audio_global"
 "billboard" "2"
 }
 // entity 22
@@ -419,7 +419,7 @@
 {
 "classname" "point_label"
 "origin" "-288 -768 304"
-"text" "trigger -> audio_positional"
+"text" "-> audio_positional"
 "billboard" "2"
 }
 // entity 27
@@ -453,7 +453,7 @@
 {
 "classname" "point_label"
 "origin" "-480 -928 304"
-"text" "trigger -> receiver(reset) -> audio_global"
+"text" "#reset-> audio_global"
 "billboard" "2"
 }
 // entity 30
