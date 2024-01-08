@@ -16,6 +16,9 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
+TODO add command to toggle render of trigger brushes
+TODO add command to toggle visual portal connections (an arrow between connected portals)
+TODO add command to toggle killtarget/target connections
 DONE fixup gungame_fgd to inherit an essentials FGD, and remove worldspawn_solid entity definition from gungame_fgd
 DONE add trigger
 DONE add trigger_push
@@ -25,6 +28,8 @@ TODO add trigger_hurt
 TODO add trigger_teleport
 DONE add audio_global
 DONE add audio_positional
+TODO add pause, reset, and restart inputs to audio_positional
+TODO add signal/receiver entities and test pause, reset, and restart audio_positional inputs with them
 TODO add more features for attenuation, positional emission, doppler, etc, in audio_positional
 TODO add logic_chance
 TODO add logic_relay
