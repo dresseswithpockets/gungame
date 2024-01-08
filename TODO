@@ -33,7 +33,7 @@ DONE add pause, reset, and restart inputs to audio_ entities
 DONE add signal/receiver entities and test pause, reset, and restart audio_positional inputs with them
 TODO add more features for attenuation, positional emission, doppler, etc, in audio_positional
 DONE add logic_chance
-TODO add logic_relay
+DONE add logic_relay
 TODO add func_portal
 TODO add func_breakable
 TODO add func_button
