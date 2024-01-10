@@ -16,7 +16,6 @@ TODO load user configurations from simple line-parsed .cfg files in user://
 TODO research crash logging, tracing, and reporting in godot
 
 # mapping/design tools
-TODO add command to toggle render of trigger brushes
 TODO add command to toggle visual portal connections (an arrow between connected portals)
 TODO add command to toggle killtarget/target connections
 TODO add command to toggle list of all sounds currently playing/audible to the player
