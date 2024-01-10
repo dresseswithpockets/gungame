@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=22 format=3 uid="uid://bxopc4p21rvtw"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=23 format=3 uid="uid://bxopc4p21rvtw"]
 
 [ext_resource type="Resource" uid="uid://bejuidw1vcb53" path="res://entities/gungame_base_fgd.tres" id="1_jnnhq"]
 [ext_resource type="Resource" uid="uid://b1tgac42735ym" path="res://entities/env_postprocess/env_postprocess.tres" id="2_1fv4s"]
@@ -20,7 +20,8 @@
 [ext_resource type="Resource" uid="uid://cayn1i8xlh23a" path="res://entities/logic_chance/logic_chance_class.tres" id="18_py4ro"]
 [ext_resource type="Resource" uid="uid://6qr4i4450jt5" path="res://entities/audio_positional/audio_positional_class.tres" id="18_upomh"]
 [ext_resource type="Resource" uid="uid://p2qcomv20vso" path="res://entities/logic_relay/logic_relay_class.tres" id="19_4cxkf"]
-[ext_resource type="Resource" uid="uid://bllwgpei7o2k6" path="res://entities/func_portal/func_portal_class.tres" id="20_2yd32"]
+[ext_resource type="Resource" uid="uid://cqqfyt2q7jvfk" path="res://entities/func_portal/func_portal_class.tres" id="20_2yd32"]
+[ext_resource type="Resource" uid="uid://bllwgpei7o2k6" path="res://entities/func_portal_seamless/func_portal_seamless_class.tres" id="20_h1hlq"]
 
 [resource]
 script = ExtResource("5_20u7v")
@@ -28,4 +29,4 @@ export_file = false
 target_folder = ""
 fgd_name = "GunGame"
 base_fgd_files = Array[Resource]([ExtResource("1_jnnhq"), ExtResource("2_wmth6")])
-entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("17_u31qj"), ExtResource("18_upomh"), ExtResource("18_py4ro"), ExtResource("19_4cxkf"), ExtResource("20_2yd32")])
+entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("17_u31qj"), ExtResource("18_upomh"), ExtResource("18_py4ro"), ExtResource("19_4cxkf"), ExtResource("20_h1hlq"), ExtResource("20_2yd32")])
