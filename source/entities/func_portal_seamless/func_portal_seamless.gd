@@ -1,8 +1,8 @@
 @tool
-class_name FuncPortal extends Area3D
+class_name FuncPortalSeamless extends Area3D
 
 @export var player_cam_group: StringName = &"player_cam"
-@export var linked_portal: FuncPortal
+@export var linked_portal: FuncPortalSeamless
 
 @export var sub_viewport: SubViewport
 @export var viewport_cam: Camera3D

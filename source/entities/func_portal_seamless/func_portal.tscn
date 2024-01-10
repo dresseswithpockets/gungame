@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b4xftjqrht4nu"]
 
-[ext_resource type="Script" path="res://entities/func_portal/func_portal.gd" id="1_ad8xv"]
+[ext_resource type="Script" path="res://entities/func_portal_seamless/func_portal_seamless.gd" id="1_ad8xv"]
 [ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="2_ddckg"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_vlnkn"]

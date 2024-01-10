@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_xjc63"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_mofc1"]
 [ext_resource type="Material" uid="uid://ddwdc3pwvedki" path="res://trenchbroom/textures/materials/uv_test_material.tres" id="3_66wj2"]
-[ext_resource type="Script" path="res://entities/func_portal/func_portal.gd" id="3_ejoc3"]
+[ext_resource type="Script" path="res://entities/func_portal_seamless/func_portal_seamless.gd" id="3_ejoc3"]
 [ext_resource type="Shader" path="res://entities/portal/fixed_shader.gdshader" id="4_53adi"]
 [ext_resource type="Script" path="res://entities/light_directional/light_directional.gd" id="8_1eecc"]
 [ext_resource type="PackedScene" uid="uid://dnrgqr8kfc21n" path="res://entities/player/player.tscn" id="9_4nq8e"]

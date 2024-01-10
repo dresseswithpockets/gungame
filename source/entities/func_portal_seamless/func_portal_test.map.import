@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://dfu8dnweu3s0e"
+path="res://.godot/imported/func_portal_test.map-2a8b5d8d25c46929cd9fc49667c61dd7.tres"
+
+[deps]
+
+source_file="res://entities/func_portal_seamless/func_portal_test.map"
+dest_files=["res://.godot/imported/func_portal_test.map-2a8b5d8d25c46929cd9fc49667c61dd7.tres"]
+
+[params]
+
