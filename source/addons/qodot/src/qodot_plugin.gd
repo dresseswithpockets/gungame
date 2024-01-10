@@ -188,6 +188,8 @@ func qodot_map_full_build(unwrap_after_build: bool = false) -> void:
     edited_object.build_failed.connect(qodot_map_build_complete.bind(edited_object))
     if unwrap_after_build:
         edited_object.build_complete.connect(qodot_map_unwrap_uv2)
+    elif edited_object.build_complete.is_connected(qodot_map_unwrap_uv2):
+        edited_object.build_complete.disconnect(qodot_map_unwrap_uv2)
 
     edited_object.verify_and_build()
 
