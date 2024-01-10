@@ -1,0 +1,16 @@
+[remap]
+
+importer="qodot.wad"
+type="Resource"
+uid="uid://cyip1x1gjvf4b"
+path="res://.godot/imported/lq_dev_legacy.wad-405480ccc37fd221403ae421b1c767b3.res"
+
+[deps]
+
+source_file="res://trenchbroom/textures/lq_dev_legacy/lq_dev_legacy.wad"
+dest_files=["res://.godot/imported/lq_dev_legacy.wad-405480ccc37fd221403ae421b1c767b3.res"]
+
+[params]
+
+palette_file="res://addons/qodot/palette.lmp"
+generate_mipmaps=true

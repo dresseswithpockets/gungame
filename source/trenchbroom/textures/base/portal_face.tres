@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://beovrkw5dh0d4"]
+
+[ext_resource type="Shader" path="res://trenchbroom/textures/base/portal_face.gdshader" id="1_gu3qe"]
+[ext_resource type="Texture2D" uid="uid://bcibf5rywaabu" path="res://trenchbroom/textures/base/portal_face.png" id="2_td7w4"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_gu3qe")
+shader_parameter/spin_rate = 1.0
+shader_parameter/uv_mid = Vector2(0.5, 0.5)
+shader_parameter/albedo = ExtResource("2_td7w4")
+shader_parameter/fresnel_amount = 4.0
+shader_parameter/fresnel_intensity = 5.0
+shader_parameter/fresnel_color = Color(0.572549, 0.0196078, 1, 1)
