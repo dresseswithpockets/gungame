@@ -20,7 +20,7 @@ var tracking_slicer: Array = []
 
 @onready var portal_shader: Shader = preload("res://entities/portal/fixed_shader.gdshader")
 @onready var slice_shader: Shader = preload("res://entities/portal/slice.gdshader")
-@onready var members_prefab: PackedScene = preload("res://entities/func_portal/func_portal_members.tscn")
+@onready var members_prefab: PackedScene = preload("res://entities/func_portal_seamless/func_portal_members.tscn")
 
 @export var properties: Dictionary:
     get:

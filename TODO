@@ -25,7 +25,7 @@ DONE add trigger_push
 DONE refactor the impulse part of trigger_push into its own trigger_impulse entity
 DONE add trigger_gravity
 TODO add trigger_hurt
-TODO add trigger_teleport
+DONE add trigger_teleport
 DONE add audio_global
 DONE add audio_positional
 DONE add pause, reset, and restart inputs to audio_ entities
@@ -33,11 +33,11 @@ DONE add signal/receiver entities and test pause, reset, and restart audio_posit
 TODO add more features for attenuation, positional emission, doppler, etc, in audio_positional
 DONE add logic_chance
 DONE add logic_relay
-DONE add func_portal
-DONE update func_portal's viewport size dynamically whenever the player's viewport size changes
-DONE fix viewport in func_portal (why is it pink lol)
+DONE add func_portal_seamless
+DONE update func_portal_seamless's viewport size dynamically whenever the player's viewport size changes
+DONE fix viewport in func_portal_seamless (why is it pink lol)
 TODO use angles or a surface normal to clip the brush-generated surface, instead of always using -z
-TODO find MVP for bug with func_portal viewports breaking in basic.map, submit to Godot github
+TODO find MVP for bug with func_portal_seamless viewports breaking in basic.map, submit to Godot github
 TODO add func_breakable
 TODO add func_button
 TODO add func_door
