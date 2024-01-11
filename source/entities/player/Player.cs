@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using Godot;
 
-public partial class Player : CharacterBody3D, IPushable
+public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 {
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
@@ -77,10 +77,13 @@ public partial class Player : CharacterBody3D, IPushable
     private Vector3 _continuousForce;
     private Vector3 _impulse;
 
+    private CapsuleShape3D _collisionCapsule;
+
     public override void _Ready()
     {
         _camera = GetNode<Camera3D>("Camera3D");
         _cameraStart = _camera.Position;
+        _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CapsuleShape3D;
     }
 
     public override void _Input(InputEvent @event)
@@ -374,5 +377,23 @@ public partial class Player : CharacterBody3D, IPushable
         Velocity = Velocity with { Y = amount.Y };
         _horizontalRunVelocity.X = amount.X;
         _horizontalRunVelocity.Z = amount.Z;
+    }
+
+    public void TeleportTo(Node3D targetNode)
+    {
+        // players origin is at their feet, but props and stuff have an origin at their center, so we can move the
+        // player relative to their feet instead. This is the default behaviour.
+        // TODO: should the feet-relative stuff be toggleable on the thing calling TeleportTo?
+        var targetPos = targetNode.GlobalPosition;
+        targetPos.Y -= _collisionCapsule.Height * 0.5f;
+        GlobalPosition = targetPos;
+        GlobalRotation = targetNode.GlobalRotation;
+
+        // redirect player's momentum
+        var forward = -GlobalTransform.Basis.Z;
+        _horizontalRunVelocity.Y = Velocity.Y;
+        _horizontalRunVelocity = forward * _horizontalRunVelocity.Length();
+        Velocity = Velocity with { Y = _horizontalRunVelocity.Y };
+        _horizontalRunVelocity.Y = 0f;
     }
 }
