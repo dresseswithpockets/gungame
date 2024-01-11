@@ -1,0 +1,113 @@
+using Godot;
+using Godot.Collections;
+using GunGame;
+
+[Tool]
+public partial class TriggerTeleport : Area3D
+{
+    private Dictionary _properties;
+    // the gdscript side expects lowercase properties :(
+    // ReSharper disable once InconsistentNaming
+    [Export]
+    public Dictionary properties
+    {
+        get => _properties;
+        set
+        {
+            if (_properties == value) return;
+            _properties = value;
+            UpdateProperties();
+        }
+    }
+
+    [Export] public Node3D targetNode;
+    [Export] public bool shouldPreserveMomentum;
+
+    [Signal]
+    // ReSharper disable once InconsistentNaming
+    public delegate void triggerEventHandler(Node3D activator);
+
+    private void UpdateProperties()
+    {
+        if (!Engine.IsEditorHint())
+            return;
+        
+        CollisionMask = (uint)properties.GetOrDefault("collision_mask", 0);
+        CollisionLayer = 0;
+
+        shouldPreserveMomentum = properties.GetOrDefault("preserve_momentum", false);
+        
+        // selfName is only used for debug purposes, so we can just default to Name
+        var selfName = properties.GetOrDefault("targetname", Name);
+        var targetPointName = properties.GetOrDefault("target", (string)null);
+        if (string.IsNullOrEmpty(targetPointName))
+        {
+            GD.PushWarning($"'{selfName}' has no target portal, so it will not link to anything.");
+            return;
+        }
+
+        var targetPoints = GetParent().Call("get_nodes_by_targetname", targetPointName).AsGodotObjectArray<Node>();
+        switch (targetPoints.Length)
+        {
+            case 0:
+                GD.PushWarning(
+                    $"'{selfName}' targets '{targetPointName}', but there are no entities with that name, so it will not link to anything.");
+                return;
+            case > 1:
+                GD.PushWarning($"'{selfName}' targets multiple entities named '{targetPointName}'. Will only link to the first one.");
+                break;
+        }
+
+        var targetPoint = targetPoints[0];
+        if (targetPoint == this)
+        {
+            GD.PushError($"'{selfName}' targets itself, but must target a different entity.");
+            return;
+        }
+
+        if (targetPoint is not Node3D targetPointNode)
+        {
+            GD.PushError($"'{selfName}' must target a Node3D-derived entity, but it targets '{targetPointName}', which doesn't derive from Node3D.");
+            return;
+        }
+
+        targetNode = targetPointNode;
+    }
+
+    public override void _Ready()
+    {
+        BodyEntered += OnBodyEntered;
+    }
+
+    private void OnBodyEntered(Node3D body)
+    {
+        EmitSignal(SignalName.trigger, body);
+        switch (body)
+        {
+            // some bodies - like the player - need to do some special stuff when teleporting, like preserving momentum
+            // in the direction of the teleport
+            case ITeleportTraveller traveller:
+                traveller.TeleportTo(targetNode);
+                return;
+            case RigidBody3D rigidBody:
+                // TODO: do we even *need* rigidbody? Maybe for projectiles and props...
+                // reorient the rigidbody's velocity
+                rigidBody.LinearVelocity = -targetNode.GlobalTransform.Basis.Z * rigidBody.LinearVelocity.Length();
+            
+                // TODO: RigidBody3D doesnt work well with direct manipulation like setting GlobalPosition/GlobalRotation
+                //       so, it would be best to override _IntegrateState in a custom class that we default to using instead
+                //       of RigidBody3D. This direct manipulation could instead be a fallback.
+                rigidBody.ConstantForce = -targetNode.GlobalTransform.Basis.Z * rigidBody.ConstantForce.Length();
+                break;
+        }
+
+        // we dont assign GlobalTransform, just in case targetNode has a non-(1,1,1) scale for some ungodly reason
+        body.GlobalPosition = targetNode.GlobalPosition;
+        body.GlobalRotation = targetNode.GlobalRotation;
+    }
+}
+
+internal interface ITeleportTraveller
+{
+    void TeleportTo(Node3D targetNode);
+}

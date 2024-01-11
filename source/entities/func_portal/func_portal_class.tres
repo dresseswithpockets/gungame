@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_1ebod"]
 [ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="1_orfaf"]
-[ext_resource type="Script" path="res://entities/func_portal/FuncPortal.cs" id="2_0f8b1"]
-[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="2_brdcq"]
+[ext_resource type="Resource" uid="uid://dofvuwf0rwsw2" path="res://entities/baseclasses/baseclass_collisionmask.tres" id="2_ut242"]
+[ext_resource type="Script" path="res://entities/trigger_teleport/TriggerTeleport.cs" id="4_jtjdu"]
 
 [resource]
 script = ExtResource("1_1ebod")
@@ -18,16 +18,16 @@ collision_layer = 0
 collision_mask = 2
 collision_priority = 1.0
 collision_shape_margin = 0.04
-script_class = ExtResource("2_0f8b1")
+script_class = ExtResource("4_jtjdu")
 classname = "func_portal"
-description = "Non-seamless portal prefab"
+description = "Like a trigger-teleport, but has visuals enabled"
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("1_orfaf"), ExtResource("2_brdcq")])
+base_classes = Array[Resource]([ExtResource("1_orfaf"), ExtResource("2_ut242")])
 class_properties = {}
 class_property_descriptions = {}
 meta_properties = {
 "color": Color(0.8, 0.8, 0.8, 1),
 "size": AABB(-8, -8, -8, 8, 8, 8)
 }
-node_class = ""
+node_class = "Area3D"
 transient_node = false
