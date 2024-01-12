@@ -14,6 +14,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     [Export(hintString: "suffix:m/s²")] public float runDeceleration = 50f;
     [Export(hintString: "suffix:m/s")] public float runNormalSpeedCap = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
+    [Export(hintString: "suffix:m")] public float maxStepHeight = 0.2f;
 
 
     [ExportCategory("Run Bobbing")]
@@ -36,8 +37,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     [Export(hintString: "suffix:s")] public float cameraLandingBobTime = 0.27f;
 
     [ExportCategory("Jumping & Falling")]
-    [Export(hintString: "suffix:m/s²")]
-    public float gravity = 15f;
+    [Export]
+    public float gravityScale = 1.0f;
 
     [Export(hintString: "suffix:m/s")] public float jumpSpeed = 4.6f;
     [Export(hintString: "suffix:s")] public float jumpBufferTime = 0.3f;
@@ -77,13 +78,14 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     private Vector3 _continuousForce;
     private Vector3 _impulse;
 
-    private CapsuleShape3D _collisionCapsule;
+    private CylinderShape3D _collisionCapsule;
 
     public override void _Ready()
     {
         _camera = GetNode<Camera3D>("Camera3D");
         _cameraStart = _camera.Position;
-        _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CapsuleShape3D;
+        _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CylinderShape3D;
+        FloorSnapLength = maxStepHeight;
     }
 
     public override void _Input(InputEvent @event)
@@ -197,6 +199,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
+        var gravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity * gravityScale;
+
         if (_isPulledByGrappleHook)
         {
             var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
@@ -247,21 +251,23 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
             // gravity is only applied when not grappling
             if (!IsOnFloor())
             {
-                var totalGravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity;
-                verticalSpeed += totalGravity.Y * deltaF;
+                verticalSpeed += gravity.Y * deltaF;
             }
         }
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 
+        var velocityUsedByStepUp = SweepStepUp(deltaF);
+        Velocity = _horizontalRunVelocity with { Y = verticalSpeed } - velocityUsedByStepUp;
+        
         var preMoveOnFloor = IsOnFloor();
-        Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
         MoveAndSlide();
 
         // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
         // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
         if (IsOnFloor() && !preMoveOnFloor)
         {
+            GD.Print("Was in air, landed");
             _cameraLandingBobTimer = cameraLandingBobTime;
             Velocity = Velocity with { Y = 0f };
 
@@ -269,11 +275,38 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
                 _shouldDoBufferJump = true;
         }
 
-        PostMove_LandingBob(deltaF);
+        //PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useMaxRunSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
 
         _impulse = Vector3.Zero;
+    }
+
+    private Vector3 SweepStepUp(float deltaF)
+    {
+        if (!IsOnFloor() || _horizontalRunVelocity is { X: 0, Z: 0 })
+            return Vector3.Zero;
+     
+        var horizontalTravelledByStepping = Vector3.Zero;   
+        var maxPossibleStepHeight = maxStepHeight;
+        var testTransform = GlobalTransform;
+        var collisionInfo = new KinematicCollision3D();
+        if (TestMove(testTransform, Vector3.Up * maxStepHeight, collisionInfo, SafeMargin))
+            maxPossibleStepHeight = collisionInfo.GetTravel().Y;
+
+        var horizontalTravel = _horizontalRunVelocity * deltaF;
+        testTransform.Origin.Y += maxPossibleStepHeight;
+        if (TestMove(testTransform, horizontalTravel, collisionInfo, SafeMargin))
+            horizontalTravel = collisionInfo.GetTravel();
+
+        testTransform.Origin += horizontalTravel;
+        if (TestMove(testTransform, Vector3.Down * maxPossibleStepHeight, collisionInfo, SafeMargin))
+        {
+            GlobalPosition = (GlobalPosition + horizontalTravel) with { Y = collisionInfo.GetPosition().Y };
+            horizontalTravelledByStepping = horizontalTravel;
+        }
+
+        return horizontalTravelledByStepping / deltaF;
     }
 
     private void ResetJumpBuffer()

@@ -117,6 +117,8 @@ DONE give "burst accel" at start of grapple
 DONE experiment with different grapple accel strengths
 DONE remove grapple hook when player gets close to it
 DONE add grapple hook cooldown
+DONE add stair stepping to player controller
+TODO make player camera smooth from vertical motion (i.e stair stepping)
 TODO rewrite portal logic in C#
 TODO fix osclliation with grapple hook when player stuck behind an obstacle (apply friction when player is touching a wall or something?)
 TODO grapple hook bhopping? this may not be realistic with the ultrakill-like grapple hook anymore
