@@ -51,6 +51,8 @@ TODO add env_bubbles - particles prefab for bubbles
 TODO add env_rain - particles prefab for rain
 TODO add env_snow - particles prefab for snow
 TODO add env_drip - particles prefab for dripping water
+TODO add env_portalstars - particles prefab to put in front of portals
+TODO add env_portalsparks - particles prefab to trigger when the player exits a portal
 TODO add monster_spawner
 TODO add env_lightmap for baked LightmapGI support?
 DONE add "Full Build & Unwrap UV2" button to QodotMap toolbar
