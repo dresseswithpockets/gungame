@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://c3efvme541xmo"]
+[gd_scene load_steps=130 format=3 uid="uid://c3efvme541xmo"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_sb6f4"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_lqwfk"]
@@ -35,6 +35,7 @@
 [ext_resource type="Texture2D" uid="uid://6j5kispuwh44" path="res://trenchbroom/textures/lq_liquidsky/star_tele4_fbr.png" id="30_7kplx"]
 [ext_resource type="PackedScene" uid="uid://bi36owxii4x7q" path="res://entities/info_player_start/info_player_start.tscn" id="31_tau2t"]
 [ext_resource type="AudioStream" uid="uid://im28latal8jl" path="res://lq_sounds/misc/r_tele4.wav" id="32_htr5y"]
+[ext_resource type="Texture2D" uid="uid://dhmxy0y7itf6v" path="res://textures/bubble.png" id="36_yfc0q"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1ckq"]
 texture_filter = 0
@@ -481,6 +482,29 @@ _surfaces = [{
 points = PackedVector3Array(-0.03125, 1.1875, -1, -0.03125, -1.1875, -1, 0.03125, -1.1875, -1, 0.03125, 1.1875, -1, -0.03125, 1.1875, 1, -0.03125, -1.1875, 1, 0.03125, -1.1875, 1, 0.03125, 1.1875, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g8hen"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ro1by"]
+emission_shape = 3
+emission_box_extents = Vector3(0.5, 0.1, 0.5)
+direction = Vector3(0, 1, 0)
+spread = 10.0
+initial_velocity_min = 0.1
+initial_velocity_max = 0.2
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ja3p1"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("36_yfc0q")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_qeq7v"]
+material = SubResource("StandardMaterial3D_ja3p1")
+size = Vector2(0.04, 0.04)
 
 [node name="map_basic" type="Node3D"]
 
@@ -1501,6 +1525,14 @@ constant_force = Vector3(20, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("BoxShape3D_g8hen")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4854, 0)
+amount = 16
+lifetime = 10.0
+visibility_aabb = AABB(-0.41552, -0.131232, -0.64735, 0.819108, 2.1404, 1.14634)
+process_material = SubResource("ParticleProcessMaterial_ro1by")
+draw_pass_1 = SubResource("QuadMesh_qeq7v")
 
 [connection signal="trigger" from="QodotMap/entity_5_trigger" to="QodotMap/entity_6_debug_print" method="use"]
 [connection signal="trigger" from="QodotMap/entity_19_trigger" to="QodotMap/entity_21_audio_global" method="use"]
