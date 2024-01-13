@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dn2mhuvxxd18q"]
+
+[ext_resource type="Texture2D" uid="uid://djcnp8j3fsdbg" path="res://trenchbroom/textures/materials/glass_transparent.png" id="1_n83up"]
+
+[resource]
+transparency = 1
+blend_mode = 1
+albedo_texture = ExtResource("1_n83up")
+texture_filter = 0
