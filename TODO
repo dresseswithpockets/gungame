@@ -50,7 +50,7 @@ TODO add env_particles
 DONE add env_bubbles - particles prefab for bubbles
 TODO add env_rain - particles prefab for rain
 TODO add env_snow - particles prefab for snow
-TODO add env_drip - particles prefab for dripping water
+DONE add env_drip - particles prefab for dripping water
 DONE add env_heightfield - for generating collision shapes for particles
 TODO add env_portalstars - particles prefab to put in front of portals
 TODO add env_portalsparks - particles prefab to trigger when the player exits a portal
