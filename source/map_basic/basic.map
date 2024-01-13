@@ -1048,3 +1048,24 @@
 "text" "Clipped Stepping"
 "billboard" "2"
 }
+// entity 54
+{
+"classname" "env_bubbles"
+"angles" "-90 0 0"
+// brush 0
+{
+( 192 -576 96 ) ( 192 -704 96 ) ( 192 -704 64 ) __TB_empty 0 16 0 1 1
+( 192 -704 96 ) ( 320 -704 96 ) ( 320 -704 64 ) __TB_empty 0 16 0 1 1
+( 320 -704 64 ) ( 320 -576 64 ) ( 192 -576 64 ) __TB_empty 0 0 0 1 1
+( 192 -576 96 ) ( 320 -576 96 ) ( 320 -704 96 ) __TB_empty 0 0 0 1 1
+( 320 -576 64 ) ( 320 -576 96 ) ( 192 -576 96 ) __TB_empty 0 16 0 1 1
+( 320 -704 96 ) ( 320 -576 96 ) ( 320 -576 64 ) __TB_empty 0 16 0 1 1
+}
+}
+// entity 55
+{
+"classname" "point_label"
+"origin" "256 -640 304"
+"text" "env_bubbles"
+"billboard" "2"
+}
