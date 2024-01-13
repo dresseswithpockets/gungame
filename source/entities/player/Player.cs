@@ -210,7 +210,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
                 // the grapple hook, but always ensure at least grappleHookMinimumSpeed speed and at most
                 // useMaxRunSpeed speed
                 var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
-                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed, useMaxRunSpeed);
+                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed, Mathf.Max(grappleHookMinimumSpeed, useMaxRunSpeed));
                 var transposed = grappleDirection * newSpeed;
                 _horizontalRunVelocity = transposed with { Y = 0f };
                 verticalSpeed = transposed.Y;
