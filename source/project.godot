@@ -70,6 +70,7 @@ grapple_hook={
 
 [layer_names]
 
+3d_render/layer_1="world"
 2d_render/layer_2="portal_recurse"
 3d_render/layer_2="portals"
 3d_render/layer_16="portal_5"
