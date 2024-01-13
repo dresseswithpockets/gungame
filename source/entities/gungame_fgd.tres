@@ -24,8 +24,8 @@
 [ext_resource type="Resource" uid="uid://cqqfyt2q7jvfk" path="res://entities/func_portal/func_portal_class.tres" id="20_2yd32"]
 [ext_resource type="Resource" uid="uid://bllwgpei7o2k6" path="res://entities/func_portal_seamless/func_portal_seamless_class.tres" id="20_h1hlq"]
 [ext_resource type="Resource" uid="uid://cl1eiynhicccv" path="res://entities/info_point/info_point.tres" id="23_4b45y"]
-[ext_resource type="Resource" uid="uid://b0isd2q5wvvai" path="res://entities/env_bubbles/env_bubbles_class.tres" id="24_x7e2v"]
-[ext_resource type="Resource" uid="uid://ddohxreb8hs0g" path="res://entities/env_drip/env_drip_class.tres" id="25_gxhdv"]
+[ext_resource type="Resource" uid="uid://b0isd2q5wvvai" path="res://entities/env_particles/env_bubbles_class.tres" id="24_x7e2v"]
+[ext_resource type="Resource" uid="uid://ddohxreb8hs0g" path="res://entities/env_particles/env_drip_class.tres" id="25_gxhdv"]
 [ext_resource type="Resource" uid="uid://bp0gd3y0lrdti" path="res://entities/env_heightfield/env_heightfield_class.tres" id="26_iwn2o"]
 
 [resource]

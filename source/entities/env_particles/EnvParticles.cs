@@ -3,7 +3,7 @@ using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class EnvDrip : GpuParticles3D
+public partial class EnvParticles : GpuParticles3D
 {
     private Dictionary _properties;
     // the gdscript side expects lowercase properties :(
@@ -25,8 +25,22 @@ public partial class EnvDrip : GpuParticles3D
         if (!Engine.IsEditorHint())
             return;
 
+        var useName = properties.GetOrDefault("targetname", (string)null);
+        if (string.IsNullOrEmpty(useName))
+            useName = Name;
+        
+        var particlePassName = properties.GetOrDefault("particle", "particles/env_drip_pass1.tres");
+        if (!particlePassName.StartsWith("res://"))
+            particlePassName = $"res://{particlePassName}";
+        if (!ResourceLoader.Exists(particlePassName, nameof(Mesh)))
+        {
+            GD.PushError($"'{useName}' points to a non-existent particle asset '{particlePassName}'");
+            // TODO: warn in console?
+            return;
+        }
+
         var meshInstance = this.FindFirstImmediateChild<MeshInstance3D>();
-        var extents = Vector3.Zero;
+        Vector3 extents;
         if (meshInstance == null || !IsInstanceValid(meshInstance))
         {
             if (ProcessMaterial is not ParticleProcessMaterial particleProcessMaterial)
@@ -58,10 +72,13 @@ public partial class EnvDrip : GpuParticles3D
         processMaterial.Spread = properties.GetOrDefault("spread", 10f);
         processMaterial.InitialVelocityMin = properties.GetOrDefault("speed_min", 0.1f);
         processMaterial.InitialVelocityMax = properties.GetOrDefault("speed_max", 0.2f);
-        processMaterial.CollisionMode = ParticleProcessMaterial.CollisionModeEnum.HideOnContact;
+        processMaterial.CollisionMode =
+            (ParticleProcessMaterial.CollisionModeEnum)properties.GetOrDefault("collision_mode",
+                (int)ParticleProcessMaterial.CollisionModeEnum.Disabled);
+        processMaterial.Gravity = properties.GetOrDefault("gravity", Vector3.Down * -10f);
         ProcessMaterial = processMaterial;
         DrawPasses = 1;
-        DrawPass1 = GD.Load<Mesh>("res://entities/env_drip/env_drip_pass1.tres");
+        DrawPass1 = GD.Load<Mesh>(particlePassName);
         Lifetime = properties.GetOrDefault("lifetime", 10f);
         Amount = properties.GetOrDefault("amount", 16);
         Emitting = properties.GetOrDefault("emit_on_spawn", true);
