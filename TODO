@@ -26,6 +26,7 @@ DONE refactor the impulse part of trigger_push into its own trigger_impulse enti
 DONE add trigger_gravity
 TODO add trigger_hurt
 DONE add trigger_teleport
+TODO fix trigger_teleport not linking targets anymore (it was in an earlier commit)
 DONE add audio_global
 DONE add audio_positional
 DONE add pause, reset, and restart inputs to audio_ entities
@@ -44,8 +45,6 @@ TODO add func_door
 TODO add func_conveyer
 TODO add func_friction
 TODO add prop_static (maybe a better name?), clean up the existing demo_model and test_model stuff
-TODO add particles_generic
-TODO add particles_drip
 TODO add env_particles
 DONE add env_bubbles - particles prefab for bubbles
 TODO add env_rain - particles prefab for rain
@@ -54,6 +53,7 @@ DONE add env_drip - particles prefab for dripping water
 DONE add env_heightfield - for generating collision shapes for particles
 TODO add env_portalstars - particles prefab to put in front of portals
 TODO add env_portalsparks - particles prefab to trigger when the player exits a portal
+TODO fix env_heightfield just not working lol
 TODO add monster_spawner
 TODO add env_lightmap for baked LightmapGI support?
 DONE add "Full Build & Unwrap UV2" button to QodotMap toolbar
