@@ -1,0 +1,15 @@
+[gd_resource type="QuadMesh" load_steps=3 format=3 uid="uid://7bxn30pceid1"]
+
+[ext_resource type="Texture2D" uid="uid://cllnb2ug0nupj" path="res://textures/rain.png" id="1_5gr53"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vgr0l"]
+transparency = 1
+shading_mode = 0
+albedo_texture = ExtResource("1_5gr53")
+texture_filter = 0
+billboard_mode = 2
+billboard_keep_scale = true
+
+[resource]
+material = SubResource("StandardMaterial3D_vgr0l")
+size = Vector2(0.1, 0.1)

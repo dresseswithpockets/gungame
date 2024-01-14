@@ -80,9 +80,14 @@ public partial class EnvParticles : GpuParticles3D
         DrawPasses = 1;
         DrawPass1 = GD.Load<Mesh>(particlePassName);
         Lifetime = properties.GetOrDefault("lifetime", 10f);
-        Amount = properties.GetOrDefault("amount", 16);
         Emitting = properties.GetOrDefault("emit_on_spawn", true);
         OneShot = properties.GetOrDefault("one_shot", false);
+        
+        var density = properties.GetOrDefault("density", 0f);
+        if (density == 0)
+            Amount = properties.GetOrDefault("amount", 16);
+        else
+            Amount = (int)(density * extents.X * extents.Y * 2f);
     }
 
     // ReSharper disable once InconsistentNaming

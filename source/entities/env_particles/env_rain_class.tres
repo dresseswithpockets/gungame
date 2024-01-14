@@ -1,12 +1,12 @@
-[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=5 format=3 uid="uid://ddohxreb8hs0g"]
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=5 format=3 uid="uid://bc1n4c22oupep"]
 
-[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_1eo1f"]
-[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="2_ih2q6"]
-[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="3_ox8xw"]
-[ext_resource type="Script" path="res://entities/env_particles/EnvParticles.cs" id="4_pebif"]
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_dh0gh"]
+[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="2_7853c"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="3_ti0dv"]
+[ext_resource type="Script" path="res://entities/env_particles/EnvParticles.cs" id="4_qridh"]
 
 [resource]
-script = ExtResource("3_ox8xw")
+script = ExtResource("3_ti0dv")
 spawn_type = 2
 build_visuals = true
 use_in_baked_light = true
@@ -18,13 +18,13 @@ collision_layer = 0
 collision_mask = 0
 collision_priority = 1.0
 collision_shape_margin = 0.04
-script_class = ExtResource("4_pebif")
-classname = "env_drip"
+script_class = ExtResource("4_qridh")
+classname = "env_rain"
 description = ""
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("1_1eo1f"), ExtResource("2_ih2q6")])
+base_classes = Array[Resource]([ExtResource("1_dh0gh"), ExtResource("2_7853c")])
 class_properties = {
-"amount": 1,
+"amount": 2000,
 "collision_mode": {
 "Disabled": 0,
 "HideOnContact": 2,
@@ -32,13 +32,13 @@ class_properties = {
 },
 "density": 0.0,
 "emit_on_spawn": true,
-"gravity": Vector3(0, -10, 0),
-"lifetime": 1.0,
+"gravity": Vector3(0, 0, 0),
+"lifetime": 2.0,
 "one_shot": false,
-"particle": "particles/env_drip_pass1.tres",
-"speed_max": 0.2,
-"speed_min": 0.1,
-"spread": 10.0
+"particle": "particles/env_rain_pass1.tres",
+"speed_max": 30.0,
+"speed_min": 20.0,
+"spread": 5.0
 }
 class_property_descriptions = {
 "collision_mode": ["Whether or not particles should collide with particle colliders. Rigid makes the particles act like rigidbodies. HideOnContact hides the particle after it collides.", 2],

@@ -30,6 +30,7 @@ class_properties = {
 "HideOnContact": 2,
 "Rigid": 1
 },
+"density": 0.0,
 "emit_on_spawn": true,
 "gravity": Vector3(0, 0, 0),
 "lifetime": 10.0,
@@ -40,7 +41,8 @@ class_properties = {
 "spread": 10.0
 }
 class_property_descriptions = {
-"collision_mode": ["Whether or not particles should collide with particle colliders. Rigid makes the particles act like rigidbodies. HideOnContact hides the particle after it collides.", 0]
+"collision_mode": ["Whether or not particles should collide with particle colliders. Rigid makes the particles act like rigidbodies. HideOnContact hides the particle after it collides.", 0],
+"density": "Particle density to use to calculate particle amount based on the AABB of the brush. If zero, uses 'amount' instead."
 }
 meta_properties = {
 "color": Color(0.8, 0.8, 0.8, 1),
