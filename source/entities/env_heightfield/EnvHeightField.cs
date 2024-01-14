@@ -34,13 +34,13 @@ public partial class EnvHeightField : GpuParticlesCollisionHeightField3D
             meshInstance.QueueFree();
         }
 
-        ToggleUpdateOnce();
+        // immediately gets set back to WhenMoved next frame
+        UpdateMode = UpdateModeEnum.Always;
     }
 
-    private async void ToggleUpdateOnce()
+    public override void _Process(double delta)
     {
-        UpdateMode = UpdateModeEnum.Always;
-        await ToSignal(GetTree(), SceneTree.SignalName.ProcessFrame);
-        UpdateMode = UpdateModeEnum.WhenMoved;
+        if (Engine.IsEditorHint() && UpdateMode == UpdateModeEnum.Always)
+            UpdateMode = UpdateModeEnum.WhenMoved;
     }
 }
