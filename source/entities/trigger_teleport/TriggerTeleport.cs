@@ -80,7 +80,8 @@ public partial class TriggerTeleport : Area3D
 
     public override void _Ready()
     {
-        BodyEntered += OnBodyEntered;
+        if (!Engine.IsEditorHint())
+            BodyEntered += OnBodyEntered;
     }
 
     private void OnBodyEntered(Node3D body)
