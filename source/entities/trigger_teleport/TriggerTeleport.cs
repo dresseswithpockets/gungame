@@ -45,7 +45,7 @@ public partial class TriggerTeleport : Area3D
         }
 
         var parent = GetParent();
-        if (parent == null || IsInstanceValid(parent))
+        if (parent == null || !IsInstanceValid(parent))
         {
             GD.PushWarning($"Couldn't setup targets in '{Name}' because GetParent() returned null.");
             return;
