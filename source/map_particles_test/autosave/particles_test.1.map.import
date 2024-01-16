@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bqmncucfjx2n2"
+path="res://.godot/imported/particles_test.1.map-67e83f76210c13ac45cd04aef5ec7e25.tres"
+
+[deps]
+
+source_file="res://map_particles_test/autosave/particles_test.1.map"
+dest_files=["res://.godot/imported/particles_test.1.map-67e83f76210c13ac45cd04aef5ec7e25.tres"]
+
+[params]
+
