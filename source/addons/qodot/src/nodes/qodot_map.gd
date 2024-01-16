@@ -1220,9 +1220,12 @@ func apply_properties() -> void:
                         # Everything else
                         else:
                             properties[property] = prop_default
-                        
+        
         if 'properties' in entity_node:
             entity_node.properties = properties
+            # TODO replace this with UpdateProperties after everything has moved to ExUpdateProperties
+            if "ExUpdateProperties" in entity_node:
+                entity_node.ExUpdateProperties(self)
 
 ## Wire signals based on Trenchbroom [code]target[/code] and [code]targetname[/code] properties
 func connect_signals() -> void:
