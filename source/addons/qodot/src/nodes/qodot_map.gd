@@ -1285,15 +1285,18 @@ func connect_signal(entity_node: Node, target_node: Node) -> void:
         for node in target_nodes:
             var signal_list = entity_node.get_signal_list()
             for signal_dict in signal_list:
-                if signal_dict['name'] == 'trigger':
-                    entity_node.connect("trigger",Callable(node,receiver_name),CONNECT_PERSIST)
+                var signal_name = signal_dict['name']
+                if signal_name == 'trigger' or signal_name == 'Trigger':
+                    entity_node.connect(signal_name,Callable(node,receiver_name),CONNECT_PERSIST)
                     break
     else:
         # entity -> entity
         var signal_list = entity_node.get_signal_list()
         for signal_dict in signal_list:
-            if signal_dict['name'] == 'trigger':
-                entity_node.connect("trigger",Callable(target_node,"use"),CONNECT_PERSIST)
+            var signal_name = signal_dict['name']
+            if signal_name == 'trigger' or signal_name == 'Trigger':
+                var target_receiver_name = "Use" if "Use" in target_node else "use"
+                entity_node.connect(signal_name,Callable(target_node, target_receiver_name),CONNECT_PERSIST)
                 break
 
 ## Remove nodes marked transient. See [member QodotFGDClass.transient_node]
