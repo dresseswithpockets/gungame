@@ -24,8 +24,7 @@ public partial class TriggerTeleport : Area3D
     [Export] public bool shouldPreserveMomentum;
 
     [Signal]
-    // ReSharper disable once InconsistentNaming
-    public delegate void triggerEventHandler(Node3D activator);
+    public delegate void TriggerEventHandler(Node3D activator);
 
     private void UpdateProperties()
     {
@@ -86,7 +85,7 @@ public partial class TriggerTeleport : Area3D
 
     private void OnBodyEntered(Node3D body)
     {
-        EmitSignal(SignalName.trigger, body);
+        EmitSignal(SignalName.Trigger, body);
         switch (body)
         {
             // some bodies - like the player - need to do some special stuff when teleporting, like preserving momentum
