@@ -3,7 +3,7 @@ using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class EnvHeightField : GpuParticlesCollisionHeightField3D
+public partial class EnvHeightField : Node3D
 {
     [Export] public Dictionary properties;
 
@@ -12,22 +12,34 @@ public partial class EnvHeightField : GpuParticlesCollisionHeightField3D
         if (!Engine.IsEditorHint())
             return;
 
+        var size = Vector3.Zero;
+        var heightField = this.FindFirstImmediateChild<GpuParticlesCollisionHeightField3D>();
+        if (heightField != null)
+        {
+            size = heightField.Size;
+            RemoveChild(heightField);
+            heightField.QueueFree();
+        }
+
         var meshInstance = this.FindFirstImmediateChild<MeshInstance3D>();
         if (meshInstance != null && IsInstanceValid(meshInstance))
         {
             //Position = meshInstance.GetAabb().Position;
-            Size = meshInstance.GetAabb().Size;
+            size = meshInstance.GetAabb().Size;
             RemoveChild(meshInstance);
             meshInstance.QueueFree();
         }
 
-        // immediately gets set back to WhenMoved next frame
-        UpdateMode = UpdateModeEnum.Always;
-    }
-
-    public override void _Process(double delta)
-    {
-        if (Engine.IsEditorHint() && UpdateMode == UpdateModeEnum.Always)
-            UpdateMode = UpdateModeEnum.WhenMoved;
+        heightField = new GpuParticlesCollisionHeightField3D();
+        heightField.Size = size;
+        AddChild(heightField);
+        if (!IsInsideTree()) return;
+        
+        var tree = GetTree();
+        if (tree == null || !IsInstanceValid(tree)) return;
+        
+        var editedSceneRoot = tree.EditedSceneRoot;
+        if (editedSceneRoot != null && IsInstanceValid(editedSceneRoot))
+            heightField.Owner = editedSceneRoot;
     }
 }
