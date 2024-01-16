@@ -210,7 +210,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
                 // the grapple hook, but always ensure at least grappleHookMinimumSpeed speed and at most
                 // useMaxRunSpeed speed
                 var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
-                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed, Mathf.Max(grappleHookMinimumSpeed, useMaxRunSpeed));
+                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed,
+                    Mathf.Max(grappleHookMinimumSpeed, useMaxRunSpeed));
                 var transposed = grappleDirection * newSpeed;
                 _horizontalRunVelocity = transposed with { Y = 0f };
                 verticalSpeed = transposed.Y;
@@ -259,7 +260,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 
         var velocityUsedByStepUp = SweepStepUp(deltaF);
         Velocity = _horizontalRunVelocity with { Y = verticalSpeed } - velocityUsedByStepUp;
-        
+
         var preMoveOnFloor = IsOnFloor();
         MoveAndSlide();
 
@@ -286,8 +287,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     {
         if (!IsOnFloor() || _horizontalRunVelocity is { X: 0, Z: 0 })
             return Vector3.Zero;
-     
-        var horizontalTravelledByStepping = Vector3.Zero;   
+
+        var horizontalTravelledByStepping = Vector3.Zero;
         var maxPossibleStepHeight = maxStepHeight;
         var testTransform = GlobalTransform;
         var collisionInfo = new KinematicCollision3D();
