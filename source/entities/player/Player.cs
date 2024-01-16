@@ -301,7 +301,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
             horizontalTravel = collisionInfo.GetTravel();
 
         testTransform.Origin += horizontalTravel;
-        if (TestMove(testTransform, Vector3.Down * maxPossibleStepHeight, collisionInfo, SafeMargin))
+        if (TestMove(testTransform, Vector3.Down * maxPossibleStepHeight, collisionInfo, SafeMargin) &&
+            collisionInfo.GetPosition().Y > GlobalPosition.Y &&
+            Vector3.Up.Dot(collisionInfo.GetNormal()) >= 0.7f)
         {
             GlobalPosition = (GlobalPosition + horizontalTravel) with { Y = collisionInfo.GetPosition().Y };
             horizontalTravelledByStepping = horizontalTravel;
