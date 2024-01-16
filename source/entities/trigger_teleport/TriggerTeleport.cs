@@ -14,7 +14,7 @@ public partial class TriggerTeleport : Area3D
     [Signal]
     public delegate void TriggerEventHandler(Node3D activator);
 
-    private void ExUpdateProperties(Node3D qodotMap)
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
@@ -31,13 +31,7 @@ public partial class TriggerTeleport : Area3D
             return;
         }
 
-        var parent = GetParent();
-        if (parent == null || !IsInstanceValid(parent))
-        {
-            GD.PushWarning($"Couldn't setup targets in '{Name}' because GetParent() returned null.");
-            return;
-        }
-        var targetPoints = parent.Call("get_nodes_by_targetname", targetPointName).AsGodotObjectArray<Node>();
+        var targetPoints = qodotMap.Call("get_nodes_by_targetname", targetPointName).AsGodotObjectArray<Node>();
         switch (targetPoints.Length)
         {
             case 0:

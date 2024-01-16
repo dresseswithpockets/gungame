@@ -9,20 +9,7 @@ using GunGame;
 [Tool]
 public partial class TriggerPush : Area3D
 {
-    private Dictionary _properties;
-    // the gdscript side expects lowercase properties :(
-    // ReSharper disable once InconsistentNaming
-    [Export]
-    public Dictionary properties
-    {
-        get => _properties;
-        set
-        {
-            if (_properties == value) return;
-            _properties = value;
-            UpdateProperties();
-        }
-    }
+    [Export] public Dictionary properties;
 
     private readonly List<IPushable> _overrideVelocityPushables = new();
     private readonly List<RigidBody3D> _overrideVelocityRigidBodies = new();
@@ -31,7 +18,7 @@ public partial class TriggerPush : Area3D
     [Export] public AxisMask axisMaskFlags;
     [Export] public bool overrideVelocity;
 
-    private void UpdateProperties()
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;

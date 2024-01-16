@@ -6,22 +6,9 @@ using GunGame;
 [Tool]
 public partial class TriggerGravity : Area3D
 {
-    private Dictionary _properties;
-    // the gdscript side expects lowercase properties :(
-    // ReSharper disable once InconsistentNaming
-    [Export]
-    public Dictionary properties
-    {
-        get => _properties;
-        set
-        {
-            if (_properties == value) return;
-            _properties = value;
-            UpdateProperties();
-        }
-    }
+    [Export] public Dictionary properties;
 
-    private void UpdateProperties()
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;

@@ -5,20 +5,7 @@ using GunGame;
 [Tool]
 public partial class TriggerImpulse : Area3D
 {
-    private Dictionary _properties;
-    // the gdscript side expects lowercase properties :(
-    // ReSharper disable once InconsistentNaming
-    [Export]
-    public Dictionary properties
-    {
-        get => _properties;
-        set
-        {
-            if (_properties == value) return;
-            _properties = value;
-            UpdateProperties();
-        }
-    }
+    [Export] public Dictionary properties;
 
     [Export] public Vector3 amount;
     [Export] public AxisMask axisMaskFlags;
@@ -27,7 +14,7 @@ public partial class TriggerImpulse : Area3D
 
     private bool _ranOnce;
 
-    private void UpdateProperties()
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
