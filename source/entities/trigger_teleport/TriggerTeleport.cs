@@ -5,20 +5,8 @@ using GunGame;
 [Tool]
 public partial class TriggerTeleport : Area3D
 {
-    private Dictionary _properties;
-    // the gdscript side expects lowercase properties :(
-    // ReSharper disable once InconsistentNaming
     [Export]
-    public Dictionary properties
-    {
-        get => _properties;
-        set
-        {
-            if (_properties == value) return;
-            _properties = value;
-            UpdateProperties();
-        }
-    }
+    public Dictionary properties;
 
     [Export] public Node3D targetNode;
     [Export] public bool shouldPreserveMomentum;
@@ -26,7 +14,7 @@ public partial class TriggerTeleport : Area3D
     [Signal]
     public delegate void TriggerEventHandler(Node3D activator);
 
-    private void UpdateProperties()
+    private void ExUpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
