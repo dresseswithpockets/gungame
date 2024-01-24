@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdc436hyxjx5v"]
+
+[ext_resource type="Script" path="res://boid_test/RandomSpawn.cs" id="1_2k457"]
+[ext_resource type="PackedScene" uid="uid://bai5mytodpehp" path="res://boid_test/boid.tscn" id="2_rfkes"]
+
+[node name="BoidTest" type="Node3D"]
+script = ExtResource("1_2k457")
+boidPrefab = ExtResource("2_rfkes")
+size = Vector3(5, 5, 5)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 4.776)
+
+[node name="Target" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.38891, 1.02616, 0)

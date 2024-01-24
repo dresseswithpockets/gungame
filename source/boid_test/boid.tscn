@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bai5mytodpehp"]
+
+[ext_resource type="Script" path="res://boid_test/Boid.cs" id="1_7xqoo"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_n444e"]
+top_radius = 0.0
+bottom_radius = 0.2
+height = 0.5
+
+[node name="Boid" type="Node3D"]
+script = ExtResource("1_7xqoo")
+minSpeed = 0.5
+targetForce = 1.0
+cohesion = 0.8
+alignment = 0.9
+separation = 1.0
+viewDistance = 1.0
+avoidDistance = 1.5
+edgeAvoidForce = 0.1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CylinderMesh_n444e")
