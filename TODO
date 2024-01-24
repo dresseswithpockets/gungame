@@ -39,6 +39,8 @@ DONE update func_portal_seamless's viewport size dynamically whenever the player
 DONE fix viewport in func_portal_seamless (why is it pink lol)
 TODO use angles or a surface normal to clip the brush-generated surface, instead of always using -z
 TODO find MVP for bug with func_portal_seamless viewports breaking in basic.map, submit to Godot github
+TODO add func_rotate
+TODO add func_mover
 TODO add func_breakable
 TODO add func_button
 TODO add func_door
