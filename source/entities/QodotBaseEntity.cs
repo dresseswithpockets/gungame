@@ -18,4 +18,6 @@ public static class QodotMath
         angles.Z = Mathf.DegToRad(angles.Z);
         return Basis.FromEuler(angles) * Vector3.Forward;
     }
+
+    public static float TbUnitsToGodot(float amount) => amount / 128f;
 }
