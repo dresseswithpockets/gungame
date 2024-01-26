@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Godot;
+using GunGame;
 
 public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 {
@@ -70,6 +71,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     private float _cameraJumpBobTimer;
     private float _cameraLandingBobTimer;
 
+    private ShapeCast3D _shapeCast;
+
     // horizontal running velocity without any Y component
     private Vector3 _horizontalRunVelocity;
 
@@ -86,6 +89,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         _cameraStart = _camera.Position;
         _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CylinderShape3D;
         FloorSnapLength = maxStepHeight;
+
+        _shapeCast = GetNode<ShapeCast3D>("Camera3D/PlayerUseShapeCast");
     }
 
     public override void _Input(InputEvent @event)
@@ -99,6 +104,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
             default:
                 if (@event.IsActionPressed("grapple_hook"))
                     TryFireGrappleHook();
+                else if (@event.IsActionPressed("use"))
+                    TryFireUse();
                 break;
         }
     }
@@ -127,6 +134,22 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         _grappleHook.GlobalPosition = grappleHookStart.GlobalPosition;
         _grappleHook.GlobalRotation = _camera.GlobalRotation;
         _grappleHook.player = this;
+    }
+
+    private void TryFireUse()
+    {
+        if (!_shapeCast.IsColliding()) return;
+
+        for (var i = 0; i < _shapeCast.GetCollisionCount(); i++)
+        {
+            var other = _shapeCast.GetCollider(i);
+            // ReSharper disable once InvertIf
+            if (other is IPlayerUsable usable)
+            {
+                usable.PlayerUse(this);
+                break;
+            }
+        }
     }
 
     private void MoveCamera(Vector2 relative)
