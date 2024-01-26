@@ -1,0 +1,43 @@
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=5 format=3 uid="uid://ypcvtsmbmf78"]
+
+[ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="1_8a70m"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="1_n5ju3"]
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="2_55fy3"]
+[ext_resource type="Script" path="res://entities/func_button/FuncButton.cs" id="3_4typ1"]
+
+[resource]
+script = ExtResource("1_n5ju3")
+spawn_type = 2
+build_visuals = true
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 32
+collision_mask = 2
+collision_priority = 1.0
+collision_shape_margin = 0.04
+script_class = ExtResource("3_4typ1")
+classname = "func_button"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_8a70m"), ExtResource("2_55fy3")])
+class_properties = {
+"cooldown_time": 0.25,
+"disable_after_use": false,
+"reset_delay": 0.0,
+"reset_time": 0.0,
+"sound": "lq_sounds/buttons/switch21.wav",
+"sound_pitch_scale": 1.0,
+"sound_volume_db": 0.0,
+"travel_distance": 0.0,
+"travel_time": 0.0
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false

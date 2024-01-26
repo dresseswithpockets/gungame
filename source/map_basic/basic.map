@@ -733,6 +733,15 @@
 ( 384 -1216 672 ) ( 384 -1216 704 ) ( 0 -1216 704 ) lq_wood/may_wood1_1 32 0 0 1 1
 ( 384 -1664 704 ) ( 384 -1216 704 ) ( 384 -1216 672 ) lq_wood/may_wood1_1 0 0 0 1 1
 }
+// brush 83
+{
+( -1440 -1184 16 ) ( -1440 -1183 16 ) ( -1440 -1184 17 ) lq_metal/met_gry_beam -32 0 0 2 1
+( -1440 -1184 16 ) ( -1440 -1184 17 ) ( -1439 -1184 16 ) lq_metal/met_gry_beam -32 0 0 2 1
+( -1440 -1184 16 ) ( -1439 -1184 16 ) ( -1440 -1183 16 ) lq_metal/met_gry_beam -32 0 0 2 1
+( -1376 -1152 256 ) ( -1376 -1151 256 ) ( -1375 -1152 256 ) lq_metal/met_gry_beam -32 0 0 2 1
+( -1376 -1168 32 ) ( -1375 -1168 32 ) ( -1376 -1168 33 ) lq_metal/met_gry_beam -32 0 0 2 1
+( -1376 -1152 32 ) ( -1376 -1152 33 ) ( -1376 -1151 32 ) lq_metal/met_gry_beam -32 0 0 2 1
+}
 }
 // entity 1
 {
@@ -1466,4 +1475,30 @@
 "origin" "-640 400 184"
 "text" "func_rotate"
 "billboard" "2"
+}
+// entity 64
+{
+"classname" "point_label"
+"origin" "-1408 -1168 304"
+"text" "func_button"
+"billboard" "2"
+}
+// entity 65
+{
+"classname" "func_button"
+"reset_delay" "0.5"
+"angles" "0 -90 0"
+"travel_distance" "8"
+"cooldown_time" "0.5"
+"sound_volume_db" "0.5"
+"reset_time" "0.05"
+// brush 0
+{
+( -1424 -1168 160 ) ( -1424 -1167 160 ) ( -1424 -1168 161 ) lq_metal/met_gry_flat 0 0 0 1 1
+( -1424 -1168 160 ) ( -1424 -1168 161 ) ( -1423 -1168 160 ) lq_metal/met_gry_lit2_fbr 0 0 0 1 1
+( -1424 -1168 160 ) ( -1423 -1168 160 ) ( -1424 -1167 160 ) lq_metal/met_gry_flat 0 0 0 1 1
+( -1392 -1152 192 ) ( -1392 -1151 192 ) ( -1391 -1152 192 ) lq_metal/met_gry_flat 0 0 0 1 1
+( -1392 -1152 192 ) ( -1391 -1152 192 ) ( -1392 -1152 193 ) lq_metal/met_gry_lit2_fbr -16 0 0 1 1
+( -1392 -1152 192 ) ( -1392 -1152 193 ) ( -1392 -1151 192 ) lq_metal/met_gry_flat 0 0 0 1 1
+}
 }
