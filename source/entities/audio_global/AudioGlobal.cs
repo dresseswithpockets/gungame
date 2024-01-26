@@ -17,7 +17,7 @@ public partial class AudioGlobal : AudioStreamPlayer
             soundName = $"res://{soundName}";
         if (!ResourceLoader.Exists(soundName, nameof(AudioStream)))
         {
-            // TODO: warn non-existent sound
+            GD.PushWarning($"'{Name}' references a non-existent AudioStream: '{soundName}', it will not play anything");
             return;
         }
         
