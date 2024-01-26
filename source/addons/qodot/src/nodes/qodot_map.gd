@@ -1223,7 +1223,8 @@ func apply_properties() -> void:
         
         if 'properties' in entity_node:
             entity_node.properties = properties
-            if "UpdateProperties" in entity_node:
+            if entity_node.has_method("UpdateProperties"):
+                entity_node.call("UpdateProperties", self)
                 entity_node.UpdateProperties(self)
 
 ## Wire signals based on Trenchbroom [code]target[/code] and [code]targetname[/code] properties
