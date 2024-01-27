@@ -52,7 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -0.45)
 
 [node name="PlayerUseShapeCast" type="ShapeCast3D" parent="Camera3D"]
 shape = SubResource("SphereShape3D_2o11y")
-target_position = Vector3(0, 0, -1)
+target_position = Vector3(0, 0, -1.5)
 margin = 0.04
 collision_mask = 32
 collide_with_areas = true
