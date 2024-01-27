@@ -97,6 +97,7 @@ public partial class FuncButton : Area3D, IPlayerUsable
             audioPlayer.Play();
         
         var oldPosition = Position;
+        // TODO: this tween can be created at build-time in UpdateProperties
         var tween = GetTree().CreateTween();
         tween.TweenCallback(Callable.From(WaitForCooldownCallback));
         tween.TweenProperty(this, "position", oldPosition + targetOffset, travelTime);
