@@ -1,3 +1,5 @@
+source/love/
+
 # Godot 4+ specific ignores
 .godot/
 
