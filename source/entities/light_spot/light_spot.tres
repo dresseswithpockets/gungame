@@ -1,7 +1,8 @@
-[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://ccuhx3dr850e2"]
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://ccuhx3dr850e2"]
 
 [ext_resource type="Resource" uid="uid://c70xfst1srrne" path="res://entities/baseclasses/baseclass_light.tres" id="1_yqxir"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="2_ecl18"]
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="2_vejk6"]
 [ext_resource type="Script" path="res://entities/light_spot/light_spot.gd" id="3_lvvrt"]
 
 [resource]
@@ -11,7 +12,7 @@ apply_rotation_on_map_build = true
 classname = "light_spot"
 description = "A spot light"
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("1_yqxir")])
+base_classes = Array[Resource]([ExtResource("1_yqxir"), ExtResource("2_vejk6")])
 class_properties = {
 "spot_angle": 45.0,
 "spot_angle_attenuation": 1.0,
