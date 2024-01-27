@@ -93,7 +93,8 @@ public partial class FuncButton : Area3D, IPlayerUsable
             return;
         }
 
-        audioPlayer.Play();
+        if (audioPlayer != null && IsInstanceValid(audioPlayer))
+            audioPlayer.Play();
         
         var oldPosition = Position;
         var tween = GetTree().CreateTween();
