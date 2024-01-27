@@ -44,7 +44,7 @@ TODO make player view turn with func_rotate when on it
 TODO add func_mover
 TODO add func_breakable
 DONE add func_button
-TODO add func_door
+DONE add func_door
 TODO add func_door_rotate
 TODO add func_conveyer
 TODO add func_friction
