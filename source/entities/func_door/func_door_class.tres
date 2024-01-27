@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=4 format=3 uid="uid://b2j50pfg8foqt"]
+[gd_resource type="Resource" script_class="QodotFGDSolidClass" load_steps=5 format=3 uid="uid://b2j50pfg8foqt"]
 
+[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="2_2f5r5"]
 [ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="2_tujvp"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_solid_class.gd" id="3_3o8qc"]
 [ext_resource type="Script" path="res://entities/func_door/FuncDoor.cs" id="4_okti5"]
@@ -21,7 +22,7 @@ script_class = ExtResource("4_okti5")
 classname = "func_door"
 description = ""
 qodot_internal = false
-base_classes = Array[Resource]([ExtResource("2_tujvp")])
+base_classes = Array[Resource]([ExtResource("2_tujvp"), ExtResource("2_2f5r5")])
 class_properties = {
 "close_after_time": 5.0,
 "close_end_sound": "lq_sounds/doors/ddoor2.wav",
@@ -29,6 +30,7 @@ class_properties = {
 "close_loop_end": 7249,
 "close_loop_sound": "lq_sounds/doors/ddoor1.wav",
 "close_start_sound": "",
+"linked_door": "",
 "open_end_sound": "lq_sounds/doors/ddoor2.wav",
 "open_loop_begin": 909,
 "open_loop_end": 7249,

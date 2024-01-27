@@ -5,7 +5,7 @@ using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class FuncDoor : AnimatableBody3D, IPlayerUsable
+public partial class FuncDoor : AnimatableBody3D, IUsableDoor
 {
     [Export] public Dictionary properties;
 
@@ -19,10 +19,11 @@ public partial class FuncDoor : AnimatableBody3D, IPlayerUsable
     [Export] public AudioStream closeStartSound;
     [Export] public AudioStream closeLoopSound;
     [Export] public AudioStream closeEndSound;
+    [Export] public Array<Node> linkedDoors;
 
     private bool _open;
 
-    public void UpdateProperties(Node3D _)
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
@@ -38,6 +39,38 @@ public partial class FuncDoor : AnimatableBody3D, IPlayerUsable
         
         if (travelTime < 0f)
             GD.PushWarning("travel_time must be >= 0, otherwise unexpected behaviour may occur.");
+
+        SetupLinkedDoors(qodotMap);
+    }
+
+    private void SetupLinkedDoors(GodotObject qodotMap)
+    {
+        var linkedDoorName = properties.GetOrDefault("linked_door", "");
+        if (string.IsNullOrWhiteSpace(linkedDoorName)) return;
+        
+        var linkedDoorNodes = qodotMap.Call("get_nodes_by_targetname", linkedDoorName).AsGodotObjectArray<Node>();
+        if (linkedDoorNodes.Length == 0)
+        {
+            GD.PushWarning(
+                $"'{Name}' targets '{linkedDoorName}', but there are no entities with that name, so it will not link to anything.");
+            return;
+        }
+
+        linkedDoors ??= new Array<Node>();
+        linkedDoors.Clear();
+        
+        foreach (var linkedDoorNode in linkedDoorNodes)
+        {
+            if (linkedDoorNode is not IUsableDoor)
+            {
+                GD.PushWarning(
+                    $"'{Name}' attempted to link to '{linkedDoorNode.Name}', which doesn't implement IUsableDoor, so it can't be linked.");
+                continue;
+            }
+
+            if (!linkedDoors.Contains(linkedDoorNode))
+                linkedDoors.Add(linkedDoorNode);
+        }
     }
 
     private void SetupAudioPlayers()
@@ -97,33 +130,52 @@ public partial class FuncDoor : AnimatableBody3D, IPlayerUsable
         return ResourceLoader.Load<AudioStream>(soundName);
     }
 
-    public async void PlayerUse(Player activator)
+    public void Use(Node3D activator) => PlayerUse(activator, true);
+
+    public void PlayerUse(Node3D activator) => PlayerUse(activator, true);
+
+    public async void PlayerUse(Node3D activator, bool withSound)
     {
         // if this function is called while its still async processing, _used will gate for us
         if (_open) return;
         if (closeAfterTime == 0f && travelTime == 0f) return;
         _open = true;
+        
+        InvokeLinkedDoors(activator);
 
-        PlayAudioStartAndLoop(openStartSound, openLoopSound);
+        if (withSound)
+            PlayAudioStartAndLoop(openStartSound, openLoopSound);
         
         var oldPosition = Position;
         // TODO: this tween can be created at build-time in UpdateProperties
         var tween = GetTree().CreateTween();
         tween.SetProcessMode(Tween.TweenProcessMode.Physics);
         tween.TweenProperty(this, "position", oldPosition + targetOffset, travelTime);
-        tween.TweenCallback(Callable.From(() => PlayAudioEnd(openEndSound)));
+        if (withSound)
+            tween.TweenCallback(Callable.From(() => PlayAudioEnd(openEndSound)));
+        
         if (closeAfterTime > 0f)
         {
             tween.TweenInterval(closeAfterTime);
-            tween.TweenCallback(Callable.From(() => PlayAudioStartAndLoop(closeStartSound, closeLoopSound)));
+            if (withSound)
+                tween.TweenCallback(Callable.From(() => PlayAudioStartAndLoop(closeStartSound, closeLoopSound)));
+            
             tween.TweenProperty(this, "position", oldPosition, travelTime);
-            tween.TweenCallback(Callable.From(() => PlayAudioEnd(closeEndSound)));
+            if (withSound)
+                tween.TweenCallback(Callable.From(() => PlayAudioEnd(closeEndSound)));
         }
 
         tween.Play();
         await ToSignal(tween, Tween.SignalName.Finished);
         if (closeAfterTime > 0f)
             _open = false;
+    }
+
+    private void InvokeLinkedDoors(Node3D activator)
+    {
+        if (linkedDoors == null) return;
+        foreach (var linkedDoor in linkedDoors)
+            ((IUsableDoor)linkedDoor).PlayerUse(activator, false);
     }
 
     private void PlayAudioStartAndLoop(AudioStream start, AudioStream loop)

@@ -79,7 +79,7 @@ public partial class FuncButton : Area3D, IPlayerUsable
             audioPlayer.Owner = editedSceneRoot;
     }
 
-    public async void PlayerUse(Player activator)
+    public async void PlayerUse(Node3D activator)
     {
         // if this function is called while its still async processing, _used will gate for us
         if (_used) return;
