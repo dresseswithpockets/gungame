@@ -1,0 +1,14 @@
+[remap]
+
+importer="qodot.map"
+type="Resource"
+uid="uid://bfmcl0s8g2c35"
+path="res://.godot/imported/house.map-6f8361b8441a0e4976d4474b93256b74.tres"
+
+[deps]
+
+source_file="res://map_house/house.map"
+dest_files=["res://.godot/imported/house.map-6f8361b8441a0e4976d4474b93256b74.tres"]
+
+[params]
+
