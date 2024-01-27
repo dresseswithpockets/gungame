@@ -56,4 +56,3 @@ target_position = Vector3(0, 0, -1)
 margin = 0.04
 collision_mask = 32
 collide_with_areas = true
-collide_with_bodies = false
