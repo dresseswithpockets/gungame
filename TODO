@@ -45,6 +45,7 @@ TODO add func_mover
 TODO add func_breakable
 DONE add func_button
 TODO add func_door
+TODO add func_door_rotate
 TODO add func_conveyer
 TODO add func_friction
 TODO add prop_static (maybe a better name?), clean up the existing demo_model and test_model stuff
