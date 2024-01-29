@@ -1,4 +1,4 @@
-[gd_scene load_steps=219 format=3 uid="uid://c3efvme541xmo"]
+[gd_scene load_steps=220 format=3 uid="uid://c3efvme541xmo"]
 
 [ext_resource type="Script" path="res://addons/qodot/src/nodes/qodot_map.gd" id="1_sb6f4"]
 [ext_resource type="Resource" uid="uid://bxopc4p21rvtw" path="res://entities/gungame_fgd.tres" id="2_lqwfk"]
@@ -927,6 +927,9 @@ volumetric_fog_emission_energy = 2.0
 volumetric_fog_temporal_reprojection_enabled = false
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g8hen"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_w6hc1"]
+size = Vector3(8.28752, 2.61609, 10.9527)
 
 [node name="map_basic" type="Node3D"]
 
@@ -2582,6 +2585,16 @@ constant_force = Vector3(20, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
 shape = SubResource("BoxShape3D_g8hen")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0122933, 0.0129142, -0.00291991)
+collision_mask = 2
+audio_bus_override = true
+audio_bus_name = &"Reverb"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.4591, 0.808045, -8.77339)
+shape = SubResource("BoxShape3D_w6hc1")
 
 [connection signal="trigger" from="QodotMap/entity_5_trigger" to="QodotMap/entity_6_debug_print" method="use"]
 [connection signal="trigger" from="QodotMap/entity_19_trigger" to="QodotMap/entity_21_audio_global" method="use"]
