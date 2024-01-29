@@ -6,7 +6,7 @@ public abstract partial class QodotBaseEntity : Node
 {
     [Export] public Dictionary properties;
 
-    protected abstract void UpdateProperties(Node3D qodotMap);
+    public abstract void UpdateProperties(Node3D qodotMap);
 }
 
 public static class QodotMath
