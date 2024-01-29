@@ -865,13 +865,14 @@
 // entity 4
 {
 "classname" "env_postprocess"
-"origin" "-24 -72 88"
+"origin" "-504 -1256 88"
 "background_energy_multiplier" "0.84"
 "ssao_enabled" "true"
 "ambient_light_energy" "1"
 "ambient_light_sky_contribution" "0.9"
 "ambient_light_color" "1 1 0.498039"
 "ambient_light_source" "0"
+"targetname" "GlobalPostprocess"
 }
 // entity 5
 {
@@ -1294,12 +1295,12 @@
 "target1" "PortalA_TeleportSound"
 // brush 0
 {
-( -1432 400 320 ) ( -1432 392 320 ) ( -1432 392 16 ) lq_liquidsky/star_tele4_fbr 0 0 0 1 1
-( -1432 392 320 ) ( -1176 392 320 ) ( -1176 392 16 ) lq_liquidsky/star_tele4_fbr 38 3.3684144 1.7763568e-15 4 4.7500005
-( -1176 392 16 ) ( -1176 400 16 ) ( -1432 400 16 ) lq_liquidsky/star_tele4_fbr 0 0 0 1 1
-( -1432 400 320 ) ( -1176 400 320 ) ( -1176 392 320 ) lq_liquidsky/star_tele4_fbr 0 0 0 1 1
-( -1176 400 16 ) ( -1176 400 320 ) ( -1432 400 320 ) lq_liquidsky/star_tele4_fbr 0 0 0 1 1
-( -1176 392 320 ) ( -1176 400 320 ) ( -1176 400 16 ) lq_liquidsky/star_tele4_fbr 0 0 0 1 1
+( -1432 400 320 ) ( -1432 392 320 ) ( -1432 392 16 ) lq_liquidsky/star_tele_mix 0 0 0 1 1
+( -1432 392 320 ) ( -1176 392 320 ) ( -1176 392 16 ) lq_liquidsky/star_tele_mix 38 3.3684144 1.7763568e-15 4 4.7500005
+( -1176 392 16 ) ( -1176 400 16 ) ( -1432 400 16 ) lq_liquidsky/star_tele_mix 0 0 0 1 1
+( -1432 400 320 ) ( -1176 400 320 ) ( -1176 392 320 ) lq_liquidsky/star_tele_mix 0 0 0 1 1
+( -1176 400 16 ) ( -1176 400 320 ) ( -1432 400 320 ) lq_liquidsky/star_tele_mix 0 0 0 1 1
+( -1176 392 320 ) ( -1176 400 320 ) ( -1176 400 16 ) lq_liquidsky/star_tele_mix 0 0 0 1 1
 }
 }
 // entity 44
@@ -1312,7 +1313,7 @@
 // entity 45
 {
 "classname" "info_player_start"
-"origin" "544 124 12"
+"origin" "-176 -292 12"
 }
 // entity 46
 {
@@ -1368,12 +1369,12 @@
 "target1" "PortalB_TeleportSound"
 // brush 0
 {
-( -1016 400 320 ) ( -1016 392 320 ) ( -1016 392 16 ) lq_liquidsky/star_tele4_fbr -32 0 0 1 1
-( -1016 392 320 ) ( -760 392 320 ) ( -760 392 16 ) lq_liquidsky/star_tele4_fbr 38 3.3684144 45 4 4.7500005
-( -760 392 16 ) ( -760 400 16 ) ( -1016 400 16 ) lq_liquidsky/star_tele4_fbr 64 32 0 1 1
-( -1016 400 320 ) ( -760 400 320 ) ( -760 392 320 ) lq_liquidsky/star_tele4_fbr 64 32 0 1 1
-( -760 400 16 ) ( -760 400 320 ) ( -1016 400 320 ) lq_liquidsky/star_tele4_fbr 64 0 0 1 1
-( -760 392 320 ) ( -760 400 320 ) ( -760 400 16 ) lq_liquidsky/star_tele4_fbr -32 0 0 1 1
+( -1016 400 320 ) ( -1016 392 320 ) ( -1016 392 16 ) lq_liquidsky/star_tele_mix -32 0 0 1 1
+( -1016 392 320 ) ( -760 392 320 ) ( -760 392 16 ) lq_liquidsky/star_tele_mix 38 3.3684144 45 4 4.7500005
+( -760 392 16 ) ( -760 400 16 ) ( -1016 400 16 ) lq_liquidsky/star_tele_mix 64 32 0 1 1
+( -1016 400 320 ) ( -760 400 320 ) ( -760 392 320 ) lq_liquidsky/star_tele_mix 64 32 0 1 1
+( -760 400 16 ) ( -760 400 320 ) ( -1016 400 320 ) lq_liquidsky/star_tele_mix 64 0 0 1 1
+( -760 392 320 ) ( -760 400 320 ) ( -760 400 16 ) lq_liquidsky/star_tele_mix -32 0 0 1 1
 }
 }
 // entity 53
@@ -1634,4 +1635,84 @@
 "color" "0.839216 0.74902 0.713726"
 "bake_mode" "1"
 "energy" "0.75"
+}
+// entity 69
+{
+"classname" "trigger"
+"target" "GlobalPostprocess"
+// brush 0
+{
+( -512 -1152 208 ) ( -512 -1216 208 ) ( -512 -1216 16 ) __TB_empty 16 -16 0 1 1
+( -512 -1216 208 ) ( -448 -1216 208 ) ( -448 -1216 16 ) __TB_empty 0 -16 0 1 1
+( -448 -1216 16 ) ( -448 -1152 16 ) ( -512 -1152 16 ) __TB_empty 0 -16 0 1 1
+( -512 -1152 208 ) ( -448 -1152 208 ) ( -448 -1216 208 ) __TB_empty 0 -16 0 1 1
+( -448 -1152 16 ) ( -448 -1152 208 ) ( -512 -1152 208 ) __TB_empty 0 -16 0 1 1
+( -448 -1216 208 ) ( -448 -1152 208 ) ( -448 -1152 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 70
+{
+"classname" "illusionary"
+// brush 0
+{
+( -512 -1152 208 ) ( -512 -1216 208 ) ( -512 -1216 16 ) layers/water 448 0 0 1 1
+( -512 -1216 208 ) ( -448 -1216 208 ) ( -448 -1216 16 ) layers/water -448 0 0 1 1
+( -448 -1216 16 ) ( -448 -1152 16 ) ( -512 -1152 16 ) layers/water -448 -448 0 1 1
+( -512 -1152 208 ) ( -448 -1152 208 ) ( -448 -1216 208 ) layers/water -448 -448 0 1 1
+( -448 -1152 16 ) ( -448 -1152 208 ) ( -512 -1152 208 ) layers/water -448 0 0 1 1
+( -448 -1216 208 ) ( -448 -1152 208 ) ( -448 -1152 16 ) layers/water 448 0 0 1 1
+}
+}
+// entity 71
+{
+"classname" "trigger"
+"target" "Environment_PurpleFoggy"
+// brush 0
+{
+( -320 -1152 208 ) ( -320 -1216 208 ) ( -320 -1216 16 ) __TB_empty 16 -16 0 1 1
+( -320 -1216 208 ) ( -256 -1216 208 ) ( -256 -1216 16 ) __TB_empty 0 -16 0 1 1
+( -256 -1216 16 ) ( -256 -1152 16 ) ( -320 -1152 16 ) __TB_empty 0 -16 0 1 1
+( -320 -1152 208 ) ( -256 -1152 208 ) ( -256 -1216 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1152 16 ) ( -256 -1152 208 ) ( -320 -1152 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1216 208 ) ( -256 -1152 208 ) ( -256 -1152 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 72
+{
+"classname" "env_environment"
+"origin" "-312 -1256 24"
+"target" "GlobalPostprocess"
+"targetname" "Environment_PurpleFoggy"
+"ambient_light_color" "0.141, 0.141, 0.141"
+"volumetric_fog_enabled" "true"
+"volumetric_fog_density" "0.25"
+"volumetric_fog_emission" "0.137, 0.035, 0.086"
+"volumetric_fog_emission_energy" "2"
+}
+// entity 73
+{
+"classname" "illusionary"
+// brush 0
+{
+( -320 -1152 208 ) ( -320 -1216 208 ) ( -320 -1216 16 ) layers/water 448 0 0 1 1
+( -320 -1216 208 ) ( -256 -1216 208 ) ( -256 -1216 16 ) layers/water -128 0 0 1 1
+( -256 -1216 16 ) ( -256 -1152 16 ) ( -320 -1152 16 ) layers/water -128 -448 0 1 1
+( -320 -1152 208 ) ( -256 -1152 208 ) ( -256 -1216 208 ) layers/water -128 -448 0 1 1
+( -256 -1152 16 ) ( -256 -1152 208 ) ( -320 -1152 208 ) layers/water -128 0 0 1 1
+( -256 -1216 208 ) ( -256 -1152 208 ) ( -256 -1152 16 ) layers/water 448 0 0 1 1
+}
+}
+// entity 74
+{
+"classname" "point_label"
+"origin" "-480 -1184 304"
+"text" "-> env_postprocess"
+"billboard" "2"
+}
+// entity 75
+{
+"classname" "point_label"
+"origin" "-288 -1184 304"
+"text" "-> env_environment"
+"billboard" "2"
 }
