@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://c01thuiidxwpc"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_f0wam"]
+[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="1_o5egf"]
+[ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="2_t0mxs"]
+[ext_resource type="Script" path="res://entities/env_environment/EnvEnvironment.cs" id="4_grshx"]
+
+[resource]
+script = ExtResource("1_f0wam")
+script_class = ExtResource("4_grshx")
+apply_rotation_on_map_build = true
+classname = "env_environment"
+description = "Environment parameters for use with env_postprocess. See https://docs.godotengine.org/en/stable/classes/class_environment.html for details on many of these properties."
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_o5egf"), ExtResource("2_t0mxs")])
+class_properties = {
+"adjustment_brightness": 1.0,
+"adjustment_contrast": 1.0,
+"adjustment_enabled": false,
+"adjustment_saturation": 1.0,
+"ambient_light_color": Color(0, 0, 0, 1),
+"ambient_light_energy": 1.0,
+"ambient_light_sky_contribution": 1.0,
+"ambient_light_source": 0,
+"background_energy_multiplier": 1.0,
+"background_mode": 2,
+"fog_aerial_perspective": 0.0,
+"fog_density": 0.01,
+"fog_enabled": false,
+"fog_height": 0.0,
+"fog_height_density": 0.0,
+"fog_light_color": Color(0.518, 0.553, 0.608, 1),
+"fog_light_energy": 1.0,
+"fog_sky_affect": 1.0,
+"fog_sun_scatter": 0.0,
+"reflected_light_source": 0,
+"ssao_ao_channel_affect": 0.0,
+"ssao_detail": 0.5,
+"ssao_enabled": false,
+"ssao_horizon": 0.06,
+"ssao_intensity": 2.0,
+"ssao_light_affect": 0.0,
+"ssao_power": 1.5,
+"ssao_radius": 1.0,
+"ssao_sharpness": 0.98,
+"ssil_enabled": false,
+"ssil_intensity": 1.0,
+"ssil_normal_rejection": 1.0,
+"ssil_radius": 5.0,
+"ssil_sharpness": 0.98,
+"ssr_depth_tolerance": 0.2,
+"ssr_enabled": false,
+"ssr_fade_in": 0.15,
+"ssr_fade_out": 2.0,
+"ssr_max_steps": 64,
+"tonemap_exposure": 1.0,
+"tonemap_mode": 0,
+"tonemap_white": 1.0,
+"volumetric_fog_albedo": Color(1, 1, 1, 1),
+"volumetric_fog_ambient_inject": 0.0,
+"volumetric_fog_anisotropy": 0.2,
+"volumetric_fog_density": 0.05,
+"volumetric_fog_detail_spread": 2.0,
+"volumetric_fog_emission": Color(0, 0, 0, 1),
+"volumetric_fog_emission_energy": 1.0,
+"volumetric_fog_enabled": false,
+"volumetric_fog_gi_inject": 1.0,
+"volumetric_fog_length": 64.0,
+"volumetric_fog_sky_affect": 1.0,
+"volumetric_fog_temporal_reprojection_amount": 0.9,
+"volumetric_fog_temporal_reprojection_enabled": false
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Node"
+transient_node = false

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=32 format=3 uid="uid://bxopc4p21rvtw"]
+[gd_resource type="Resource" script_class="QodotFGDFile" load_steps=33 format=3 uid="uid://bxopc4p21rvtw"]
 
 [ext_resource type="Resource" uid="uid://bejuidw1vcb53" path="res://entities/gungame_base_fgd.tres" id="1_jnnhq"]
 [ext_resource type="Resource" uid="uid://b1tgac42735ym" path="res://entities/env_postprocess/env_postprocess.tres" id="2_1fv4s"]
@@ -31,6 +31,7 @@
 [ext_resource type="Resource" uid="uid://du7eluslu4fxd" path="res://entities/func_rotate/func_rotate_class.tres" id="28_sa8hb"]
 [ext_resource type="Resource" uid="uid://ypcvtsmbmf78" path="res://entities/func_button/func_button_class.tres" id="29_nwa40"]
 [ext_resource type="Resource" uid="uid://b2j50pfg8foqt" path="res://entities/func_door/func_door_class.tres" id="30_13f6k"]
+[ext_resource type="Resource" uid="uid://c01thuiidxwpc" path="res://entities/env_environment/env_environment.tres" id="31_jx46i"]
 
 [resource]
 script = ExtResource("5_20u7v")
@@ -38,4 +39,4 @@ export_file = false
 target_folder = ""
 fgd_name = "GunGame"
 base_fgd_files = Array[Resource]([ExtResource("1_jnnhq"), ExtResource("2_wmth6")])
-entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("14_bgpc6"), ExtResource("20_h1hlq"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("17_u31qj"), ExtResource("18_upomh"), ExtResource("18_py4ro"), ExtResource("19_4cxkf"), ExtResource("20_2yd32"), ExtResource("23_4b45y"), ExtResource("24_x7e2v"), ExtResource("25_gxhdv"), ExtResource("26_iwn2o"), ExtResource("27_48q6d"), ExtResource("28_sa8hb"), ExtResource("29_nwa40"), ExtResource("30_13f6k")])
+entity_definitions = Array[Resource]([ExtResource("2_1fv4s"), ExtResource("2_16kin"), ExtResource("3_tl7am"), ExtResource("4_j4wml"), ExtResource("5_uv5lk"), ExtResource("6_15c7v"), ExtResource("9_u8nhj"), ExtResource("10_vxibd"), ExtResource("14_2nsv0"), ExtResource("15_prbna"), ExtResource("13_8t1lc"), ExtResource("14_bgpc6"), ExtResource("20_h1hlq"), ExtResource("11_efcr4"), ExtResource("12_f2tlw"), ExtResource("17_u31qj"), ExtResource("18_upomh"), ExtResource("18_py4ro"), ExtResource("19_4cxkf"), ExtResource("20_2yd32"), ExtResource("23_4b45y"), ExtResource("24_x7e2v"), ExtResource("25_gxhdv"), ExtResource("26_iwn2o"), ExtResource("27_48q6d"), ExtResource("28_sa8hb"), ExtResource("29_nwa40"), ExtResource("30_13f6k"), ExtResource("31_jx46i")])
