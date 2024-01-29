@@ -19,6 +19,9 @@ public static class GodotCollectionsExtensions
     public static Vector3 GetOrDefault(this Dictionary dictionary, string key, Vector3 @default = default)
         => dictionary.TryGetValue(key, out var value) ? value.AsVector3() : @default;
     
+    public static Color GetOrDefault(this Dictionary dictionary, string key, Color @default = default)
+        => dictionary.TryGetValue(key, out var value) ? value.AsColor() : @default;
+    
     public static string GetOrDefault(this Dictionary dictionary, string key, string @default = "")
         => dictionary.TryGetValue(key, out var value) ? value.AsString() : @default;
 }
