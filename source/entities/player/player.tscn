@@ -1,7 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://dnrgqr8kfc21n"]
+[gd_scene load_steps=12 format=3 uid="uid://dnrgqr8kfc21n"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_jit2s"]
 [ext_resource type="PackedScene" uid="uid://dexxr3wcnc0y2" path="res://entities/player_grapple_hook/player_grapple_hook.tscn" id="2_rd5lf"]
+[ext_resource type="AudioStream" uid="uid://c6pxtnrg08xk7" path="res://love/hl_sounds/player/pl_step1.wav" id="3_d4rx4"]
+[ext_resource type="AudioStream" uid="uid://1ylq83v0du8h" path="res://love/hl_sounds/player/pl_step2.wav" id="4_0okij"]
+[ext_resource type="AudioStream" uid="uid://dojvngfy5tkl3" path="res://love/hl_sounds/player/pl_step3.wav" id="5_bowuw"]
+[ext_resource type="AudioStream" uid="uid://bcskxl43cx7g7" path="res://love/hl_sounds/player/pl_step4.wav" id="6_bnrj3"]
 
 [sub_resource type="Curve" id="Curve_ndggg"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, -1.99441, 1, 1]
@@ -36,6 +40,8 @@ cameraJumpSquatCurve = SubResource("Curve_r5f5j")
 cameraLandingBobCurve = SubResource("Curve_tofiy")
 grappleHookPrefab = ExtResource("2_rd5lf")
 grappleHookStart = NodePath("Camera3D/GrappleHookStart")
+footstepClips = Array[AudioStream]([ExtResource("3_d4rx4"), ExtResource("4_0okij"), ExtResource("5_bowuw"), ExtResource("6_bnrj3")])
+footstepDistance = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
@@ -56,3 +62,7 @@ target_position = Vector3(0, 0, -1.5)
 margin = 0.04
 collision_mask = 32
 collide_with_areas = true
+
+[node name="FootstepStreamPlayer" type="AudioStreamPlayer3D" parent="."]
+max_polyphony = 4
+attenuation_filter_cutoff_hz = 20500.0

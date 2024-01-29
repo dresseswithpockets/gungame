@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Godot;
+using Godot.Collections;
 using GunGame;
 
 public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
@@ -55,6 +56,16 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     [Export(hintString: "suffix:m/s²")] public float runDecelerationDuringGrappleMomentum = 20f;
     [Export(hintString: "suffix:m/s")] public float grappleHookMinimumSpeed = 10f;
     [Export(hintString: "suffix:s")] public float grappleHookCooldown = 0.3f;
+
+    [ExportCategory("Footsteps")]
+    [Export] public Array<AudioStream> footstepClips;
+
+    [Export(hintString: "suffix:m")] public float footstepDistance = 1f;
+
+    private float _footstepDistanceAccumulator;
+    private RandomNumberGenerator _rand = new();
+    private AudioStreamPlayer3D _footstepStreamPlayer;
+    
     private float _grappleHookCooldownTimer;
     private bool _isPulledByGrappleHook;
     private bool _wasPulledByGrappleHookLastFrame;
@@ -91,6 +102,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         FloorSnapLength = maxStepHeight;
 
         _shapeCast = GetNode<ShapeCast3D>("Camera3D/PlayerUseShapeCast");
+        _footstepStreamPlayer = GetNode<AudioStreamPlayer3D>("FootstepStreamPlayer");
     }
 
     public override void _Input(InputEvent @event)
@@ -304,6 +316,29 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         _camera.Position = _cameraStart + _cameraAggregateOffset;
 
         _impulse = Vector3.Zero;
+
+        PostMove_Footsteps(Velocity.Length() * deltaF);
+    }
+
+    private void PostMove_Footsteps(float distanceTravelled)
+    {
+        if (!IsOnFloor() || footstepClips == null || footstepClips.Count == 0 || _footstepStreamPlayer == null ||
+            !IsInstanceValid(_footstepStreamPlayer))
+            return;
+
+        _footstepDistanceAccumulator += distanceTravelled;
+        if (_footstepDistanceAccumulator >= footstepDistance)
+        {
+            _footstepDistanceAccumulator -= footstepDistance;
+            PlayRandomFootstep();
+        }
+    }
+
+    private void PlayRandomFootstep()
+    {
+        var clip = footstepClips[_rand.RandiRange(0, footstepClips.Count - 1)];
+        _footstepStreamPlayer.Stream = clip;
+        _footstepStreamPlayer.Play();
     }
 
     private Vector3 SweepStepUp(float deltaF)
