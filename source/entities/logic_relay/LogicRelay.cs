@@ -15,8 +15,8 @@ public partial class LogicRelay : QodotBaseEntity
     private bool _fired;
 
     public override void _Ready() => _enabled = !startDisabled;
-    
-    protected override void UpdateProperties(Node3D qodotMap)
+
+    public override void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;

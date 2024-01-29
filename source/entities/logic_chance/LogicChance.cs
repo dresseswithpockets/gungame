@@ -12,8 +12,8 @@ public partial class LogicChance : QodotBaseEntity
 
     // shared across all logic_chances
     private static readonly RandomNumberGenerator NumberGenerator = new();
-    
-    protected override void UpdateProperties(Node3D qodotMap)
+
+    public override void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
