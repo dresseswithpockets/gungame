@@ -3,9 +3,12 @@ using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class AudioGlobal : AudioStreamPlayer
+public partial class AudioGlobal : AudioStreamPlayer, IAudioPlayer
 {
     [Export] public Dictionary properties;
+    [Export] public float defaultVolumeDb;
+    
+    public float DefaultVolumeDb => defaultVolumeDb;
 
     public void UpdateProperties(Node3D qodotMap)
     {
@@ -22,7 +25,9 @@ public partial class AudioGlobal : AudioStreamPlayer
         }
         
         Stream = ResourceLoader.Load<AudioStream>(soundName);
-        VolumeDb = properties.GetOrDefault("volume_db", 0f);
+        
+        defaultVolumeDb = properties.GetOrDefault("volume_db", 0f);
+        VolumeDb = defaultVolumeDb;
         Autoplay = properties.GetOrDefault("autoplay", false);
         PitchScale = properties.GetOrDefault("pitch_scale", 1f);
     }
