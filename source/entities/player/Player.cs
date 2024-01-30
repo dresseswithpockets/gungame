@@ -3,7 +3,7 @@ using Godot;
 using Godot.Collections;
 using GunGame;
 
-public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
+public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, IDamageable
 {
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
@@ -17,7 +17,6 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
     [Export(hintString: "suffix:m/s")] public float runNormalSpeedCap = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
     [Export(hintString: "suffix:m")] public float maxStepHeight = 0.2f;
-
 
     [ExportCategory("Run Bobbing")]
     [Export]
@@ -62,6 +61,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 
     [Export(hintString: "suffix:m")] public float footstepDistance = 1f;
 
+    private Vector3 _defaultRespawnPosition;
+    private Vector3 _defaultRespawnRotation;
+    private AudioStreamPlayer _deathStreamPlayer;
+
     private float _footstepDistanceAccumulator;
     private RandomNumberGenerator _rand = new();
     private AudioStreamPlayer3D _footstepStreamPlayer;
@@ -94,19 +97,25 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 
     private CylinderShape3D _collisionCapsule;
 
+    private bool _alive = true;
+
     public override void _Ready()
     {
+        _defaultRespawnPosition = GlobalPosition;
+        _defaultRespawnRotation = GlobalRotation;
         _camera = GetNode<Camera3D>("Camera3D");
         _cameraStart = _camera.Position;
         _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CylinderShape3D;
         FloorSnapLength = maxStepHeight;
 
         _shapeCast = GetNode<ShapeCast3D>("Camera3D/PlayerUseShapeCast");
+        _deathStreamPlayer = GetNode<AudioStreamPlayer>("DeathStreamPlayer");
         _footstepStreamPlayer = GetNode<AudioStreamPlayer3D>("FootstepStreamPlayer");
     }
 
     public override void _Input(InputEvent @event)
     {
+        if (!_alive) return;
         if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
         switch (@event)
         {
@@ -176,6 +185,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
 
     public override void _PhysicsProcess(double delta)
     {
+        if (!_alive) return;
+        
         _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
 
@@ -488,5 +499,60 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         _horizontalRunVelocity = forward * _horizontalRunVelocity.Length();
         Velocity = Velocity with { Y = _horizontalRunVelocity.Y };
         _horizontalRunVelocity.Y = 0f;
+    }
+
+    public void Damage(int amount)
+    {
+        // for now, all damage instantly kills the player
+        if (!_alive)
+            return;
+
+        Kill();
+    }
+
+    private async void Kill()
+    {
+        _alive = false;
+        // TODO: make camera fall to the ground with a canted angle
+        // TODO: spawn gibs & blood effects
+
+        _deathStreamPlayer.Play();
+        await ToSignal(GetTree().CreateTimer(5), SceneTreeTimer.SignalName.Timeout);
+        Respawn();
+    }
+
+    private void ResetTimers()
+    {
+        _jumpBufferTimer = 0f;
+        _cameraJumpBobTimer = 0f;
+        _cameraLandingBobTimer = 0f;
+        _cameraRunBobTimer = 0f;
+        _grappleHookCooldownTimer = 0f;
+        _cameraRunBobResetTimer = 0f;
+    }
+
+    private void ResetVelocity()
+    {
+        _horizontalRunVelocity = Vector3.Zero;
+        Velocity = Vector3.Zero;
+    }
+
+    private void Respawn()
+    {
+        ResetTimers();
+        ResetVelocity();
+        var respawns = GetTree().GetNodesInGroup("info_player_respawn");
+        if (respawns.Count == 0)
+        {
+            GlobalPosition = _defaultRespawnPosition;
+            GlobalRotation = _defaultRespawnRotation;
+        }
+        else
+        {
+            var respawn = (Node3D)respawns[_rand.RandiRange(0, respawns.Count - 1)];
+            GlobalPosition = respawn.GlobalPosition;
+            GlobalRotation = respawn.GlobalRotation;
+        }
+        _alive = true;
     }
 }
