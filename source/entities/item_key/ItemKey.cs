@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using Godot.Collections;
 using GunGame;
 
@@ -15,7 +14,6 @@ public partial class ItemKey : Area3D
     [Export] public float pitchMin = 0.8f;
     [Export] public float pitchMax = 1f;
 
-    private readonly RandomNumberGenerator _rand = new();
     private PlayerInventory _playerInventory;
     private AudioStreamPlayer3D _audioStreamPlayer3D;
     private Node3D _render;
