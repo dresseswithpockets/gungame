@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://dvagggvtg0jif"]
+
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_d6fcp"]
+[ext_resource type="PackedScene" uid="uid://cklp1how1xyna" path="res://entities/info_player_respawn/info_player_respawn.tscn" id="2_423py"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="3_7762g"]
+
+[resource]
+script = ExtResource("3_7762g")
+scene_file = ExtResource("2_423py")
+apply_rotation_on_map_build = true
+classname = "info_player_respawn"
+description = "Player respawn"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_d6fcp")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0, 0.392157, 0, 1),
+"size": AABB(-32, -32, 0, 32, 32, 234)
+}
+node_class = ""
+transient_node = false

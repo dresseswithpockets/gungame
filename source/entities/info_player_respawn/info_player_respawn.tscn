@@ -1,0 +1,3 @@
+[gd_scene format=3 uid="uid://cklp1how1xyna"]
+
+[node name="InfoPlayerRespawn" type="Node3D" groups=["info_player_respawn"]]
