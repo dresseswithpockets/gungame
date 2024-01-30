@@ -21,6 +21,7 @@ InputGlobal="*res://input_global.gd"
 Constants="*res://constants.gd"
 ConsoleGlobal="*res://console/Console.cs"
 AudioControllerGlobal="*res://AudioController.cs"
+PlayerInventory="*res://PlayerInventory.cs"
 
 [display]
 
