@@ -303,7 +303,6 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
         // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
         if (IsOnFloor() && !preMoveOnFloor)
         {
-            GD.Print("Was in air, landed");
             _cameraLandingBobTimer = cameraLandingBobTime;
             Velocity = Velocity with { Y = 0f };
 
@@ -311,7 +310,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller
                 _shouldDoBufferJump = true;
         }
 
-        //PostMove_LandingBob(deltaF);
+        // TODO: do we still want the landing bob? PostMove_LandingBob(deltaF);
         PostMove_RunBob(deltaF, useMaxRunSpeed, direction);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
 
