@@ -1716,3 +1716,102 @@
 "text" "-> env_environment"
 "billboard" "2"
 }
+// entity 76
+{
+"classname" "illusionary"
+// brush 0
+{
+( -512 -1408 208 ) ( -512 -1472 208 ) ( -512 -1472 16 ) layers/water 192 0 0 1 1
+( -512 -1472 208 ) ( -448 -1472 208 ) ( -448 -1472 16 ) layers/water -448 0 0 1 1
+( -448 -1472 16 ) ( -448 -1408 16 ) ( -512 -1408 16 ) layers/water -448 -192 0 1 1
+( -512 -1408 208 ) ( -448 -1408 208 ) ( -448 -1472 208 ) layers/water -448 -192 0 1 1
+( -448 -1408 16 ) ( -448 -1408 208 ) ( -512 -1408 208 ) layers/water -448 0 0 1 1
+( -448 -1472 208 ) ( -448 -1408 208 ) ( -448 -1408 16 ) layers/water 192 0 0 1 1
+}
+}
+// entity 77
+{
+"classname" "illusionary"
+// brush 0
+{
+( -320 -1408 208 ) ( -320 -1472 208 ) ( -320 -1472 16 ) layers/water 192 0 0 1 1
+( -320 -1472 208 ) ( -256 -1472 208 ) ( -256 -1472 16 ) layers/water -128 0 0 1 1
+( -256 -1472 16 ) ( -256 -1408 16 ) ( -320 -1408 16 ) layers/water -128 -192 0 1 1
+( -320 -1408 208 ) ( -256 -1408 208 ) ( -256 -1472 208 ) layers/water -128 -192 0 1 1
+( -256 -1408 16 ) ( -256 -1408 208 ) ( -320 -1408 208 ) layers/water -128 0 0 1 1
+( -256 -1472 208 ) ( -256 -1408 208 ) ( -256 -1408 16 ) layers/water 192 0 0 1 1
+}
+}
+// entity 78
+{
+"classname" "point_label"
+"origin" "-480 -1440 304"
+"text" "trigger_ambient -> 1"
+"billboard" "2"
+}
+// entity 79
+{
+"classname" "point_label"
+"origin" "-288 -1440 304"
+"text" "trigger_ambient -> 2"
+"billboard" "2"
+}
+// entity 80
+{
+"classname" "trigger_ambient"
+"target" "AudioGlobal_Ambience2"
+"target1" "AudioGlobal_Ambience1"
+// brush 0
+{
+( -512 -1408 208 ) ( -512 -1472 208 ) ( -512 -1472 16 ) __TB_empty 16 -16 0 1 1
+( -512 -1472 208 ) ( -448 -1472 208 ) ( -448 -1472 16 ) __TB_empty 0 -16 0 1 1
+( -448 -1472 16 ) ( -448 -1408 16 ) ( -512 -1408 16 ) __TB_empty 0 -16 0 1 1
+( -512 -1408 208 ) ( -448 -1408 208 ) ( -448 -1472 208 ) __TB_empty 0 -16 0 1 1
+( -448 -1408 16 ) ( -448 -1408 208 ) ( -512 -1408 208 ) __TB_empty 0 -16 0 1 1
+( -448 -1472 208 ) ( -448 -1408 208 ) ( -448 -1408 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 81
+{
+"classname" "trigger_ambient"
+"target" "AudioGlobal_Ambience1"
+"target1" "AudioGlobal_Ambience2"
+// brush 0
+{
+( -320 -1408 208 ) ( -320 -1472 208 ) ( -320 -1472 16 ) __TB_empty 16 -16 0 1 1
+( -320 -1472 208 ) ( -256 -1472 208 ) ( -256 -1472 16 ) __TB_empty 0 -16 0 1 1
+( -256 -1472 16 ) ( -256 -1408 16 ) ( -320 -1408 16 ) __TB_empty 0 -16 0 1 1
+( -320 -1408 208 ) ( -256 -1408 208 ) ( -256 -1472 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1408 16 ) ( -256 -1408 208 ) ( -320 -1408 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1472 208 ) ( -256 -1408 208 ) ( -256 -1408 16 ) __TB_empty 16 -16 0 1 1
+}
+}
+// entity 82
+{
+"classname" "audio_global"
+"origin" "-488 -1512 24"
+"sound" "lq_music/track02-alt.ogg"
+"targetname" "AudioGlobal_Ambience1"
+}
+// entity 83
+{
+"classname" "audio_global"
+"origin" "-296 -1512 24"
+"sound" "lq_music/track02.ogg"
+"targetname" "AudioGlobal_Ambience2"
+}
+// entity 84
+{
+"classname" "trigger_ambient"
+"target" "AudioGlobal_Ambience1"
+"target1" "AudioGlobal_Ambience2"
+// brush 0
+{
+( -320 -1408 208 ) ( -320 -1472 208 ) ( -320 -1472 16 ) __TB_empty 16 -16 0 1 1
+( -320 -1472 208 ) ( -256 -1472 208 ) ( -256 -1472 16 ) __TB_empty 0 -16 0 1 1
+( -256 -1472 16 ) ( -256 -1408 16 ) ( -320 -1408 16 ) __TB_empty 0 -16 0 1 1
+( -320 -1408 208 ) ( -256 -1408 208 ) ( -256 -1472 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1408 16 ) ( -256 -1408 208 ) ( -320 -1408 208 ) __TB_empty 0 -16 0 1 1
+( -256 -1472 208 ) ( -256 -1408 208 ) ( -256 -1408 16 ) __TB_empty 16 -16 0 1 1
+}
+}
