@@ -1,11 +1,13 @@
-[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://cojf2yqgtr4bt"]
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://cojf2yqgtr4bt"]
 
 [ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="1_gbd74"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_i2xpb"]
 [ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="2_3wydv"]
+[ext_resource type="Script" path="res://entities/info_node/InfoNode.cs" id="4_higsa"]
 
 [resource]
 script = ExtResource("1_i2xpb")
+script_class = ExtResource("4_higsa")
 apply_rotation_on_map_build = true
 classname = "info_node"
 description = ""
