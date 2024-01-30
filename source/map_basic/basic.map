@@ -1878,3 +1878,58 @@
 "origin" "-1104 -160 16"
 "angles" "0 90 0"
 }
+// entity 93
+{
+"classname" "point_label"
+"origin" "648 -184 304"
+"text" "item_key"
+"billboard" "2"
+}
+// entity 94
+{
+"classname" "info_node"
+"origin" "-1816 -1400 24"
+"targetname" "RailMover_Node1"
+"target" "RailMover_Node2"
+}
+// entity 95
+{
+"classname" "info_node"
+"origin" "-1224 -1400 24"
+"targetname" "RailMover_Node2"
+"target" "RailMover_Node3"
+}
+// entity 96
+{
+"classname" "info_node"
+"origin" "-776 -1768 24"
+"targetname" "RailMover_Node3"
+"target" "RailMover_Node4"
+}
+// entity 97
+{
+"classname" "info_node"
+"origin" "-1000 -2312 24"
+"targetname" "RailMover_Node4"
+"target" "RailMover_Node5"
+}
+// entity 98
+{
+"classname" "info_node"
+"origin" "-1608 -2152 24"
+"targetname" "RailMover_Node5"
+"target" "RailMover_Node1"
+}
+// entity 99
+{
+"classname" "monster_railmover"
+"origin" "-1384 -1752 24"
+"target" "RailMover_Node1"
+}
+// entity 100
+{
+"classname" "point_label"
+"origin" "-1360 -1728 304"
+"text" "monster_railmover + info_node"
+"billboard" "2"
+}
