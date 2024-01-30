@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=3 format=3 uid="uid://0a6dn30gxokp"]
+
+[ext_resource type="PackedScene" uid="uid://bic1icuf3q736" path="res://entities/item_key/item_key.tscn" id="1_btupy"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_xgh7u"]
+
+[resource]
+script = ExtResource("1_xgh7u")
+scene_file = ExtResource("1_btupy")
+apply_rotation_on_map_build = true
+classname = "item_key"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"key": {
+"Black": 0,
+"Orange": 2,
+"Purple": 1,
+"Red": 3
+}
+}
+class_property_descriptions = {
+"key": ["Key color", 0]
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
