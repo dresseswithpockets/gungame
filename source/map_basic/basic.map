@@ -1815,3 +1815,27 @@
 ( -256 -1472 208 ) ( -256 -1408 208 ) ( -256 -1408 16 ) __TB_empty 16 -16 0 1 1
 }
 }
+// entity 85
+{
+"classname" "item_key"
+"origin" "648 8 104"
+"key" "0"
+}
+// entity 86
+{
+"classname" "item_key"
+"origin" "648 -120 104"
+"key" "1"
+}
+// entity 87
+{
+"classname" "item_key"
+"origin" "648 -248 104"
+"key" "2"
+}
+// entity 88
+{
+"classname" "item_key"
+"origin" "648 -376 104"
+"key" "3"
+}
