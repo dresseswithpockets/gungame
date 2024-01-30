@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfjt5f71p7sq"]
+
+[ext_resource type="Script" path="res://entities/monster_railmover/MonsterRailMover.cs" id="1_lyylt"]
+[ext_resource type="AudioStream" uid="uid://cl3w43adcjgab" path="res://lq_sounds/ambience/drone6.wav" id="2_wfhaj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_boj31"]
+size = Vector3(1, 1, 0.1)
+
+[node name="MonsterRailmover" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_lyylt")
+properties = {}
+speed = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("BoxShape3D_boj31")
+
+[node name="Render" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+size = Vector3(1, 1, 0.1)
+
+[node name="RailmoverLoopPlayer" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_wfhaj")
+autoplay = true
+max_distance = 10.0
+bus = &"SoundEffects"

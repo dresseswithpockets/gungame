@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://doufhbr3psd4r"]
+
+[ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="1_36xrt"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_ednli"]
+[ext_resource type="PackedScene" uid="uid://cfjt5f71p7sq" path="res://entities/monster_railmover/monster_railmover.tscn" id="2_60yi4"]
+
+[resource]
+script = ExtResource("1_ednli")
+scene_file = ExtResource("2_60yi4")
+apply_rotation_on_map_build = true
+classname = "monster_railmover"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_36xrt")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+transient_node = false
