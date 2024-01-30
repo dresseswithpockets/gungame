@@ -12,7 +12,10 @@ public partial class ItemKey : Area3D
     [Export] public float bobAmplitude = 0.25f;
     [Export] public float bobSpeed = 1f;
     [Export] public float rotateSpeed = 90f;
+    [Export] public float pitchMin = 0.8f;
+    [Export] public float pitchMax = 1f;
 
+    private readonly RandomNumberGenerator _rand = new();
     private PlayerInventory _playerInventory;
     private AudioStreamPlayer3D _audioStreamPlayer3D;
     private Node3D _render;
@@ -39,6 +42,9 @@ public partial class ItemKey : Area3D
 
     public override void _Process(double delta)
     {
+        if (Engine.IsEditorHint())
+            return;
+        
         _bobTimer += (float)delta;
         _render.RotateY(Mathf.DegToRad(rotateSpeed * (float)delta));
         _render.Position = _render.Position with
@@ -54,6 +60,7 @@ public partial class ItemKey : Area3D
         
         _playerInventory.AddKey(color);
         _render.Visible = false;
+        _audioStreamPlayer3D.PitchScale = Mathf.Lerp(pitchMin, pitchMax, (float)(int)color / (int)ItemKeyColor.Max);
         _audioStreamPlayer3D.Play();
         await ToSignal(_audioStreamPlayer3D, AudioStreamPlayer3D.SignalName.Finished);
         QueueFree();
@@ -62,8 +69,10 @@ public partial class ItemKey : Area3D
 
 public enum ItemKeyColor
 {
-    Black,
-    Purple,
-    Orange,
-    Red,
+    Black = 0,
+    Purple = 1,
+    Orange = 2,
+    Red = 3,
+
+    Max = 4,
 }
