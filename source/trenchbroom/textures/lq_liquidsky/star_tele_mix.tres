@@ -8,6 +8,6 @@
 render_priority = 0
 shader = ExtResource("1_p18wf")
 shader_parameter/albedo_scale = 8.0
-shader_parameter/noise_mix = 0.5
+shader_parameter/noise_mix = 0.8
 shader_parameter/albedo = ExtResource("2_8pbas")
 shader_parameter/noise = ExtResource("3_pc2pq")
