@@ -77,7 +77,6 @@ public partial class TriggerAmbient : Area3D
 
     private void OnBodyEntered(Node3D body)
     {
-        GD.Print(body.Name);
         Debug.Assert(targetFadeFrom is null or AudioGlobal or AudioPositional);
         Debug.Assert(targetFadeTo is null or AudioGlobal or AudioPositional);
         _globalAudioController.QueueFade(targetFadeFrom, targetFadeTo, fadeTime, stopAfterFade);
