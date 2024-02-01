@@ -47,6 +47,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     [Export]
     public float gravityScale = 1.0f;
 
+    [Export] public float terminalVelocity = 20f;
+
     [Export(hintString: "suffix:m/s")] public float jumpSpeed = 4.6f;
     [Export(hintString: "suffix:s")] public float jumpBufferTime = 0.3f;
 
