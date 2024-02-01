@@ -59,6 +59,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     [ExportCategory("Footsteps")]
     [Export] public Array<AudioStream> footstepClips;
 
+    [Export] public AudioStream jumpClip;
+    [Export] public AudioStream jumpLandClip;
+
     [Export(hintString: "suffix:m")] public float footstepDistance = 1f;
 
     private Vector3 _defaultRespawnPosition;
@@ -319,6 +322,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
             if (_jumpBufferTimer > 0f)
                 _shouldDoBufferJump = true;
+
+            EmitJumpLandingSound();
         }
 
         // TODO: do we still want the landing bob? PostMove_LandingBob(deltaF);
@@ -327,10 +332,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         _impulse = Vector3.Zero;
 
-        PostMove_Footsteps(Velocity.Length() * deltaF);
+        PostMove_FootstepsSounds(Velocity.Length() * deltaF);
     }
 
-    private void PostMove_Footsteps(float distanceTravelled)
+    private void PostMove_FootstepsSounds(float distanceTravelled)
     {
         if (!IsOnFloor() || footstepClips == null || footstepClips.Count == 0 || _footstepStreamPlayer == null ||
             !IsInstanceValid(_footstepStreamPlayer))
@@ -397,6 +402,20 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         // non-zero when jump squatting
         if (_cameraJumpBobTimer == 0f)
             _cameraJumpBobTimer = cameraJumpSquatTime;
+
+        EmitJumpingSound();
+    }
+
+    private void EmitJumpingSound()
+    {
+        _footstepStreamPlayer.Stream = jumpClip;
+        _footstepStreamPlayer.Play();
+    }
+
+    private void EmitJumpLandingSound()
+    {
+        _footstepStreamPlayer.Stream = jumpLandClip;
+        _footstepStreamPlayer.Play();
     }
 
     private void PreMove_JumpSquat(float delta, ref float verticalSpeed)
@@ -553,6 +572,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             GlobalPosition = respawn.GlobalPosition;
             GlobalRotation = respawn.GlobalRotation;
         }
+
         _alive = true;
     }
 
