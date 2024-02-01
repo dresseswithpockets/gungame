@@ -3,8 +3,11 @@ using Godot;
 using Godot.Collections;
 using GunGame;
 
+[Tool]
 public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, IDamageable
 {
+    [Export] public Dictionary properties;
+
     public const float MouseYawSpeed = 0.022f;
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
@@ -12,9 +15,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     [Export(PropertyHint.Layers3DPhysics)] public uint lineOfSightCollisionMask;
 
     [ExportCategory("Basic Movement")]
-    [Export(hintString: "suffix:m/s²")]
-    public float runAcceleration = 150f;
+    [Export]
+    public bool allowMovement;
 
+    [Export(hintString: "suffix:m/s²")] public float runAcceleration = 150f;
     [Export(hintString: "suffix:m/s²")] public float runDeceleration = 50f;
     [Export(hintString: "suffix:m/s")] public float runNormalSpeedCap = 10.0f;
     [Export] public float runBoostSpeedMultiplier = 1.15f;
@@ -48,8 +52,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     [ExportCategory("Grappling")]
     [Export]
-    public PackedScene grappleHookPrefab;
+    public bool allowGrapple;
 
+    [Export] public PackedScene grappleHookPrefab;
     [Export] public Node3D grappleHookStart;
     [Export(hintString: "suffix:m/s²")] public float grappleHookPullAccel = 30f;
     [Export(hintString: "suffix:m/s")] public float grappleHookMaxSpeed = 20f;
@@ -73,7 +78,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     private float _footstepDistanceAccumulator;
     private RandomNumberGenerator _rand = new();
     private AudioStreamPlayer3D _footstepStreamPlayer;
-    
+
     private float _grappleHookCooldownTimer;
     private bool _isPulledByGrappleHook;
     private bool _wasPulledByGrappleHookLastFrame;
@@ -104,8 +109,17 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     private bool _alive = true;
 
+    public void UpdateProperties(Node3D _)
+    {
+        allowMovement = properties.GetOrDefault("start_allow_movement", true);
+        allowGrapple = properties.GetOrDefault("start_allow_grapple", true);
+    }
+
     public override void _Ready()
     {
+        if (Engine.IsEditorHint())
+            return;
+
         _defaultRespawnPosition = GlobalPosition;
         _defaultRespawnRotation = GlobalRotation;
         _camera = GetNode<Camera3D>("Camera3D");
@@ -120,7 +134,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     public override void _Input(InputEvent @event)
     {
-        if (!_alive) return;
+        if (Engine.IsEditorHint())
+            return;
+
+        if (!_alive || !allowMovement) return;
         if (Input.MouseMode != Input.MouseModeEnum.Captured) return;
         switch (@event)
         {
@@ -128,7 +145,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
                 MoveCamera(mouseMotion.Relative);
                 break;
             default:
-                if (@event.IsActionPressed("grapple_hook"))
+                if (allowGrapple && @event.IsActionPressed("grapple_hook"))
                     TryFireGrappleHook();
                 else if (@event.IsActionPressed("use"))
                     TryFireUse();
@@ -190,8 +207,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     public override void _PhysicsProcess(double delta)
     {
+        if (Engine.IsEditorHint()) return;
         if (!_alive) return;
-        
+
         _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
 
@@ -206,7 +224,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         verticalSpeed += _impulse.Y + (_continuousForce.Y * deltaF);
         _horizontalRunVelocity += _impulse with { Y = 0f } + (_continuousForce with { Y = 0f } * deltaF);
 
-        if (Input.IsActionJustPressed("move_jump"))
+        var moveJumpJustPressed = allowMovement && Input.IsActionJustPressed("move_jump");
+        var moveJumpPressed = allowMovement && Input.IsActionPressed("move_jump");
+        if (moveJumpJustPressed)
         {
             if (_isPulledByGrappleHook)
             {
@@ -225,12 +245,12 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
                     BeginJumpBuffer();
             }
         }
-        else if (Input.IsActionPressed("move_jump"))
+        else if (moveJumpPressed)
         {
             if (_shouldDoBufferJump)
                 StartJump();
         }
-        else if (Input.IsActionJustReleased("move_jump"))
+        else if (!allowMovement || Input.IsActionJustReleased("move_jump"))
         {
             ResetJumpBuffer();
         }
@@ -239,7 +259,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
-        var inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+        var inputDir = Vector2.Zero;
+        if (allowMovement)
+            inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
         var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
