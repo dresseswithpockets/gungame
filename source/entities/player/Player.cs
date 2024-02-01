@@ -491,13 +491,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         var targetPos = targetNode.GlobalPosition;
         targetPos.Y -= _collisionCapsule.Height * 0.5f;
         GlobalPosition = targetPos;
-        GlobalRotation = targetNode.GlobalRotation;
+        GlobalRotation = GlobalRotation with { Y = GlobalRotation.Y };
 
         // redirect player's momentum
-        if (Mathf.IsZeroApprox(_horizontalRunVelocity.LengthSquared()))
-            return;
-
-        var forward = -GlobalTransform.Basis.Z;
+        var forward = -targetNode.GlobalTransform.Basis.Z;
         _horizontalRunVelocity.Y = Velocity.Y;
         _horizontalRunVelocity = forward * _horizontalRunVelocity.Length();
         Velocity = Velocity with { Y = _horizontalRunVelocity.Y };
