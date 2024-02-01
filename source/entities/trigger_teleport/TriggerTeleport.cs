@@ -24,39 +24,14 @@ public partial class TriggerTeleport : Area3D
 
         shouldPreserveMomentum = properties.GetOrDefault("preserve_momentum", false);
         
-        var targetPointName = properties.GetOrDefault("target", (string)null);
-        if (string.IsNullOrEmpty(targetPointName))
+        var targetPointName = properties.GetOrDefault("target", "");
+        if (string.IsNullOrWhiteSpace(targetPointName))
         {
-            GD.PushWarning($"'{Name}' has no target portal, so it will not link to anything.");
+            GD.PushWarning($"'{Name}' has no target point, so it will not link to anything.");
             return;
         }
 
-        var targetPoints = qodotMap.Call("get_nodes_by_targetname", targetPointName).AsGodotObjectArray<Node>();
-        switch (targetPoints.Length)
-        {
-            case 0:
-                GD.PushWarning(
-                    $"'{Name}' targets '{targetPointName}', but there are no entities with that name, so it will not link to anything.");
-                return;
-            case > 1:
-                GD.PushWarning($"'{Name}' targets multiple entities named '{targetPointName}'. Will only link to the first one.");
-                break;
-        }
-
-        var targetPoint = targetPoints[0];
-        if (targetPoint == this)
-        {
-            GD.PushError($"'{Name}' targets itself, but must target a different entity.");
-            return;
-        }
-
-        if (targetPoint is not Node3D targetPointNode)
-        {
-            GD.PushError($"'{Name}' must target a Node3D-derived entity, but it targets '{targetPointName}', which doesn't derive from Node3D.");
-            return;
-        }
-
-        targetNode = targetPointNode;
+        qodotMap.QodotMapOneOrNull(Name, targetPointName, out targetNode);
     }
 
     public override void _Ready()
