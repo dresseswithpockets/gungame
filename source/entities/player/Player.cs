@@ -555,4 +555,25 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         }
         _alive = true;
     }
+
+    public bool IsCameraLookingTowards(Vector3 globalPosition, double minFraction)
+    {
+        var forward = (-_camera.GlobalBasis.Z).Normalized();
+        var delta = (globalPosition - _camera.GlobalPosition).Normalized();
+        return forward.Dot(delta) >= minFraction;
+    }
+
+    public Vector3 GetEyeGlobalPosition() => _camera.GlobalPosition;
+
+    public bool CanSeePosition(Vector3 globalPosition)
+    {
+        var spaceState = GetWorld3D().DirectSpaceState;
+        var query = PhysicsRayQueryParameters3D.Create(
+            GetEyeGlobalPosition(),
+            globalPosition,
+            lineOfSightCollisionMask);
+
+        var result = spaceState.IntersectRay(query);
+        return result.Count == 0;
+    }
 }
