@@ -9,6 +9,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     public const float MousePitchSpeed = 0.022f;
     public const float MouseSensitivity = 2f;
 
+    [Export(PropertyHint.Layers3DPhysics)] public uint lineOfSightCollisionMask;
+
     [ExportCategory("Basic Movement")]
     [Export(hintString: "suffix:m/s²")]
     public float runAcceleration = 150f;
