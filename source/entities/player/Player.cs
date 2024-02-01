@@ -324,8 +324,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
             _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
 
-            // gravity is only applied when not grappling
-            if (!IsOnFloor())
+            // gravity is only applied when not grappling, and when the player isnt beyond the terminal velocity
+            if (!IsOnFloor() && verticalSpeed < terminalVelocity)
             {
                 verticalSpeed += gravity.Y * deltaF;
             }
