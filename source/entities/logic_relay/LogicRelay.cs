@@ -4,15 +4,13 @@ using GunGame;
 [Tool]
 public partial class LogicRelay : QodotBaseEntity
 {
-    [Signal]
-    // ReSharper disable once InconsistentNaming
-    public delegate void triggerEventHandler(Node3D activator);
+    [Signal] public delegate void TriggerEventHandler(Node3D activator);
 
     [Export] public bool startDisabled;
-    [Export] public bool onlyOnce;
+    [Export] public int onlyN;
 
     private bool _enabled;
-    private bool _fired;
+    private int _fireCount;
 
     public override void _Ready() => _enabled = !startDisabled;
 
@@ -22,17 +20,17 @@ public partial class LogicRelay : QodotBaseEntity
             return;
 
         startDisabled = properties.GetOrDefault("start_disabled", false);
-        onlyOnce = properties.GetOrDefault("only_once", false);
+        onlyN = properties.GetOrDefault("only_n", 0);
     }
 
     // ReSharper disable once InconsistentNaming
     public void use(Node3D activator)
     {
         if (!_enabled) return;
-        if (onlyOnce && _fired) return;
-        
-        EmitSignal(SignalName.trigger, activator);
-        _fired = true;
+        if (onlyN > 0 && _fireCount >= onlyN) return;
+
+        EmitSignal(SignalName.Trigger, activator);
+        _fireCount++;
     }
 
     // ReSharper disable once InconsistentNaming
@@ -40,4 +38,11 @@ public partial class LogicRelay : QodotBaseEntity
 
     // ReSharper disable once InconsistentNaming
     public void disable(Node3D _) => _enabled = false;
+
+    // ReSharper disable once InconsistentNaming
+    public void reset(Node3D _)
+    {
+        _enabled = false;
+        _fireCount = 0;
+    }
 }

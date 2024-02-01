@@ -14,7 +14,7 @@ description = ""
 qodot_internal = false
 base_classes = Array[Resource]([ExtResource("1_f6kkl"), ExtResource("2_n3h2k")])
 class_properties = {
-"only_once": false,
+"only_n": 0,
 "start_disabled": false
 }
 class_property_descriptions = {
