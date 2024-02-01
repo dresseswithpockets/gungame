@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dnrgqr8kfc21n"]
+[gd_scene load_steps=15 format=3 uid="uid://dnrgqr8kfc21n"]
 
 [ext_resource type="Script" path="res://entities/player/Player.cs" id="1_jit2s"]
 [ext_resource type="PackedScene" uid="uid://dexxr3wcnc0y2" path="res://entities/player_grapple_hook/player_grapple_hook.tscn" id="2_rd5lf"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://dojvngfy5tkl3" path="res://love/hl_sounds/player/pl_step3.wav" id="5_bowuw"]
 [ext_resource type="AudioStream" uid="uid://bcskxl43cx7g7" path="res://love/hl_sounds/player/pl_step4.wav" id="6_bnrj3"]
 [ext_resource type="AudioStream" uid="uid://c2gp12y132y22" path="res://love/hl_sounds/player/pl_pain7.wav" id="7_7tswl"]
+[ext_resource type="AudioStream" uid="uid://61i7cfhurn24" path="res://love/hl_sounds/player/pl_jump2.wav" id="7_dqtju"]
+[ext_resource type="AudioStream" uid="uid://ccseoshqq6b5u" path="res://love/hl_sounds/player/pl_jumpland2.wav" id="8_xcpwu"]
 
 [sub_resource type="Curve" id="Curve_ndggg"]
 _data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, -1.99441, 1, 1]
@@ -21,6 +23,7 @@ _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252101, 1), 0.0, 0.0, 0, 0, Ve
 point_count = 3
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_bufw5"]
+margin = 0.001
 height = 1.82
 radius = 0.25
 
@@ -32,6 +35,8 @@ collision_layer = 2
 collision_mask = 5
 floor_snap_length = 0.2
 script = ExtResource("1_jit2s")
+properties = {}
+lineOfSightCollisionMask = 1
 runAcceleration = 100.0
 runNormalSpeedCap = 8.0
 runBoostSpeedMultiplier = 1.2
@@ -42,6 +47,8 @@ cameraLandingBobCurve = SubResource("Curve_tofiy")
 grappleHookPrefab = ExtResource("2_rd5lf")
 grappleHookStart = NodePath("Camera3D/GrappleHookStart")
 footstepClips = Array[AudioStream]([ExtResource("3_d4rx4"), ExtResource("4_0okij"), ExtResource("5_bowuw"), ExtResource("6_bnrj3")])
+jumpClip = ExtResource("7_dqtju")
+jumpLandClip = ExtResource("8_xcpwu")
 footstepDistance = 3.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
