@@ -10,6 +10,9 @@ public partial class TriggerTeleport : Area3D
 
     [Export] public Node3D targetNode;
     [Export] public bool shouldPreserveMomentum;
+    [Export] public int disableAfter;
+
+    private int _fireCount;
 
     [Signal]
     public delegate void TriggerEventHandler(Node3D activator);
@@ -23,6 +26,7 @@ public partial class TriggerTeleport : Area3D
         CollisionLayer = 0;
 
         shouldPreserveMomentum = properties.GetOrDefault("preserve_momentum", false);
+        disableAfter = properties.GetOrDefault("disable_after", 0);
         
         var targetPointName = properties.GetOrDefault("target", "");
         if (string.IsNullOrWhiteSpace(targetPointName))
@@ -42,6 +46,9 @@ public partial class TriggerTeleport : Area3D
 
     private void OnBodyEntered(Node3D body)
     {
+        if (disableAfter > 0 && _fireCount >= disableAfter) return;
+        
+        _fireCount++;
         EmitSignal(SignalName.Trigger, body);
         switch (body)
         {
@@ -65,6 +72,12 @@ public partial class TriggerTeleport : Area3D
         // we dont assign GlobalTransform, just in case targetNode has a non-(1,1,1) scale for some ungodly reason
         body.GlobalPosition = targetNode.GlobalPosition;
         body.GlobalRotation = targetNode.GlobalRotation;
+    }
+
+    // ReSharper disable once InconsistentNaming
+    public void reset(Node3D _)
+    {
+        _fireCount = 0;
     }
 }
 
