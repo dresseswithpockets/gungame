@@ -19,7 +19,7 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
     [Export] public AudioStream closeStartSound;
     [Export] public AudioStream closeLoopSound;
     [Export] public AudioStream closeEndSound;
-    [Export] public Array<Node> linkedDoors;
+    [Export] public Array<Node3D> linkedDoors;
 
     private bool _open;
 
@@ -41,6 +41,16 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
             GD.PushWarning("travel_time must be >= 0, otherwise unexpected behaviour may occur.");
 
         SetupLinkedDoors(qodotMap);
+
+        // set the audio player at the average position of all of the linked doors
+        if (linkedDoors.Count > 0)
+        {
+            var averagePosition = GlobalPosition;
+            foreach (var linkedDoor in linkedDoors)
+                averagePosition += linkedDoor.GlobalPosition;
+            averagePosition /= linkedDoors.Count + 1;
+            audioPlayer.GlobalPosition = averagePosition;
+        }
     }
 
     private void SetupLinkedDoors(GodotObject qodotMap)
@@ -56,11 +66,18 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
             return;
         }
 
-        linkedDoors ??= new Array<Node>();
+        linkedDoors ??= new Array<Node3D>();
         linkedDoors.Clear();
         
         foreach (var linkedDoorNode in linkedDoorNodes)
         {
+            if (linkedDoorNode is not Node3D node3d)
+            {
+                GD.PushWarning(
+                    $"'{Name}' attempted to link to '{linkedDoorNode.Name}', which isn't a 3D Node, so it can't be linked.");
+                continue;
+            }
+
             if (linkedDoorNode is not IUsableDoor)
             {
                 GD.PushWarning(
@@ -68,8 +85,8 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
                 continue;
             }
 
-            if (!linkedDoors.Contains(linkedDoorNode))
-                linkedDoors.Add(linkedDoorNode);
+            if (!linkedDoors.Contains(node3d))
+                linkedDoors.Add(node3d);
         }
     }
 
