@@ -12,7 +12,10 @@ classname = "info_player_start"
 description = "Player start"
 qodot_internal = false
 base_classes = Array[Resource]([ExtResource("1_lt34t")])
-class_properties = {}
+class_properties = {
+"start_allow_grapple": true,
+"start_allow_movement": true
+}
 class_property_descriptions = {}
 meta_properties = {
 "color": Color(0, 0.392157, 0, 1),

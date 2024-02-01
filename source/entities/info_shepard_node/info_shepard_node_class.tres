@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=5 format=3 uid="uid://ctu7vrdfpx6fm"]
+
+[ext_resource type="Resource" uid="uid://bv58uim48w85c" path="res://entities/baseclasses/baseclass_targetname.tres" id="1_2miy6"]
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_ckaen"]
+[ext_resource type="Script" path="res://entities/info_shepard_node/InfoShepardNode.cs" id="2_avm1h"]
+[ext_resource type="Resource" uid="uid://b0wgqmlvyqps" path="res://entities/baseclasses/baseclass_target.tres" id="2_gcm48"]
+
+[resource]
+script = ExtResource("1_ckaen")
+script_class = ExtResource("2_avm1h")
+apply_rotation_on_map_build = true
+classname = "info_shepard_node"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_2miy6"), ExtResource("2_gcm48")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false

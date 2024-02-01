@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://4owbtyljvleg"]
+
+[ext_resource type="Script" path="res://entities/monster_shepard/MonsterShepard.cs" id="1_wormf"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_bo37r"]
+size = Vector2(100, 200)
+
+[node name="MonsterShepard" type="Node3D" node_paths=PackedStringArray("shepardNodes")]
+script = ExtResource("1_wormf")
+properties = {}
+shepardNodes = []
+runAwayDistance = 5.0
+lineOfSightCollisionMask = 1
+waitAndHideTime = 3.0
+runAwaySpeed = 5.0
+
+[node name="Render" type="Node3D" parent="."]
+
+[node name="South" type="Sprite3D" parent="Render"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+billboard = 2
+double_sided = false
+texture = SubResource("PlaceholderTexture2D_bo37r")
+
+[node name="Eyes" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
