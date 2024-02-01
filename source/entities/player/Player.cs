@@ -494,6 +494,9 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         GlobalRotation = targetNode.GlobalRotation;
 
         // redirect player's momentum
+        if (Mathf.IsZeroApprox(_horizontalRunVelocity.LengthSquared()))
+            return;
+
         var forward = -GlobalTransform.Basis.Z;
         _horizontalRunVelocity.Y = Velocity.Y;
         _horizontalRunVelocity = forward * _horizontalRunVelocity.Length();
