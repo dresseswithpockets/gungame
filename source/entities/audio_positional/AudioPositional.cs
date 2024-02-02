@@ -30,6 +30,7 @@ public partial class AudioPositional : AudioStreamPlayer3D, IAudioPlayer
         VolumeDb = defaultVolumeDb;
         Autoplay = properties.GetOrDefault("autoplay", false);
         PitchScale = properties.GetOrDefault("pitch_scale", 1f);
+        MaxDistance = properties.GetOrDefault("max_distance", 0f);
     }
     
     // ReSharper disable once InconsistentNaming
