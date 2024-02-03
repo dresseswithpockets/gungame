@@ -111,6 +111,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     private bool _alive = true;
     private bool _groundedAtStartOfFrame;
+    private float _physicsDelta;
 
     public void UpdateProperties(Node3D _)
     {
@@ -210,6 +211,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     public override void _PhysicsProcess(double delta)
     {
+        _physicsDelta = (float)delta;
+        
         if (Engine.IsEditorHint()) return;
         if (!_alive) return;
 
@@ -218,16 +221,16 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
 
+        // reset camera offset, which gets recalculated during the move
         _cameraAggregateOffset = Vector3.Zero;
 
         // the vertical part of the player's movement isn't subject to normal run acceleration/deceleration, but
         // is subject to adjustments made by MoveAndSlide, so the vertical part is not maintained in
         // _horizontalRunVelocity
         var verticalSpeed = Velocity.Y;
-        var deltaF = (float)delta;
 
-        verticalSpeed += _impulse.Y + (_continuousForce.Y * deltaF);
-        _horizontalRunVelocity += _impulse with { Y = 0f } + (_continuousForce with { Y = 0f } * deltaF);
+        verticalSpeed += _impulse.Y + (_continuousForce.Y * _physicsDelta);
+        _horizontalRunVelocity += _impulse with { Y = 0f } + (_continuousForce with { Y = 0f } * _physicsDelta);
 
         var moveJumpJustPressed = allowMovement && Input.IsActionJustPressed("move_jump");
         var moveJumpPressed = allowMovement && Input.IsActionPressed("move_jump");
@@ -249,17 +252,17 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
         if (_isPulledByGrappleHook)
-            MovePlayerGrappling(deltaF, useMaxRunSpeed, ref verticalSpeed);
+            MovePlayerGrappling(useMaxRunSpeed, ref verticalSpeed);
         else
         {
             var gravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity * gravityScale;
-            MovePlayerGrounded(deltaF, wishDirection, useMaxRunSpeed, ref verticalSpeed, gravity);
+            MovePlayerGrounded(wishDirection, useMaxRunSpeed, ref verticalSpeed, gravity);
         }
 
-        AnimatePreMove(deltaF, ref verticalSpeed);
+        AnimatePreMove(ref verticalSpeed);
 
         Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
-        SweepStairStepUp(deltaF, Velocity);
+        SweepStairStepUp(Velocity);
         MoveAndSlide();
         SweepStairStepDown();
 
@@ -269,7 +272,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         if (IsOnFloor() && !_groundedAtStartOfFrame)
             PlayerLanded();
 
-        AnimatePostMove(deltaF, useMaxRunSpeed, wishDirection);
+        AnimatePostMove(useMaxRunSpeed, wishDirection);
     }
 
     private void ProcessJumpInput(bool moveJumpJustPressed, bool moveJumpPressed, ref float verticalSpeed)
@@ -306,32 +309,32 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _shouldDoBufferJump = false;
     }
 
-    private void MovePlayerGrounded(float deltaF, Vector3 wishDirection, float useMaxRunSpeed, ref float verticalSpeed,
+    private void MovePlayerGrounded(Vector3 wishDirection, float useMaxRunSpeed, ref float verticalSpeed,
         Vector3 gravity)
     {
         if (_grappleHookCooldownTimer > 0f)
-            _grappleHookCooldownTimer = Mathf.Max(0f, _grappleHookCooldownTimer - deltaF);
+            _grappleHookCooldownTimer = Mathf.Max(0f, _grappleHookCooldownTimer - _physicsDelta);
 
         // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
         if (wishDirection != Vector3.Zero)
-            _horizontalRunVelocity += wishDirection * runAcceleration * deltaF;
+            _horizontalRunVelocity += wishDirection * runAcceleration * _physicsDelta;
         else
         {
             var useDeceleration =
                 _maxSpeedFromGrapple > 0f ? runDecelerationDuringGrappleMomentum : runDeceleration;
-            _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, useDeceleration * deltaF);
+            _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, useDeceleration * _physicsDelta);
         }
 
         // cap max ground speed if we're not being pulled by the grapple hook
         _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
-        _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
+        _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * _physicsDelta);
 
         // gravity is only applied when not grappling, and when the player isnt beyond the terminal velocity
         if (!_groundedAtStartOfFrame && verticalSpeed < terminalVelocity)
-            verticalSpeed += gravity.Y * deltaF;
+            verticalSpeed += gravity.Y * _physicsDelta;
     }
 
-    private void MovePlayerGrappling(float deltaF, float useMaxRunSpeed, ref float verticalSpeed)
+    private void MovePlayerGrappling(float useMaxRunSpeed, ref float verticalSpeed)
     {
         var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
         if (!_wasPulledByGrappleHookLastFrame)
@@ -348,7 +351,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         }
 
         // accelerate player directly towards where they're grappling, up to a max speed
-        var accel = grappleDirection * grappleHookPullAccel * deltaF;
+        var accel = grappleDirection * grappleHookPullAccel * _physicsDelta;
         _horizontalRunVelocity += accel with { Y = 0f };
         // since _horizontalRunVelocity.Y is always overwritten by verticalSpeed, we never see the fruits of
         // this acceleration vertically, resulting in a funny bobbing motion and a really slow pull by the
@@ -361,18 +364,18 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         // also, grappling completely disables gravity
     }
 
-    private void AnimatePreMove(float deltaF, ref float verticalSpeed)
+    private void AnimatePreMove(ref float verticalSpeed)
     {
-        PreMove_JumpSquat(deltaF, ref verticalSpeed);
+        PreMove_JumpSquat(ref verticalSpeed);
     }
 
-    private void AnimatePostMove(float deltaF, float useMaxRunSpeed, Vector3 wishDirection)
+    private void AnimatePostMove(float useMaxRunSpeed, Vector3 wishDirection)
     {
-        // TODO: do we still want the landing bob? PostMove_LandingBob(deltaF);
-        PostMove_RunBob(deltaF, useMaxRunSpeed, wishDirection);
+        // TODO: do we still want the landing bob? PostMove_LandingBob();
+        PostMove_RunBob(useMaxRunSpeed, wishDirection);
         _camera.Position = _cameraStart + _cameraAggregateOffset;
 
-        PostMove_FootstepsSounds(Velocity.Length() * deltaF);
+        PostMove_FootstepsSounds(Velocity.Length() * _physicsDelta);
     }
 
     private void PlayerLanded()
@@ -432,7 +435,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         ApplyFloorSnap();
     }
 
-    private void SweepStairStepUp(float deltaF, Vector3 desiredVelocity)
+    private void SweepStairStepUp(Vector3 desiredVelocity)
     {
         if (!_groundedAtStartOfFrame)
             return; //Let's not bother if we're in the air
@@ -454,7 +457,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         // Game is my autoload because I don't like passing 'delta' around everywhere
         // Replace with 'delta' parameter if in your own game
-        var distance = testingVelocity * deltaF;
+        var distance = testingVelocity * _physicsDelta;
         parameters.From = transform;
         parameters.Motion = distance;
         parameters.Margin = _collisionCapsule.Margin;
@@ -534,11 +537,11 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _footstepStreamPlayer.Play();
     }
 
-    private void PreMove_JumpSquat(float delta, ref float verticalSpeed)
+    private void PreMove_JumpSquat(ref float verticalSpeed)
     {
         if (_cameraJumpBobTimer <= 0f) return;
 
-        _cameraJumpBobTimer -= delta;
+        _cameraJumpBobTimer -= _physicsDelta;
         if (_cameraJumpBobTimer < 0f)
         {
             _cameraJumpBobTimer = 0f;
@@ -551,11 +554,11 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _cameraAggregateOffset += Vector3.Zero.Lerp(cameraJumpBob, blend);
     }
 
-    private void PostMove_LandingBob(float delta)
+    private void PostMove_LandingBob()
     {
         if (_cameraLandingBobTimer <= 0f) return;
 
-        _cameraLandingBobTimer -= delta;
+        _cameraLandingBobTimer -= _physicsDelta;
         if (_cameraLandingBobTimer < 0f)
             _cameraLandingBobTimer = 0f;
 
@@ -564,7 +567,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _cameraAggregateOffset += Vector3.Zero.Lerp(cameraLandingBob, blend);
     }
 
-    private void PostMove_RunBob(float delta, float maxSpeedThisFrame, Vector3 wishDirection)
+    private void PostMove_RunBob(float maxSpeedThisFrame, Vector3 wishDirection)
     {
         Debug.Assert(maxSpeedThisFrame != 0f);
 
@@ -579,7 +582,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             // camera bobbing takes into account the *actual* horizontal speed of the player after MoveAndSlide, so
             // they arent bobbing so much when running directly into a wall.
             var speedFraction = (Velocity with { Y = 0 }).Length() / maxSpeedThisFrame;
-            _cameraRunBobTimer += delta * speedFraction;
+            _cameraRunBobTimer += _physicsDelta * speedFraction;
 
             // the run bob is looping/wrapping while they're moving
             var t = Mathf.PingPong(_cameraRunBobTimer, cameraRunBobTime);
@@ -597,7 +600,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
                 _cameraRunBobTimer = 0f;
             }
 
-            _cameraRunBobResetTimer -= delta;
+            _cameraRunBobResetTimer -= _physicsDelta;
             if (_cameraRunBobResetTimer < 0f)
                 _cameraRunBobResetTimer = 0f;
 
