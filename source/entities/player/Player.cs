@@ -232,9 +232,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         verticalSpeed += _impulse.Y + (_continuousForce.Y * _physicsDelta);
         _horizontalRunVelocity += _impulse with { Y = 0f } + (_continuousForce with { Y = 0f } * _physicsDelta);
 
-        var moveJumpJustPressed = allowMovement && Input.IsActionJustPressed("move_jump");
-        var moveJumpPressed = allowMovement && Input.IsActionPressed("move_jump");
-        ProcessJumpInput(moveJumpJustPressed, moveJumpPressed, ref verticalSpeed);
+        ProcessJumpInput(ref verticalSpeed);
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
@@ -275,8 +273,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         AnimatePostMove(useMaxRunSpeed, wishDirection);
     }
 
-    private void ProcessJumpInput(bool moveJumpJustPressed, bool moveJumpPressed, ref float verticalSpeed)
+    private void ProcessJumpInput(ref float verticalSpeed)
     {
+        var moveJumpJustPressed = allowMovement && Input.IsActionJustPressed("move_jump");
+        var moveJumpPressed = allowMovement && Input.IsActionPressed("move_jump");
         if (moveJumpJustPressed)
         {
             if (_isPulledByGrappleHook)
