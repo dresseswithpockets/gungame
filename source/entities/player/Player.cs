@@ -267,7 +267,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         var inputDir = Vector2.Zero;
         if (allowMovement)
             inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
-        var direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+        var wishDirection = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
@@ -277,90 +277,111 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         if (_maxSpeedFromGrapple > useMaxRunSpeed)
             useMaxRunSpeed = _maxSpeedFromGrapple;
 
-        var gravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity * gravityScale;
-
         if (_isPulledByGrappleHook)
-        {
-            var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
-            if (!_wasPulledByGrappleHookLastFrame)
-            {
-                // we just started grapple-hooking, so transpose the player's current momentum into the direction of
-                // the grapple hook, but always ensure at least grappleHookMinimumSpeed speed and at most
-                // useMaxRunSpeed speed
-                var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
-                var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed,
-                    Mathf.Max(grappleHookMinimumSpeed, useMaxRunSpeed));
-                var transposed = grappleDirection * newSpeed;
-                _horizontalRunVelocity = transposed with { Y = 0f };
-                verticalSpeed = transposed.Y;
-            }
-
-            // accelerate player directly towards where they're grappling, up to a max speed
-            var accel = grappleDirection * grappleHookPullAccel * deltaF;
-            _horizontalRunVelocity += accel with { Y = 0f };
-            // since _horizontalRunVelocity.Y is always overwritten by verticalSpeed, we never see the fruits of
-            // this acceleration vertically, resulting in a funny bobbing motion and a really slow pull by the
-            // grapple. so, add the Y accel explicitly to verticalSpeed instead of to _horizontalRunVelocity.Y
-            verticalSpeed += accel.Y;
-
-            _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(grappleHookMaxSpeed);
-            _maxSpeedFromGrapple = Mathf.Max(_maxSpeedFromGrapple, _horizontalRunVelocity.Length());
-
-            // also, grappling completely disables gravity
-        }
+            MovePlayerGrappling(deltaF, useMaxRunSpeed, ref verticalSpeed);
         else
         {
-            if (_grappleHookCooldownTimer > 0f)
-                _grappleHookCooldownTimer = Mathf.Max(0f, _grappleHookCooldownTimer - deltaF);
-
-            // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
-            if (direction != Vector3.Zero)
-                _horizontalRunVelocity += direction * runAcceleration * deltaF;
-            else
-            {
-                var useDeceleration =
-                    _maxSpeedFromGrapple > 0f ? runDecelerationDuringGrappleMomentum : runDeceleration;
-                _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, useDeceleration * deltaF);
-            }
-
-            // cap max ground speed if we're not being pulled by the grapple hook
-            _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
-            _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
-
-            // gravity is only applied when not grappling, and when the player isnt beyond the terminal velocity
-            if (!_groundedAtStartOfFrame && verticalSpeed < terminalVelocity)
-            {
-                verticalSpeed += gravity.Y * deltaF;
-            }
+            var gravity = PhysicsServer3D.BodyGetDirectState(GetRid()).TotalGravity * gravityScale;
+            MovePlayerGrounded(deltaF, wishDirection, useMaxRunSpeed, ref verticalSpeed, gravity);
         }
 
-        PreMove_JumpSquat(deltaF, ref verticalSpeed);
+        AnimatePreMove(deltaF, ref verticalSpeed);
 
         Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
         SweepStairStepUp(deltaF, Velocity);
         MoveAndSlide();
         SweepStairStepDown();
 
-        // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
-        // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
-        if (IsOnFloor() && !_groundedAtStartOfFrame)
-        {
-            _cameraLandingBobTimer = cameraLandingBobTime;
-            Velocity = Velocity with { Y = 0f };
-
-            if (_jumpBufferTimer > 0f)
-                _shouldDoBufferJump = true;
-
-            EmitJumpLandingSound();
-        }
-
-        // TODO: do we still want the landing bob? PostMove_LandingBob(deltaF);
-        PostMove_RunBob(deltaF, useMaxRunSpeed, direction);
-        _camera.Position = _cameraStart + _cameraAggregateOffset;
-
+        // post-move reset
         _impulse = Vector3.Zero;
 
+        if (IsOnFloor() && !_groundedAtStartOfFrame)
+            PlayerLanded();
+
+        AnimatePostMove(deltaF, useMaxRunSpeed, wishDirection);
+    }
+
+    private void MovePlayerGrounded(float deltaF, Vector3 wishDirection, float useMaxRunSpeed, ref float verticalSpeed,
+        Vector3 gravity)
+    {
+        if (_grappleHookCooldownTimer > 0f)
+            _grappleHookCooldownTimer = Mathf.Max(0f, _grappleHookCooldownTimer - deltaF);
+
+        // move normally, and take into account the _maxSpeedFromGrapple achieved during the grapple
+        if (wishDirection != Vector3.Zero)
+            _horizontalRunVelocity += wishDirection * runAcceleration * deltaF;
+        else
+        {
+            var useDeceleration =
+                _maxSpeedFromGrapple > 0f ? runDecelerationDuringGrappleMomentum : runDeceleration;
+            _horizontalRunVelocity = _horizontalRunVelocity.MoveToward(Vector3.Zero, useDeceleration * deltaF);
+        }
+
+        // cap max ground speed if we're not being pulled by the grapple hook
+        _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(useMaxRunSpeed);
+        _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
+
+        // gravity is only applied when not grappling, and when the player isnt beyond the terminal velocity
+        if (!_groundedAtStartOfFrame && verticalSpeed < terminalVelocity)
+            verticalSpeed += gravity.Y * deltaF;
+    }
+
+    private void MovePlayerGrappling(float deltaF, float useMaxRunSpeed, ref float verticalSpeed)
+    {
+        var grappleDirection = (_grappleHook!.GlobalPosition - _camera.GlobalPosition).Normalized();
+        if (!_wasPulledByGrappleHookLastFrame)
+        {
+            // we just started grapple-hooking, so transpose the player's current momentum into the direction of
+            // the grapple hook, but always ensure at least grappleHookMinimumSpeed speed and at most
+            // useMaxRunSpeed speed
+            var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
+            var newSpeed = Mathf.Clamp(momentum.Length(), grappleHookMinimumSpeed,
+                Mathf.Max(grappleHookMinimumSpeed, useMaxRunSpeed));
+            var transposed = grappleDirection * newSpeed;
+            _horizontalRunVelocity = transposed with { Y = 0f };
+            verticalSpeed = transposed.Y;
+        }
+
+        // accelerate player directly towards where they're grappling, up to a max speed
+        var accel = grappleDirection * grappleHookPullAccel * deltaF;
+        _horizontalRunVelocity += accel with { Y = 0f };
+        // since _horizontalRunVelocity.Y is always overwritten by verticalSpeed, we never see the fruits of
+        // this acceleration vertically, resulting in a funny bobbing motion and a really slow pull by the
+        // grapple. so, add the Y accel explicitly to verticalSpeed instead of to _horizontalRunVelocity.Y
+        verticalSpeed += accel.Y;
+
+        _horizontalRunVelocity = _horizontalRunVelocity.LimitLength(grappleHookMaxSpeed);
+        _maxSpeedFromGrapple = Mathf.Max(_maxSpeedFromGrapple, _horizontalRunVelocity.Length());
+
+        // also, grappling completely disables gravity
+    }
+
+    private void AnimatePreMove(float deltaF, ref float verticalSpeed)
+    {
+        PreMove_JumpSquat(deltaF, ref verticalSpeed);
+    }
+
+    private void AnimatePostMove(float deltaF, float useMaxRunSpeed, Vector3 wishDirection)
+    {
+        // TODO: do we still want the landing bob? PostMove_LandingBob(deltaF);
+        PostMove_RunBob(deltaF, useMaxRunSpeed, wishDirection);
+        _camera.Position = _cameraStart + _cameraAggregateOffset;
+
         PostMove_FootstepsSounds(Velocity.Length() * deltaF);
+    }
+
+    private void PlayerLanded()
+    {
+        // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
+        // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
+        // TODO: this might actually be handled by the stair step sweep
+        _cameraLandingBobTimer = cameraLandingBobTime;
+        Velocity = Velocity with { Y = 0f };
+
+        if (_jumpBufferTimer > 0f)
+            _shouldDoBufferJump = true;
+
+        EmitJumpLandingSound();
     }
 
     private void PostMove_FootstepsSounds(float distanceTravelled)
