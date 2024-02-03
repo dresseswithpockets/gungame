@@ -1,9 +1,12 @@
 using Godot;
+using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class LogicChance : QodotBaseEntity
+public partial class LogicChance : Node
 {
+    [Export] public Dictionary properties;
+    
     [Signal]
     // ReSharper disable once InconsistentNaming
     public delegate void triggerEventHandler(Node3D activator);
@@ -13,7 +16,7 @@ public partial class LogicChance : QodotBaseEntity
     // shared across all logic_chances
     private static readonly RandomNumberGenerator NumberGenerator = new();
 
-    public override void UpdateProperties(Node3D qodotMap)
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;

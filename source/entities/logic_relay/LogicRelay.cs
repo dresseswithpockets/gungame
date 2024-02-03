@@ -1,10 +1,13 @@
 using Godot;
+using Godot.Collections;
 using GunGame;
 
 [Tool]
-public partial class LogicRelay : QodotBaseEntity
+public partial class LogicRelay : Node
 {
     [Signal] public delegate void TriggerEventHandler(Node3D activator);
+    
+    [Export] public Dictionary properties;
 
     [Export] public bool startDisabled;
     [Export] public int onlyN;
@@ -14,7 +17,7 @@ public partial class LogicRelay : QodotBaseEntity
 
     public override void _Ready() => _enabled = !startDisabled;
 
-    public override void UpdateProperties(Node3D qodotMap)
+    public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
             return;
