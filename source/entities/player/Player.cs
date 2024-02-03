@@ -231,36 +231,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         var moveJumpJustPressed = allowMovement && Input.IsActionJustPressed("move_jump");
         var moveJumpPressed = allowMovement && Input.IsActionPressed("move_jump");
-        if (moveJumpJustPressed)
-        {
-            if (_isPulledByGrappleHook)
-            {
-                var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
-                var speed = momentum.Length();
-                momentum = momentum.Normalized().Slerp(Vector3.Up, 0.5f) * speed;
-                _horizontalRunVelocity = momentum with { Y = 0f };
-                verticalSpeed = momentum.Y;
-                RemoveGrappleHook();
-            }
-            else
-            {
-                if (_groundedAtStartOfFrame)
-                    StartJump();
-                else
-                    BeginJumpBuffer();
-            }
-        }
-        else if (moveJumpPressed)
-        {
-            if (_shouldDoBufferJump)
-                StartJump();
-        }
-        else if (!allowMovement || Input.IsActionJustReleased("move_jump"))
-        {
-            ResetJumpBuffer();
-        }
-
-        _shouldDoBufferJump = false;
+        ProcessJumpInput(moveJumpJustPressed, moveJumpPressed, ref verticalSpeed);
 
         // Get the input direction and handle the movement/deceleration.
         // As good practice, you should replace UI actions with custom gameplay actions.
@@ -299,6 +270,40 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             PlayerLanded();
 
         AnimatePostMove(deltaF, useMaxRunSpeed, wishDirection);
+    }
+
+    private void ProcessJumpInput(bool moveJumpJustPressed, bool moveJumpPressed, ref float verticalSpeed)
+    {
+        if (moveJumpJustPressed)
+        {
+            if (_isPulledByGrappleHook)
+            {
+                var momentum = _horizontalRunVelocity with { Y = verticalSpeed };
+                var speed = momentum.Length();
+                momentum = momentum.Normalized().Slerp(Vector3.Up, 0.5f) * speed;
+                _horizontalRunVelocity = momentum with { Y = 0f };
+                verticalSpeed = momentum.Y;
+                RemoveGrappleHook();
+            }
+            else
+            {
+                if (_groundedAtStartOfFrame)
+                    StartJump();
+                else
+                    BeginJumpBuffer();
+            }
+        }
+        else if (moveJumpPressed)
+        {
+            if (_shouldDoBufferJump)
+                StartJump();
+        }
+        else if (!allowMovement || Input.IsActionJustReleased("move_jump"))
+        {
+            ResetJumpBuffer();
+        }
+
+        _shouldDoBufferJump = false;
     }
 
     private void MovePlayerGrounded(float deltaF, Vector3 wishDirection, float useMaxRunSpeed, ref float verticalSpeed,
