@@ -7,6 +7,7 @@ public partial class AudioGlobal : AudioStreamPlayer, IAudioPlayer
 {
     [Export] public Dictionary properties;
     [Export] public float defaultVolumeDb;
+    [Export] public float fadeInTime;
     
     public float DefaultVolumeDb => defaultVolumeDb;
 
@@ -30,6 +31,39 @@ public partial class AudioGlobal : AudioStreamPlayer, IAudioPlayer
         VolumeDb = defaultVolumeDb;
         Autoplay = properties.GetOrDefault("autoplay", false);
         PitchScale = properties.GetOrDefault("pitch_scale", 1f);
+        fadeInTime = properties.GetOrDefault("fade_in_time", 0f);
+    }
+
+    public override void _Ready()
+    {
+        if (Engine.IsEditorHint())
+            return;
+        
+        if (Autoplay && fadeInTime > 0f)
+        {
+            VolumeDb = -80f;
+            FadeInVolume();
+        }
+    }
+
+    private void FadeInVolume()
+    {
+        var tween = CreateTween();
+        tween.TweenProperty(this, "volume_db", defaultVolumeDb, fadeInTime);
+        tween.Play();
+    }
+
+    private void StartPlaying()
+    {
+        if (fadeInTime > 0f)
+            VolumeDb = -80f;
+        else
+            VolumeDb = defaultVolumeDb;
+        
+        Play();
+
+        if (fadeInTime > 0f)
+            FadeInVolume();
     }
     
     // ReSharper disable once InconsistentNaming
@@ -38,7 +72,7 @@ public partial class AudioGlobal : AudioStreamPlayer, IAudioPlayer
         if (StreamPaused)
             StreamPaused = false;
         else
-            Play();
+            StartPlaying();
     }
 
     // ReSharper disable once InconsistentNaming
@@ -48,5 +82,5 @@ public partial class AudioGlobal : AudioStreamPlayer, IAudioPlayer
     public void reset(Node3D _) => Stop();
     
     // ReSharper disable once InconsistentNaming
-    public void restart(Node3D _) => Play();
+    public void restart(Node3D _) => StartPlaying();
 }
