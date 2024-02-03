@@ -14,6 +14,7 @@ qodot_internal = false
 base_classes = Array[Resource]([ExtResource("1_hofaa")])
 class_properties = {
 "autoplay": false,
+"fade_in_time": 0.0,
 "pitch_scale": 1.0,
 "sound": "",
 "volume_db": 0.0
