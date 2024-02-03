@@ -55,6 +55,9 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
 
     private void SetupLinkedDoors(GodotObject qodotMap)
     {
+        linkedDoors ??= new Array<Node3D>();
+        linkedDoors.Clear();
+        
         var linkedDoorName = properties.GetOrDefault("linked_door", "");
         if (string.IsNullOrWhiteSpace(linkedDoorName)) return;
         
@@ -65,9 +68,6 @@ public partial class FuncDoor : AnimatableBody3D, IUsableDoor
                 $"'{Name}' targets '{linkedDoorName}', but there are no entities with that name, so it will not link to anything.");
             return;
         }
-
-        linkedDoors ??= new Array<Node3D>();
-        linkedDoors.Clear();
         
         foreach (var linkedDoorNode in linkedDoorNodes)
         {
