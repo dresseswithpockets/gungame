@@ -110,6 +110,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     private CylinderShape3D _collisionCapsule;
 
     private bool _alive = true;
+    private bool _groundedAtStartOfFrame;
 
     public void UpdateProperties(Node3D _)
     {
@@ -212,6 +213,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         if (Engine.IsEditorHint()) return;
         if (!_alive) return;
 
+        _groundedAtStartOfFrame = IsOnFloor();
+
         _wasPulledByGrappleHookLastFrame = _isPulledByGrappleHook;
         _isPulledByGrappleHook = _grappleHook != null && IsInstanceValid(_grappleHook) && _grappleHook.IsPulling;
 
@@ -241,7 +244,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             }
             else
             {
-                if (IsOnFloor())
+                if (_groundedAtStartOfFrame)
                     StartJump();
                 else
                     BeginJumpBuffer();
@@ -325,7 +328,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             _maxSpeedFromGrapple = Mathf.MoveToward(_maxSpeedFromGrapple, 0f, grappleHookMaxSpeedDeceleration * deltaF);
 
             // gravity is only applied when not grappling, and when the player isnt beyond the terminal velocity
-            if (!IsOnFloor() && verticalSpeed < terminalVelocity)
+            if (!_groundedAtStartOfFrame && verticalSpeed < terminalVelocity)
             {
                 verticalSpeed += gravity.Y * deltaF;
             }
@@ -333,15 +336,14 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         PreMove_JumpSquat(deltaF, ref verticalSpeed);
 
-        var velocityUsedByStepUp = SweepStepUp(deltaF);
-        Velocity = _horizontalRunVelocity with { Y = verticalSpeed } - velocityUsedByStepUp;
-
-        var preMoveOnFloor = IsOnFloor();
+        Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
+        SweepStairStepUp(deltaF, Velocity);
         MoveAndSlide();
+        SweepStairStepDown();
 
         // if the player lands on a ledge during the rise of the jump, then treat it as if they've completed
         // the jump by the next frame. This ends up behaving pretty much exactly like ion fury's vaulting jump
-        if (IsOnFloor() && !preMoveOnFloor)
+        if (IsOnFloor() && !_groundedAtStartOfFrame)
         {
             _cameraLandingBobTimer = cameraLandingBobTime;
             Velocity = Velocity with { Y = 0f };
@@ -382,33 +384,95 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _footstepStreamPlayer.Play();
     }
 
-    private Vector3 SweepStepUp(float deltaF)
+    private void SweepStairStepDown()
     {
-        if (!IsOnFloor() || _horizontalRunVelocity is { X: 0, Z: 0 })
-            return Vector3.Zero;
+        // Not on the ground last stair step, or currently jumping? Don't snap to the ground
+        // Prevents from suddenly snapping when you're falling
+        if (_groundedAtStartOfFrame == false || Velocity.Y >= 0) return;
 
-        var horizontalTravelledByStepping = Vector3.Zero;
-        var maxPossibleStepHeight = maxStepHeight;
-        var testTransform = GlobalTransform;
-        var collisionInfo = new KinematicCollision3D();
-        if (TestMove(testTransform, Vector3.Up * maxStepHeight, collisionInfo, SafeMargin))
-            maxPossibleStepHeight = collisionInfo.GetTravel().Y;
+        // MoveAndSlide() kept us on the floor so no need to do anything
+        if (IsOnFloor()) return;
 
-        var horizontalTravel = _horizontalRunVelocity * deltaF;
-        testTransform.Origin.Y += maxPossibleStepHeight;
-        if (TestMove(testTransform, horizontalTravel, collisionInfo, SafeMargin))
-            horizontalTravel = collisionInfo.GetTravel();
+        var result = new PhysicsTestMotionResult3D();
+        var parameters = new PhysicsTestMotionParameters3D();
 
-        testTransform.Origin += horizontalTravel;
-        if (TestMove(testTransform, Vector3.Down * maxPossibleStepHeight, collisionInfo, SafeMargin) &&
-            collisionInfo.GetPosition().Y > GlobalPosition.Y &&
-            Vector3.Up.Dot(collisionInfo.GetNormal()) >= 0.7f)
-        {
-            GlobalPosition = (GlobalPosition + horizontalTravel) with { Y = collisionInfo.GetPosition().Y };
-            horizontalTravelledByStepping = horizontalTravel;
-        }
+        parameters.From = GlobalTransform;
+        parameters.Motion = Vector3.Down * maxStepHeight;
+        parameters.Margin = _collisionCapsule.Margin;
 
-        return horizontalTravelledByStepping / deltaF;
+        if (!PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result)) return;
+
+        GlobalTransform = GlobalTransform.Translated(result.GetTravel());
+        ApplyFloorSnap();
+    }
+
+    private void SweepStairStepUp(float deltaF, Vector3 desiredVelocity)
+    {
+        if (!_groundedAtStartOfFrame)
+            return; //Let's not bother if we're in the air
+
+        var horizontalVelocity = Velocity with { Y = 0f };
+        var testingVelocity = horizontalVelocity;
+
+        if (horizontalVelocity == Vector3.Zero)
+            testingVelocity = desiredVelocity;
+
+        // Not moving or attempting to move, let's not bother	
+        if (testingVelocity == Vector3.Zero)
+            return;
+
+        var result = new PhysicsTestMotionResult3D();
+        var parameters = new PhysicsTestMotionParameters3D();
+
+        var transform = GlobalTransform;
+
+        // Game is my autoload because I don't like passing 'delta' around everywhere
+        // Replace with 'delta' parameter if in your own game
+        var distance = testingVelocity * deltaF;
+        parameters.From = transform;
+        parameters.Motion = distance;
+        parameters.Margin = _collisionCapsule.Margin;
+
+        if (PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result) == false)
+            return; // No stair step to bother with because we're not hitting anything
+
+        //Move to collision
+        var remainder = result.GetRemainder();
+        transform = transform.Translated(result.GetTravel());
+
+        // Raise up to ceiling - can't walk on steps if the corridor is too low for example
+        var stepUp = maxStepHeight * Vector3.Up;
+        parameters.From = transform;
+        parameters.Motion = stepUp;
+        PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result);
+        transform = transform.Translated(result.GetTravel()); // GetTravel will be full length if we didn't hit anything
+        var stepUpDistance = result.GetTravel().Length();
+
+        // Move forward remaining distance
+        parameters.From = transform;
+        parameters.Motion = remainder;
+        PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result);
+        transform = transform.Translated(result.GetTravel());
+
+        // And set the collider back down again
+        parameters.From = transform;
+        // But no further than how far we stepped up
+        parameters.Motion = Vector3.Down * stepUpDistance;
+
+        // Don't bother with the rest if we're not actually gonna land back down on something
+        if (PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result) == false)
+            return;
+
+        transform = transform.Translated(result.GetTravel());
+
+        var surfaceNormal = result.GetCollisionNormal();
+        if (surfaceNormal.AngleTo(Vector3.Up) > FloorMaxAngle)
+            return; //Can't stand on the thing we're trying to step on anyway
+
+        var gp = GlobalPosition;
+        gp.Y = transform.Origin.Y;
+        GlobalPosition = gp;
+        // TODO: do we need to actually return a horizontal travel?
     }
 
     private void ResetJumpBuffer()
