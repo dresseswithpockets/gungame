@@ -17,6 +17,7 @@ public partial class TriggerTeleport : Area3D
     [Signal]
     public delegate void TriggerEventHandler(Node3D activator);
 
+    // TODO: add an option for axis flags e.g. only teleport the Y position
     public void UpdateProperties(Node3D qodotMap)
     {
         if (!Engine.IsEditorHint())
