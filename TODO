@@ -160,8 +160,8 @@ TODO update portal-traveller velocity & rotation when they go through a portal, 
 TODO ensure support for emissive textures in default material
 TODO default material adds dither to all surfaces
 TODO default material supports transparency (flag in TB? or maybe per-texture material)
-TODO rewrite env_sprite in C# (? maybe base qodot entities are always written in gdscript, since its only ever ran at build-time)
-TODO consider refactoring QodotEntity to support both gdscript and C# implementations (compositional approach?)
+TODO rewrite env_sprite in C#
+DONE consider refactoring QodotEntity to support both gdscript and C# implementations - unecessary
 TODO simple opaque color shader for surface if current camera (CAMERA_POSITION_WORLD) is not the portal's camera. for recursion
 TODO fix lighting around portals (since the portal camera renders the portal without the surface, the shadow isnt there. Maybe these shadows need to be baked.)
 TODO finish recursive portals (https://www.youtube.com/watch?v=cWpFZbjtSQg)
