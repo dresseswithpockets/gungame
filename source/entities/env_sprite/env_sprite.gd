@@ -21,7 +21,7 @@ func update_properties():
         child.queue_free()
     
     var texture: Texture2D
-    var sprite_path = properties.get("sprite_path")
+    var sprite_path = properties.get("sprite_name")
     if sprite_path is String:
         if !sprite_path.begins_with("res://"):
             sprite_path = "res://" + sprite_path
@@ -42,6 +42,8 @@ func update_properties():
     sprite_node.modulate = properties.get("modulate", Color.WHITE)
     sprite_node.pixel_size = properties.get("pixel_size", 1.0) / TB_UNITS_PER_GODOT_UNIT
     sprite_node.billboard = billboard
+    sprite_node.flip_h = true
+    sprite_node.transparent = false
     
     add_child(sprite_node)
     
