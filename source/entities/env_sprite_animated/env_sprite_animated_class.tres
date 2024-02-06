@@ -1,0 +1,33 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://cruq741yww2wq"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_6oaw0"]
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_ghidk"]
+[ext_resource type="Script" path="res://entities/env_sprite_animated/EnvSpriteAnimated.cs" id="2_68ck5"]
+
+[resource]
+script = ExtResource("1_6oaw0")
+script_class = ExtResource("2_68ck5")
+apply_rotation_on_map_build = true
+classname = "env_sprite_animated"
+description = "Animated static sprite entity"
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_ghidk")])
+class_properties = {
+"billboard": {
+"Disabled": 0,
+"Enabled": 1,
+"Y-Billboard": 2
+},
+"modulate": Color(1, 1, 1, 1),
+"pixel_size": 1.0,
+"sprite_name": ""
+}
+class_property_descriptions = {
+"billboard": ["Billboard behaviour. Defaults to Disabled. Enabled keeps sprite aligned with camera. Y-Billboard keeps sprite's y axis aligned with the camera's.", 0]
+}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-4, -4, -4, 4, 4, 4)
+}
+node_class = "AnimatedSprite3D"
+transient_node = false
