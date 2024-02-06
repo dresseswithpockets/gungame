@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=3 format=3 uid="uid://dl4je7gnbbibp"]
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://dl4je7gnbbibp"]
 
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_4x8fv"]
 [ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_80aji"]
 [ext_resource type="Script" path="res://entities/env_sprite/env_sprite.gd" id="2_rr0yc"]
 
@@ -10,7 +11,7 @@ apply_rotation_on_map_build = true
 classname = "env_sprite"
 description = "Single static sprite entity"
 qodot_internal = false
-base_classes = Array[Resource]([])
+base_classes = Array[Resource]([ExtResource("1_4x8fv")])
 class_properties = {
 "billboard": {
 "Disabled": 0,
