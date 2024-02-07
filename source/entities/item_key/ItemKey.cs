@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 using GunGame;
@@ -13,10 +14,15 @@ public partial class ItemKey : Area3D
     [Export] public float rotateSpeed = 90f;
     [Export] public float pitchMin = 0.8f;
     [Export] public float pitchMax = 1f;
+    [Export] public Material blackMaterial;
+    [Export] public Material purpleMaterial;
+    [Export] public Material orangeMaterial;
+    [Export] public Material redMaterial;
 
     private PlayerInventory _playerInventory;
     private AudioStreamPlayer3D _audioStreamPlayer3D;
-    private Node3D _render;
+    private MeshInstance3D _render;
+    private Node3D _renderRoot;
     private bool _pickingUp;
 
     public void UpdateProperties(Node3D _)
@@ -29,10 +35,27 @@ public partial class ItemKey : Area3D
     {
         if (Engine.IsEditorHint())
             return;
-
+        
         _playerInventory = GetNode<PlayerInventory>("/root/PlayerInventory");
         _audioStreamPlayer3D = GetNode<AudioStreamPlayer3D>("PickupSoundPlayer");
-        _render = GetNode<Node3D>("Render");
+        _render = GetNode<MeshInstance3D>("RenderRoot/Render");
+        _renderRoot = GetNode<Node3D>("RenderRoot");
+
+#pragma warning disable CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+        var material = color switch
+#pragma warning restore CS8509 // The switch expression does not handle all possible values of its input type (it is not exhaustive).
+        {
+            ItemKeyColor.Black => blackMaterial,
+            ItemKeyColor.Purple => purpleMaterial,
+            ItemKeyColor.Orange => orangeMaterial,
+            ItemKeyColor.Red => redMaterial,
+        };
+
+        _render.MaterialOverride = material;
+        GD.Print(_render.Mesh.GetSurfaceCount());
+        for (var i = 0; i < _render.Mesh.GetSurfaceCount(); i++)
+            _render.SetSurfaceOverrideMaterial(i, material);
+        
         BodyEntered += OnBodyEntered;
     }
 
@@ -44,8 +67,8 @@ public partial class ItemKey : Area3D
             return;
         
         _bobTimer += (float)delta;
-        _render.RotateY(Mathf.DegToRad(rotateSpeed * (float)delta));
-        _render.Position = _render.Position with
+        _renderRoot.RotateY(Mathf.DegToRad(rotateSpeed * (float)delta));
+        _renderRoot.Position = _renderRoot.Position with
         {
             Y = bobAmplitude * Mathf.Sin(bobSpeed * _bobTimer)
         };
