@@ -302,6 +302,7 @@ func register_post_attach_steps() -> void:
     register_build_step('apply_worldspawn_layer_meshes', [], "", true)
     register_build_step('apply_properties', [], "", true)
     register_build_step('connect_signals', [], "", true)
+    register_build_step('update_entities_post_collision_build', [], "", true)
     register_build_step('remove_transient_nodes', [], "", true)
 
 # Actions
@@ -757,6 +758,12 @@ func build_worldspawn_layer_collision_shape_nodes() -> Array:
         worldspawn_layer_collision_shapes.append(shapes)
     
     return worldspawn_layer_collision_shapes
+
+func update_entities_post_collision_build() -> void:
+    for entity_idx in range(0, entity_dicts.size()):
+        var entity = entity_nodes[entity_idx]
+        if entity != null and entity.has_method("UpdatePostCollisionBuild"):
+            entity.call("UpdatePostCollisionBuild", self)
 
 ## Build the concrete [Shape3D] resources for each brush
 func build_entity_collision_shapes() -> void:
