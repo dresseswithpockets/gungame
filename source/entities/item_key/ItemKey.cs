@@ -52,7 +52,6 @@ public partial class ItemKey : Area3D
         };
 
         _render.MaterialOverride = material;
-        GD.Print(_render.Mesh.GetSurfaceCount());
         for (var i = 0; i < _render.Mesh.GetSurfaceCount(); i++)
             _render.SetSurfaceOverrideMaterial(i, material);
         
