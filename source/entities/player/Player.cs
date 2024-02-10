@@ -65,8 +65,11 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     [Export(hintString: "suffix:m/s")] public float grappleHookMinimumSpeed = 10f;
     [Export(hintString: "suffix:s")] public float grappleHookCooldown = 0.3f;
 
-    [ExportCategory("Footsteps")]
+    [ExportCategory("Physics Sounds & Footsteps")]
     [Export] public Array<AudioStream> footstepClips;
+    [Export(PropertyHint.ResourceType, nameof(PhysicsSoundCollection))] public Resource physicsSoundCollection;
+
+    private PhysicsSoundCollection PhysicsSoundCollection => (PhysicsSoundCollection)physicsSoundCollection;
 
     [Export] public AudioStream jumpClip;
     [Export] public AudioStream jumpLandClip;
@@ -80,6 +83,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     private float _footstepDistanceAccumulator;
     private RandomNumberGenerator _rand = new();
     private AudioStreamPlayer3D _footstepStreamPlayer;
+    private RayCast3D _footStepCast;
 
     private float _grappleHookCooldownTimer;
     private bool _isPulledByGrappleHook;
@@ -137,6 +141,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _shapeCast = _camera.GetNode<ShapeCast3D>("PlayerUseShapeCast");
         _deathStreamPlayer = GetNode<AudioStreamPlayer>("DeathStreamPlayer");
         _footstepStreamPlayer = GetNode<AudioStreamPlayer3D>("FootstepStreamPlayer");
+        _footStepCast = GetNode<RayCast3D>("FootStepCast");
     }
 
     public override void _Input(InputEvent @event)
@@ -261,8 +266,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         AnimatePreMove(ref verticalSpeed);
 
+        SweepStairStepUp(_horizontalRunVelocity);
         Velocity = _horizontalRunVelocity with { Y = verticalSpeed };
-        SweepStairStepUp(Velocity);
         MoveAndSlide();
         SweepStairStepDown();
 
@@ -403,8 +408,17 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         _footstepDistanceAccumulator += distanceTravelled;
         if (_footstepDistanceAccumulator >= footstepDistance)
         {
+            var materialPhysicsSound = PhysicsSoundCollection.defaultSound;
+            var groundCollider = _footStepCast.GetCollider();
+            if (groundCollider?.HasMeta("physics_tag") ?? false)
+            {
+                var soundName = groundCollider.GetMeta("physics_tag").AsString();
+                materialPhysicsSound = PhysicsSoundCollection.GetSoundByTag(soundName);
+            }
+            
             _footstepDistanceAccumulator -= footstepDistance;
-            PlayRandomFootstep();
+            _footstepStreamPlayer.Stream = materialPhysicsSound.footstepSoundStream;
+            _footstepStreamPlayer.Play();
         }
     }
 

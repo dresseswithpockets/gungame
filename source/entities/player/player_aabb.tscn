@@ -1,0 +1,89 @@
+[gd_scene load_steps=16 format=3 uid="uid://br3scscnoucct"]
+
+[ext_resource type="Script" path="res://entities/player/Player.cs" id="1_lsstm"]
+[ext_resource type="PackedScene" uid="uid://dexxr3wcnc0y2" path="res://entities/player_grapple_hook/player_grapple_hook.tscn" id="2_ryqv8"]
+[ext_resource type="AudioStream" uid="uid://c6pxtnrg08xk7" path="res://love/hl_sounds/player/pl_step1.wav" id="3_l27ne"]
+[ext_resource type="AudioStream" uid="uid://1ylq83v0du8h" path="res://love/hl_sounds/player/pl_step2.wav" id="4_styqb"]
+[ext_resource type="AudioStream" uid="uid://dojvngfy5tkl3" path="res://love/hl_sounds/player/pl_step3.wav" id="5_aq6hy"]
+[ext_resource type="AudioStream" uid="uid://bcskxl43cx7g7" path="res://love/hl_sounds/player/pl_step4.wav" id="6_c5qj2"]
+[ext_resource type="Resource" uid="uid://djus46xvfl6gj" path="res://entities/player/player_footstep_collection.tres" id="7_jstq0"]
+[ext_resource type="AudioStream" uid="uid://61i7cfhurn24" path="res://love/hl_sounds/player/pl_jump2.wav" id="7_oxqr3"]
+[ext_resource type="AudioStream" uid="uid://ccseoshqq6b5u" path="res://love/hl_sounds/player/pl_jumpland2.wav" id="8_skoq2"]
+[ext_resource type="AudioStream" uid="uid://c2gp12y132y22" path="res://love/hl_sounds/player/pl_pain7.wav" id="9_ibl5k"]
+
+[sub_resource type="Curve" id="Curve_ndggg"]
+_data = [Vector2(0, 0), 0.0, 1.0, 0, 1, Vector2(1, 1), 1.0, -1.99441, 1, 1]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_r5f5j"]
+_data = [Vector2(0, 0), 0.0, 2.83001, 0, 0, Vector2(0.501401, 1), 0.0, -2.00562, 0, 0, Vector2(1, 0), -1.98306, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_tofiy"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.252101, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qg3ok"]
+margin = 0.005
+size = Vector3(0.5, 1.82, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2o11y"]
+radius = 0.15
+
+[node name="player" type="CharacterBody3D" node_paths=PackedStringArray("grappleHookStart") groups=["player"]]
+collision_layer = 2
+collision_mask = 5
+floor_snap_length = 0.2
+script = ExtResource("1_lsstm")
+properties = {}
+lineOfSightCollisionMask = 1
+runAcceleration = 100.0
+runNormalSpeedCap = 8.0
+runBoostSpeedMultiplier = 1.2
+maxStepHeight = 0.333
+cameraRunBobCurve = SubResource("Curve_ndggg")
+cameraJumpSquatCurve = SubResource("Curve_r5f5j")
+cameraLandingBobCurve = SubResource("Curve_tofiy")
+jumpSpeed = 5.0
+grappleHookPrefab = ExtResource("2_ryqv8")
+grappleHookStart = NodePath("CameraYaw/Camera3D/GrappleHookStart")
+footstepClips = Array[AudioStream]([ExtResource("3_l27ne"), ExtResource("4_styqb"), ExtResource("5_aq6hy"), ExtResource("6_c5qj2")])
+physicsSoundCollection = ExtResource("7_jstq0")
+jumpClip = ExtResource("7_oxqr3")
+jumpLandClip = ExtResource("8_skoq2")
+footstepDistance = 3.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.91, 0)
+shape = SubResource("BoxShape3D_qg3ok")
+
+[node name="CameraYaw" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraYaw" groups=["player_cam"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+keep_aspect = 0
+cull_mask = 294909
+fov = 110.0
+
+[node name="GrappleHookStart" type="Node3D" parent="CameraYaw/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -0.45)
+
+[node name="PlayerUseShapeCast" type="ShapeCast3D" parent="CameraYaw/Camera3D"]
+shape = SubResource("SphereShape3D_2o11y")
+target_position = Vector3(0, 0, -1.5)
+margin = 0.04
+collision_mask = 32
+collide_with_areas = true
+
+[node name="FootstepStreamPlayer" type="AudioStreamPlayer3D" parent="."]
+max_polyphony = 4
+bus = &"SoundEffects"
+attenuation_filter_cutoff_hz = 20500.0
+
+[node name="DeathStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_ibl5k")
+bus = &"SoundEffects"
+
+[node name="FootStepCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+target_position = Vector3(0, -0.5, 0)

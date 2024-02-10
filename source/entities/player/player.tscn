@@ -44,6 +44,7 @@ maxStepHeight = 0.333
 cameraRunBobCurve = SubResource("Curve_ndggg")
 cameraJumpSquatCurve = SubResource("Curve_r5f5j")
 cameraLandingBobCurve = SubResource("Curve_tofiy")
+jumpSpeed = 5.0
 grappleHookPrefab = ExtResource("2_rd5lf")
 grappleHookStart = NodePath("Camera3D/GrappleHookStart")
 footstepClips = Array[AudioStream]([ExtResource("3_d4rx4"), ExtResource("4_0okij"), ExtResource("5_bowuw"), ExtResource("6_bnrj3")])
