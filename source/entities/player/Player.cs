@@ -89,6 +89,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     private float _jumpBufferTimer;
     private bool _shouldDoBufferJump;
 
+    private Node3D _cameraYaw;
     private Camera3D _camera;
     private Vector3 _cameraStart;
     private Vector3 _cameraAggregateOffset;
@@ -107,7 +108,8 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
     private Vector3 _continuousForce;
     private Vector3 _impulse;
 
-    private CylinderShape3D _collisionCapsule;
+    private Shape3D _playerShape;
+    private float _playerHeight;
 
     private bool _alive = true;
     private bool _groundedAtStartOfFrame;
@@ -126,12 +128,13 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         _defaultRespawnPosition = GlobalPosition;
         _defaultRespawnRotation = GlobalRotation;
-        _camera = GetNode<Camera3D>("Camera3D");
+        _cameraYaw = GetNode<Node3D>("CameraYaw");
+        _camera = _cameraYaw.GetNode<Camera3D>("Camera3D");
         _cameraStart = _camera.Position;
-        _collisionCapsule = GetNode<CollisionShape3D>("CollisionShape3D").Shape as CylinderShape3D;
+        _playerShape = GetNode<CollisionShape3D>("CollisionShape3D").Shape;
         FloorSnapLength = maxStepHeight;
 
-        _shapeCast = GetNode<ShapeCast3D>("Camera3D/PlayerUseShapeCast");
+        _shapeCast = _camera.GetNode<ShapeCast3D>("PlayerUseShapeCast");
         _deathStreamPlayer = GetNode<AudioStreamPlayer>("DeathStreamPlayer");
         _footstepStreamPlayer = GetNode<AudioStreamPlayer3D>("FootstepStreamPlayer");
     }
@@ -201,7 +204,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
     private void MoveCamera(Vector2 relative)
     {
-        RotateY(Mathf.DegToRad(MouseSensitivity * MouseYawSpeed * -relative.X));
+        _cameraYaw.RotateY(Mathf.DegToRad(MouseSensitivity * MouseYawSpeed * -relative.X));
         _camera.RotateX(Mathf.DegToRad(MouseSensitivity * MousePitchSpeed * -relative.Y));
         // clamping camera's pitch to +/- 90 to prevent inversion
         var rot = _camera.RotationDegrees;
@@ -235,11 +238,10 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         ProcessJumpInput(ref verticalSpeed);
 
         // Get the input direction and handle the movement/deceleration.
-        // As good practice, you should replace UI actions with custom gameplay actions.
         var inputDir = Vector2.Zero;
         if (allowMovement)
             inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
-        var wishDirection = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+        var wishDirection = (_cameraYaw.GlobalBasis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
         // we actually want diagonals to be faster than cardinals, to mimic build engine movement;
         // so if the player is trying to move in a diagonal direction, give them a speed boost
@@ -427,7 +429,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
 
         parameters.From = GlobalTransform;
         parameters.Motion = Vector3.Down * maxStepHeight;
-        parameters.Margin = _collisionCapsule.Margin;
+        parameters.Margin = _playerShape.Margin;
 
         if (!PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result)) return;
 
@@ -460,7 +462,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         var distance = testingVelocity * _physicsDelta;
         parameters.From = transform;
         parameters.Motion = distance;
-        parameters.Margin = _collisionCapsule.Margin;
+        parameters.Margin = _playerShape.Margin;
 
         if (PhysicsServer3D.BodyTestMotion(GetRid(), parameters, result) == false)
             return; // No stair step to bother with because we're not hitting anything
@@ -627,7 +629,7 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
         // player relative to their feet instead. This is the default behaviour.
         // TODO: should the feet-relative stuff be toggleable on the thing calling TeleportTo?
         var targetPos = targetNode.GlobalPosition;
-        targetPos.Y -= _collisionCapsule.Height * 0.5f;
+        targetPos.Y -= _playerHeight * 0.5f;
         GlobalPosition = targetPos;
         GlobalRotation = GlobalRotation with { Y = GlobalRotation.Y };
 
