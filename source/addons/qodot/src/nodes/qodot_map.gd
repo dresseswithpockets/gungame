@@ -694,6 +694,13 @@ func build_entity_collision_shape_nodes() -> Array:
             entity_collision_shapes_arr.append(null)
             continue
         
+        # if brush has any meta: properties, set them as metadata on the
+        # collision hull
+        for key in properties:
+            if key.begins_with("meta:"):
+                var meta_key = key.split(":")[1]
+                node.set_meta(meta_key, properties[key])
+        
         if concave:
             var collision_shape := CollisionShape3D.new()
             collision_shape.name = "entity_%s_collision_shape" % entity_idx
