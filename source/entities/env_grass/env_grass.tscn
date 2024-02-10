@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://gx1mv4rpqh37"]
+
+[ext_resource type="Texture2D" uid="uid://cked241kfb80c" path="res://love/grass.png" id="1_g47eh"]
+[ext_resource type="Script" path="res://entities/env_grass/EnvGrass.cs" id="1_tjn8n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gotoy"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_texture = ExtResource("1_g47eh")
+ao_texture = ExtResource("1_g47eh")
+texture_filter = 0
+
+[node name="EnvGrass" type="Node3D"]
+script = ExtResource("1_tjn8n")
+properties = {}
+
+[node name="Grass1" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.396461, 0)
+material_override = SubResource("StandardMaterial3D_gotoy")
+pixel_size = 0.005
+shaded = true
+texture_filter = 0
+texture = ExtResource("1_g47eh")
+
+[node name="Grass2" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0.396461, 0)
+material_override = SubResource("StandardMaterial3D_gotoy")
+pixel_size = 0.005
+shaded = true
+texture_filter = 0
+texture = ExtResource("1_g47eh")

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=3 format=3 uid="uid://bnmn7aog8kkh6"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_6b748"]
+[ext_resource type="PackedScene" uid="uid://gx1mv4rpqh37" path="res://entities/env_grass/env_grass.tscn" id="1_t0jcs"]
+
+[resource]
+script = ExtResource("1_6b748")
+scene_file = ExtResource("1_t0jcs")
+apply_rotation_on_map_build = true
+classname = "env_grass"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
