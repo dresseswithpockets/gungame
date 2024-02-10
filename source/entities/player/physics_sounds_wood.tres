@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=3 format=3 uid="uid://bdiax3ew1k448"]
+
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="1_yqgu5"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tvxa1"]
+
+[resource]
+script = ExtResource("1_yqgu5")
+tagName = &"wood"
+footstepSoundStream = SubResource("AudioStreamRandomizer_tvxa1")

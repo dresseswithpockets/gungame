@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=7 format=3 uid="uid://dgkeobrteca7k"]
+
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="1_hfiyf"]
+[ext_resource type="AudioStream" uid="uid://wph0mjdxmp1m" path="res://love/hl_sounds/player/pl_metal1.wav" id="1_l8vch"]
+[ext_resource type="AudioStream" uid="uid://ydutfyl2eve" path="res://love/hl_sounds/player/pl_metal2.wav" id="2_tvvtq"]
+[ext_resource type="AudioStream" uid="uid://8jvjel8lovmh" path="res://love/hl_sounds/player/pl_metal3.wav" id="3_df0lo"]
+[ext_resource type="AudioStream" uid="uid://uwy3ps4n0vqa" path="res://love/hl_sounds/player/pl_metal4.wav" id="4_64k2x"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xwyy0"]
+streams_count = 4
+stream_0/stream = ExtResource("1_l8vch")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_tvvtq")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_df0lo")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_64k2x")
+stream_3/weight = 1.0
+
+[resource]
+script = ExtResource("1_hfiyf")
+tagName = &"metal"
+footstepSoundStream = SubResource("AudioStreamRandomizer_xwyy0")

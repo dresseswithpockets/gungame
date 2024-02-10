@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=7 format=3 uid="uid://ckp8xls6f35me"]
+
+[ext_resource type="AudioStream" uid="uid://c6pxtnrg08xk7" path="res://love/hl_sounds/player/pl_step1.wav" id="1_bybfh"]
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="1_l8x7t"]
+[ext_resource type="AudioStream" uid="uid://1ylq83v0du8h" path="res://love/hl_sounds/player/pl_step2.wav" id="2_xkdbw"]
+[ext_resource type="AudioStream" uid="uid://dojvngfy5tkl3" path="res://love/hl_sounds/player/pl_step3.wav" id="3_wy7qe"]
+[ext_resource type="AudioStream" uid="uid://bcskxl43cx7g7" path="res://love/hl_sounds/player/pl_step4.wav" id="4_yk1ey"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ejqfl"]
+streams_count = 4
+stream_0/stream = ExtResource("1_bybfh")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_xkdbw")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_wy7qe")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_yk1ey")
+stream_3/weight = 1.0
+
+[resource]
+script = ExtResource("1_l8x7t")
+tagName = &"concrete"
+footstepSoundStream = SubResource("AudioStreamRandomizer_ejqfl")

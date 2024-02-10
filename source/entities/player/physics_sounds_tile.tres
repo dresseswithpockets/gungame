@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=8 format=3 uid="uid://pkg50g6jwcq6"]
+
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="1_c05oo"]
+[ext_resource type="AudioStream" uid="uid://chv0mo8fteyxe" path="res://love/hl_sounds/player/pl_tile1.wav" id="1_qie07"]
+[ext_resource type="AudioStream" uid="uid://dkhxqmh33wjno" path="res://love/hl_sounds/player/pl_tile2.wav" id="2_vpww8"]
+[ext_resource type="AudioStream" uid="uid://upux44jqfaum" path="res://love/hl_sounds/player/pl_tile3.wav" id="3_2iqll"]
+[ext_resource type="AudioStream" uid="uid://bl3sdkwfobeyr" path="res://love/hl_sounds/player/pl_tile4.wav" id="4_ynuoy"]
+[ext_resource type="AudioStream" uid="uid://4a7bhfhxh6in" path="res://love/hl_sounds/player/pl_tile5.wav" id="5_gkcvs"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ujfbt"]
+streams_count = 5
+stream_0/stream = ExtResource("1_qie07")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_vpww8")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_2iqll")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_ynuoy")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("5_gkcvs")
+stream_4/weight = 1.0
+
+[resource]
+script = ExtResource("1_c05oo")
+tagName = &"tile"
+footstepSoundStream = SubResource("AudioStreamRandomizer_ujfbt")

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=7 format=3 uid="uid://8qfrlkhffshr"]
+
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="1_dhf0c"]
+[ext_resource type="AudioStream" uid="uid://cjh3c13xl18kh" path="res://love/hl_sounds/player/pl_dirt1.wav" id="1_ln8ns"]
+[ext_resource type="AudioStream" uid="uid://4u8h5t047aid" path="res://love/hl_sounds/player/pl_dirt2.wav" id="2_nl8on"]
+[ext_resource type="AudioStream" uid="uid://dh2kygl5a7s43" path="res://love/hl_sounds/player/pl_dirt3.wav" id="3_ynd3e"]
+[ext_resource type="AudioStream" uid="uid://4p0eys0tufgy" path="res://love/hl_sounds/player/pl_dirt4.wav" id="4_gvgrv"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_f6hd8"]
+streams_count = 4
+stream_0/stream = ExtResource("1_ln8ns")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_nl8on")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_ynd3e")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_gvgrv")
+stream_3/weight = 1.0
+
+[resource]
+script = ExtResource("1_dhf0c")
+tagName = &"dirt"
+footstepSoundStream = SubResource("AudioStreamRandomizer_f6hd8")
