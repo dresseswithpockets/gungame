@@ -17,6 +17,7 @@ class_properties = {
 "max_distance": 0.0,
 "pitch_scale": 1.0,
 "sound": "",
+"start_silent": false,
 "volume_db": 0.0
 }
 class_property_descriptions = {}

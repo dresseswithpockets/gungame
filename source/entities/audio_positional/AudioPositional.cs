@@ -26,8 +26,9 @@ public partial class AudioPositional : AudioStreamPlayer3D, IAudioPlayer
         
         Stream = ResourceLoader.Load<AudioStream>(soundName);
         
+        var startSilent = properties.GetOrDefault("start_silent", false);
         defaultVolumeDb = properties.GetOrDefault("volume_db", 0f);
-        VolumeDb = defaultVolumeDb;
+        VolumeDb = startSilent ? -80f : defaultVolumeDb;
         Autoplay = properties.GetOrDefault("autoplay", false);
         PitchScale = properties.GetOrDefault("pitch_scale", 1f);
         MaxDistance = properties.GetOrDefault("max_distance", 0f);
