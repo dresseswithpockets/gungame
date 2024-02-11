@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dpqsjl8r7p20t"]
+
+[ext_resource type="Shader" path="res://quake_liquid.gdshader" id="1_ca7kq"]
+[ext_resource type="Texture2D" uid="uid://dnw1lsnhftog0" path="res://trenchbroom/textures/lq_liquidsky/star_water0.png" id="2_n72my"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_ca7kq")
+shader_parameter/albedo_color = Color(0.501961, 0.501961, 0.501961, 1)
+shader_parameter/wave_scale = 0.8
+shader_parameter/wave_frequency = 0.5
+shader_parameter/wave_amplitude = 0.15
+shader_parameter/albedo = ExtResource("2_n72my")
