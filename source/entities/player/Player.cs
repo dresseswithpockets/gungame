@@ -405,18 +405,23 @@ public partial class Player : CharacterBody3D, IPushable, ITeleportTraveller, ID
             !IsInstanceValid(_footstepStreamPlayer))
             return;
 
-        _footstepDistanceAccumulator += distanceTravelled;
-        if (_footstepDistanceAccumulator >= footstepDistance)
+        var materialPhysicsSound = PhysicsSoundCollection.defaultSound;
+        var groundCollider = _footStepCast.GetCollider();
+        if (groundCollider?.HasMeta("physics_tag") ?? false)
         {
-            var materialPhysicsSound = PhysicsSoundCollection.defaultSound;
-            var groundCollider = _footStepCast.GetCollider();
-            if (groundCollider?.HasMeta("physics_tag") ?? false)
-            {
-                var soundName = groundCollider.GetMeta("physics_tag").AsString();
-                materialPhysicsSound = PhysicsSoundCollection.GetSoundByTag(soundName);
-            }
+            var soundName = groundCollider.GetMeta("physics_tag").AsString();
+            materialPhysicsSound = PhysicsSoundCollection.GetSoundByTag(soundName);
+        }
+
+        var useFootstepDistance = materialPhysicsSound.overrideFootstepDistance
+            ? materialPhysicsSound.footstepDistance
+            : footstepDistance;
+        
+        _footstepDistanceAccumulator += distanceTravelled;
+        if (_footstepDistanceAccumulator >= useFootstepDistance)
+        {
             
-            _footstepDistanceAccumulator -= footstepDistance;
+            _footstepDistanceAccumulator -= useFootstepDistance;
             _footstepStreamPlayer.Stream = materialPhysicsSound.footstepSoundStream;
             _footstepStreamPlayer.Play();
         }
