@@ -1,12 +1,13 @@
-[gd_resource type="Resource" script_class="PhysicsSoundCollection" load_steps=6 format=3 uid="uid://djus46xvfl6gj"]
+[gd_resource type="Resource" script_class="PhysicsSoundCollection" load_steps=7 format=3 uid="uid://djus46xvfl6gj"]
 
 [ext_resource type="Script" path="res://PhysicsSoundCollection.cs" id="1_att34"]
 [ext_resource type="Resource" uid="uid://ckp8xls6f35me" path="res://entities/player/physics_sounds_concrete.tres" id="2_2y0er"]
 [ext_resource type="Resource" uid="uid://8qfrlkhffshr" path="res://entities/player/physics_sounds_dirt.tres" id="2_q3c4d"]
 [ext_resource type="Resource" uid="uid://dgkeobrteca7k" path="res://entities/player/physics_sounds_metal.tres" id="3_xxetc"]
 [ext_resource type="Resource" uid="uid://pkg50g6jwcq6" path="res://entities/player/physics_sounds_tile.tres" id="4_ugyns"]
+[ext_resource type="Resource" uid="uid://b8qs55rytd6ge" path="res://entities/player/physics_sounds_water_shallow.tres" id="5_enpty"]
 
 [resource]
 script = ExtResource("1_att34")
 defaultSound = ExtResource("2_2y0er")
-collection = Array[Object]([ExtResource("2_2y0er"), ExtResource("2_q3c4d"), ExtResource("3_xxetc"), ExtResource("4_ugyns")])
+collection = Array[Object]([ExtResource("2_2y0er"), ExtResource("2_q3c4d"), ExtResource("3_xxetc"), ExtResource("4_ugyns"), ExtResource("5_enpty")])

@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PhysicsSound" load_steps=7 format=3 uid="uid://b8qs55rytd6ge"]
+
+[ext_resource type="AudioStream" uid="uid://dwar51a6hixws" path="res://love/hl_sounds/player/pl_wade1.wav" id="1_i2iiw"]
+[ext_resource type="AudioStream" uid="uid://dfvjv5d42qdb5" path="res://love/hl_sounds/player/pl_wade2.wav" id="2_7h3wm"]
+[ext_resource type="AudioStream" uid="uid://b7oi83okkb5n2" path="res://love/hl_sounds/player/pl_wade3.wav" id="3_16l3n"]
+[ext_resource type="AudioStream" uid="uid://dwrn3y6dq4ok7" path="res://love/hl_sounds/player/pl_wade4.wav" id="4_dv7x0"]
+[ext_resource type="Script" path="res://PhysicsSound.cs" id="6_oby33"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_ywaow"]
+streams_count = 4
+stream_0/stream = ExtResource("1_i2iiw")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("2_7h3wm")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("3_16l3n")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("4_dv7x0")
+stream_3/weight = 1.0
+
+[resource]
+script = ExtResource("6_oby33")
+tagName = &"water_shallow"
+footstepSoundStream = SubResource("AudioStreamRandomizer_ywaow")
+overrideFootstepDistance = true
+footstepDistance = 5.0
