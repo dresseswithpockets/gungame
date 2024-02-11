@@ -43,7 +43,8 @@ func update_properties():
     sprite_node.pixel_size = properties.get("pixel_size", 1.0) / TB_UNITS_PER_GODOT_UNIT
     sprite_node.billboard = billboard
     sprite_node.flip_h = true
-    sprite_node.transparent = false
+    sprite_node.transparent = properties.get("transparent", false)
+    sprite_node.texture_filter = properties.get("filter_mode", 3)
     
     add_child(sprite_node)
     

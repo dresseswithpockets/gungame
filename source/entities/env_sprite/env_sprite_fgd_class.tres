@@ -18,12 +18,22 @@ class_properties = {
 "Enabled": 1,
 "Y-Billboard": 2
 },
+"filter_mode": {
+"Linear": 1,
+"Linear With Mipmaps": 3,
+"Linear With Mipmaps Anisotropic": 5,
+"Nareast With Mipmaps Anisotropic": 4,
+"Nearest": 0,
+"Nearest With Mipmaps": 2
+},
 "modulate": Color(1, 1, 1, 1),
 "pixel_size": 1.0,
-"sprite_name": ""
+"sprite_name": "",
+"transparent": false
 }
 class_property_descriptions = {
-"billboard": ["Billboard behaviour. Defaults to Disabled. Enabled keeps sprite aligned with camera. Y-Billboard keeps sprite's y axis aligned with the camera's.", 0]
+"billboard": ["Billboard behaviour. Defaults to Disabled. Enabled keeps sprite aligned with camera. Y-Billboard keeps sprite's y axis aligned with the camera's.", 0],
+"filter_mode": ["The texture filter mode", 3]
 }
 meta_properties = {
 "color": Color(0.8, 0.8, 0.8, 1),
