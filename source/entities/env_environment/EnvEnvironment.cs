@@ -49,8 +49,31 @@ public partial class EnvEnvironment : Node
             (Environment.ReflectionSource)properties.GetOrDefault("reflected_light_source", 0);
 
         // TODO: add sky properties
+        var skyType = (SkyType)properties.GetOrDefault("sky", (int)SkyType.Procedural);
         environment.Sky = new Sky();
-        environment.Sky.SkyMaterial = new ProceduralSkyMaterial();
+        if (skyType == 0)
+        {
+            environment.Sky.SkyMaterial = new ProceduralSkyMaterial();
+        }
+        else
+        {
+            var panoramaMaterial = new PanoramaSkyMaterial();
+            environment.Sky.SkyMaterial = panoramaMaterial;
+            
+            var skyTextureName = properties.GetOrDefault("sky_panorama", "");
+            if (string.IsNullOrWhiteSpace(skyTextureName))
+                GD.PushWarning($"'{Name}' has no sky_panorama despite selecting Panorama sky mode.");
+            else
+            {
+                if (!skyTextureName.StartsWith("res://"))
+                    skyTextureName = $"res://{skyTextureName}";
+
+                if (!ResourceLoader.Exists(skyTextureName, "Texture2D"))
+                    GD.PushWarning($"'{Name}': no Texture2D at sky_panorama path: '{skyTextureName}'.");
+                else
+                    panoramaMaterial.Panorama = GD.Load<Texture2D>(skyTextureName);
+            }
+        }
 
         environment.SsaoEnabled = properties.GetOrDefault("ssao_enabled", false);
         environment.SsaoAOChannelAffect = properties.GetOrDefault("ssao_ao_channel_affect", 0.0f);

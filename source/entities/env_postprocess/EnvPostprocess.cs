@@ -49,8 +49,31 @@ public partial class EnvPostprocess : WorldEnvironment
             (Environment.ReflectionSource)properties.GetOrDefault("reflected_light_source", 0);
 
         // TODO: add sky properties
+        var skyType = (SkyType)properties.GetOrDefault("sky", (int)SkyType.Procedural);
         defaultEnvironment.Sky = new Sky();
-        defaultEnvironment.Sky.SkyMaterial = new ProceduralSkyMaterial();
+        if (skyType == 0)
+        {
+            defaultEnvironment.Sky.SkyMaterial = new ProceduralSkyMaterial();
+        }
+        else
+        {
+            var panoramaMaterial = new PanoramaSkyMaterial();
+            defaultEnvironment.Sky.SkyMaterial = panoramaMaterial;
+            
+            var skyTextureName = properties.GetOrDefault("sky_panorama", "");
+            if (string.IsNullOrWhiteSpace(skyTextureName))
+                GD.PushWarning($"'{Name}' has no sky_panorama despite selecting Panorama sky mode.");
+            else
+            {
+                if (!skyTextureName.StartsWith("res://"))
+                    skyTextureName = $"res://{skyTextureName}";
+
+                if (!ResourceLoader.Exists(skyTextureName, "Texture2D"))
+                    GD.PushWarning($"'{Name}': no Texture2D at sky_panorama path: '{skyTextureName}'.");
+                else
+                    panoramaMaterial.Panorama = GD.Load<Texture2D>(skyTextureName);
+            }
+        }
 
         defaultEnvironment.SsaoEnabled = properties.GetOrDefault("ssao_enabled", false);
         defaultEnvironment.SsaoAOChannelAffect = properties.GetOrDefault("ssao_ao_channel_affect", 0.0f);
@@ -103,4 +126,10 @@ public partial class EnvPostprocess : WorldEnvironment
         // just reset to the default environment
         Environment = defaultEnvironment;
     }
+}
+
+public enum SkyType
+{
+    Procedural = 0,
+    Panorama = 1,
 }
