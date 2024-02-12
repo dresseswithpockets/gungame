@@ -30,8 +30,10 @@ public partial class LightSpot : SpotLight3D
         baseLightEnergy = properties.GetOrDefault("energy", 1f);
         LightEnergy = baseLightEnergy;
         LightIndirectEnergy = baseLightEnergy;
+        var overrideFogEnergy = properties.GetOrDefault("inherit_fog_energy", true);
+        var fogEnergy = overrideFogEnergy ?  baseLightEnergy : properties.GetOrDefault("fog_energy", 1f);
         var isShortLived = properties.GetOrDefault("short_lived", false);
-        LightVolumetricFogEnergy = isShortLived ? 0f : baseLightEnergy;
+        LightVolumetricFogEnergy = isShortLived ? 0f : fogEnergy;
         LightBakeMode = (BakeMode)properties.GetOrDefault("bake_mode", (int)BakeMode.Dynamic);
 
         ShadowEnabled = properties.GetOrDefault("shadows", false);
