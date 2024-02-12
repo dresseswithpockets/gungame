@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="QodotFGDPointClass" load_steps=4 format=3 uid="uid://1b0oqa6x1pxu"]
+
+[ext_resource type="Script" path="res://addons/qodot/src/resources/game-definitions/fgd/qodot_fgd_point_class.gd" id="1_pk8cr"]
+[ext_resource type="Resource" uid="uid://b74npv80q5mmx" path="res://entities/baseclasses/baseclass_angles.tres" id="1_whgas"]
+[ext_resource type="PackedScene" uid="uid://cvub3hc3yyv45" path="res://love/celeste_car/car.tscn" id="1_wuydi"]
+
+[resource]
+script = ExtResource("1_pk8cr")
+scene_file = ExtResource("1_wuydi")
+apply_rotation_on_map_build = true
+classname = "static_car"
+description = ""
+qodot_internal = false
+base_classes = Array[Resource]([ExtResource("1_whgas")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+transient_node = false
