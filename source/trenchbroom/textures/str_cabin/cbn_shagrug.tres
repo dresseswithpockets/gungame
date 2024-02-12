@@ -1,0 +1,11 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dtv0238v78sow"]
+
+[ext_resource type="Texture2D" uid="uid://bm8nxhr324gw" path="res://trenchbroom/textures/str_cabin/cbn_shagrug.png" id="1_hksml"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+albedo_texture = ExtResource("1_hksml")
+metallic_specular = 0.0
+texture_filter = 0
