@@ -7,7 +7,7 @@ damping = 0.33
 spread = 0.59
 
 [resource]
-bus/0/volume_db = -7.63072
+bus/0/volume_db = -21.0931
 bus/1/name = &"SoundEffects"
 bus/1/solo = false
 bus/1/mute = false
