@@ -1,0 +1,87 @@
+[gd_scene load_steps=12 format=3 uid="uid://cnsuy0ettlygs"]
+
+[ext_resource type="Texture2D" uid="uid://b8xf4yitqfk45" path="res://trenchbroom/textures/str_cabin/cbn_pinecard1.png" id="1_be5sy"]
+[ext_resource type="Script" path="res://entities/foliage_tree/FoliageTree.cs" id="1_ksoqa"]
+[ext_resource type="Texture2D" uid="uid://cked241kfb80c" path="res://love/grass.png" id="2_wgqor"]
+[ext_resource type="Texture2D" uid="uid://drim4jld4hcts" path="res://trenchbroom/textures/str_cabin/cbn_pinecard2.png" id="4_d4lf7"]
+[ext_resource type="Texture2D" uid="uid://jdi3h3qmx17k" path="res://trenchbroom/textures/str_cabin/cbn_pinecard3.png" id="5_vh68y"]
+[ext_resource type="Texture2D" uid="uid://r3ou8wnpip21" path="res://trenchbroom/textures/str_cabin/cbn_pinecard4.png" id="6_2fq1q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_imvgp"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.568627, 0.568627, 0.568627, 1)
+albedo_texture = ExtResource("1_be5sy")
+ao_texture = ExtResource("2_wgqor")
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_max_distance = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pqv11"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.568627, 0.568627, 0.568627, 1)
+albedo_texture = ExtResource("4_d4lf7")
+ao_texture = ExtResource("2_wgqor")
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_max_distance = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_or63v"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.568627, 0.568627, 0.568627, 1)
+albedo_texture = ExtResource("5_vh68y")
+ao_texture = ExtResource("2_wgqor")
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_max_distance = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fqi1c"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.568627, 0.568627, 0.568627, 1)
+albedo_texture = ExtResource("6_2fq1q")
+ao_texture = ExtResource("2_wgqor")
+texture_filter = 0
+distance_fade_mode = 2
+distance_fade_max_distance = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_68j4u"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+cull_mode = 2
+albedo_color = Color(0.552941, 0.552941, 0.552941, 1)
+albedo_texture = ExtResource("1_be5sy")
+ao_texture = ExtResource("2_wgqor")
+texture_filter = 0
+grow_amount = 0.632
+proximity_fade_distance = 5.0
+distance_fade_mode = 2
+distance_fade_max_distance = 1.0
+
+[node name="FoliageTree" type="Node3D" node_paths=PackedStringArray("sprites")]
+script = ExtResource("1_ksoqa")
+properties = {}
+cardMaterials = Array[Material]([SubResource("StandardMaterial3D_imvgp"), SubResource("StandardMaterial3D_pqv11"), SubResource("StandardMaterial3D_or63v"), SubResource("StandardMaterial3D_fqi1c")])
+sprites = [NodePath("NorthSouth"), NodePath("EastWest")]
+
+[node name="NorthSouth" type="Sprite3D" parent="."]
+material_override = SubResource("StandardMaterial3D_68j4u")
+offset = Vector2(0, 256)
+texture = ExtResource("1_be5sy")
+
+[node name="EastWest" type="Sprite3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_68j4u")
+offset = Vector2(0, 256)
+texture = ExtResource("1_be5sy")
