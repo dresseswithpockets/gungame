@@ -21,3 +21,5 @@ stream_3/weight = 1.0
 script = ExtResource("1_dhf0c")
 tagName = &"dirt"
 footstepSoundStream = SubResource("AudioStreamRandomizer_f6hd8")
+overrideFootstepDistance = false
+footstepDistance = 0.0
